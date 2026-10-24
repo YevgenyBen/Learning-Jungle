@@ -33,6 +33,9 @@ test.describe("a Round of the rabbit Game", () => {
     const { challenge } = await gameState<RabbitState>(page);
     await completeChallenge(page);
     await expect(page.getByTestId("celebration-sign")).toContainText(challenge.text);
+    await expect(
+      page.getByTestId("celebration-sign").getByRole("img", { name: challenge.word.plain }),
+    ).toHaveAttribute("src", `/pictures/${challenge.word.id}.svg`);
     await expect(roundCelebration(page)).toBeHidden();
 
     await completeChallenge(page);

@@ -58,6 +58,21 @@ test.describe("the rabbit Game", () => {
     await expect(wordBar(page).locator('[data-slot="filled"]')).toHaveCount(0);
   });
 
+  test("the word bar shows each Word's Picture from its file", async ({ page }) => {
+    await openFromMenu(page);
+    for (let i = 0; i < 2; i++) {
+      const { challenge } = await gameState<RabbitState>(page);
+      const picture = wordBar(page).getByRole("img", { name: challenge.word.plain });
+      await expect(picture).toHaveAttribute("src", `/pictures/${challenge.word.id}.svg`);
+      await expect
+        .poll(() => picture.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0))
+        .toBe(true);
+      await completeChallenge(page);
+      // The next Word comes once the Challenge Celebration is over.
+      await expect.poll(async () => (await gameState<RabbitState>(page)).celebration).toBeNull();
+    }
+  });
+
   for (const key of ["Space", "ArrowUp", "KeyW"]) {
     test(`the rabbit jumps on ${key}`, async ({ page }) => {
       test.skip(isTouch(), "keyboard jumps are checked on desktop");
