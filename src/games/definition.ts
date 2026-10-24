@@ -37,6 +37,33 @@ export interface DifficultyControl<D extends string> {
   readonly options: Readonly<Record<D, { readonly name: string; readonly icon: string }>>;
 }
 
+/** One of a Game's Difficulty options, as the Difficulty control shows it. */
+export interface DifficultyOption<D extends string> {
+  readonly difficulty: D;
+  readonly name: string;
+  readonly icon: string;
+}
+
+/**
+ * A Game's `difficulties` and `difficultyControl`, from one ordered list of
+ * its options: the order the control cycles them in, the first being the
+ * default ("automatic").
+ */
+export function difficultySettings<D extends string>(
+  label: string,
+  options: readonly DifficultyOption<D>[],
+): { readonly difficulties: readonly D[]; readonly difficultyControl: DifficultyControl<D> } {
+  return {
+    difficulties: options.map((option) => option.difficulty),
+    difficultyControl: {
+      label,
+      options: Object.fromEntries(
+        options.map(({ difficulty, name, icon }) => [difficulty, { name, icon }]),
+      ) as DifficultyControl<D>["options"],
+    },
+  };
+}
+
 export interface GameDefinition<S extends GameState = GameState, D extends string = string> {
   /** Stable identity, also the Game's route segment: /games/<id>. */
   readonly id: string;

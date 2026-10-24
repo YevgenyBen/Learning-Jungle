@@ -31,7 +31,7 @@ Paths are relative to `src/`. The rabbit's model is `games/rabbit/model.ts`, its
 
 | Prototype behaviour | Status | Where / why |
 |---|---|---|
-| Slow 170, medium 280, fast 400 px/s; automatic is the default (L278-280) | ported | model `SPEEDS`, `RABBIT_DIFFICULTIES` |
+| Slow 170, medium 280, fast 400 px/s; automatic is the default (L278-280) | ported | model `SPEEDS`; the ordered options in `games/rabbit/index.ts` |
 | Automatic: slow + 30 px/s per two completed Words, capped at fast, easing at 40 px/s², frozen during a Celebration (L444-446, L566-571) | ported | model `autoSpeed`, `AUTO_SPEED_EASING`, `playing()` |
 | A fixed speed applies at once (L988-992) | ported | model `configure` |
 | Switching to automatic eases from the current speed toward the Words' speed (L988-992) | deliberate change | #8: a change of speed applies at once, so switching to automatic sets the speed the completed Words have earned straight away (model `configure`; tested). Only automatic's own step-ups after a Celebration ease in |

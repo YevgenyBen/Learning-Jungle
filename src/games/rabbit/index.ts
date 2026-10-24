@@ -1,5 +1,5 @@
-import type { GameDefinition } from "../definition";
-import { createRabbitModel, RABBIT_DIFFICULTIES, type RabbitDifficulty, type RabbitState } from "./model";
+import { difficultySettings, type GameDefinition } from "../definition";
+import { createRabbitModel, type RabbitDifficulty, type RabbitState } from "./model";
 import { RabbitView } from "./RabbitView";
 import { rabbitTestDriver } from "./testDriver";
 
@@ -10,17 +10,13 @@ export const rabbitGame: GameDefinition<RabbitState, RabbitDifficulty> = {
   icon: "🐇",
   subject: "hebrew",
   createModel: createRabbitModel,
-  difficulties: RABBIT_DIFFICULTIES,
-  // Difficulty is the rabbit's speed.
-  difficultyControl: {
-    label: "מהירות",
-    options: {
-      automatic: { name: "אוטומטי", icon: "✨" },
-      slow: { name: "איטי", icon: "🐢" },
-      medium: { name: "בינוני", icon: "🐇" },
-      fast: { name: "מהיר", icon: "🐆" },
-    },
-  },
+  // Difficulty is the rabbit's speed, automatic by default.
+  ...difficultySettings("מהירות", [
+    { difficulty: "automatic", name: "אוטומטי", icon: "✨" },
+    { difficulty: "slow", name: "איטי", icon: "🐢" },
+    { difficulty: "medium", name: "בינוני", icon: "🐇" },
+    { difficulty: "fast", name: "מהיר", icon: "🐆" },
+  ]),
   View: RabbitView,
   // Space is the shared main action; the rabbit also jumps on up arrow and W.
   mainActionKeys: ["ArrowUp", "KeyW"],

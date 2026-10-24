@@ -64,7 +64,8 @@ const WORDS_PER_SPEED_STEP = 2;
 const AUTO_SPEED_EASING = 40; // px/s per second
 
 export type RabbitDifficulty = "automatic" | keyof typeof SPEEDS;
-export const RABBIT_DIFFICULTIES: readonly RabbitDifficulty[] = ["automatic", "slow", "medium", "fast"];
+const isRabbitDifficulty = (difficulty: string | undefined): difficulty is RabbitDifficulty =>
+  difficulty === "automatic" || (difficulty !== undefined && Object.hasOwn(SPEEDS, difficulty));
 
 export interface Tile {
   /** Unique within one model, for following a tile across snapshots. */
@@ -142,17 +143,9 @@ export interface RabbitState extends GameState {
 
 export type RabbitModel = GameModel<RabbitState>;
 
-interface MutableTile {
-  id: number;
-  letter: string;
-  x: number;
-  y: number;
-  bob: number;
-  collected: boolean;
-  sinceCollected: number;
-  rejected: boolean;
-  sinceRejected: number;
-}
+/** The model's own, changeable copy of a shape it hands out read-only. */
+type Mutable<T> = { -readonly [K in keyof T]: T[K] };
+type MutableTile = Mutable<Tile>;
 
 export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> = ({
   settings,
@@ -189,22 +182,19 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
   const playing = () => celebrating === 0 && !roundOver;
   let requests: GameRequest[] = [];
 
-  let word: Word;
-  let letters: readonly SpelledLetter[];
-  let text: string;
-  let next: number;
-  startChallenge();
+  let challenge: Mutable<RabbitState["challenge"]> = newChallenge();
 
+  function newChallenge(): Mutable<RabbitState["challenge"]> {
+    const word = words.next();
+    const { text, letters } = content.spelling(word, current);
+    return { word, text, letters, next: 0 };
+  }
   function startChallenge(): void {
-    word = words.next();
-    const spelling = content.spelling(word, current);
-    text = spelling.text;
-    letters = spelling.letters;
-    next = 0;
+    challenge = newChallenge();
   }
 
   const emit = (request: GameRequest) => requests.push(request);
-  const needed = () => letters[next].letter;
+  const needed = () => challenge.letters[challenge.next].letter;
 
   function spawn(): void {
     while (spawnCursor < SPAWN_AHEAD) {
@@ -260,8 +250,8 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     tile.collected = true;
     const letter = content.letter(tile.letter);
     if (letter) emit({ kind: "say", item: letter, interrupt: true });
-    next++;
-    if (next < letters.length) {
+    challenge.next++;
+    if (challenge.next < challenge.letters.length) {
       emit({ kind: "sound", effect: "collect" });
       return;
     }
@@ -269,12 +259,12 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     wordsDone++;
     // The Challenge has ended, and its Hint with it.
     mistakes = 0;
-    emit({ kind: "say", item: word, interrupt: false });
+    emit({ kind: "say", item: challenge.word, interrupt: false });
     emit({ kind: "sound", effect: "challenge-complete" });
     emit({ kind: "celebrate", celebration: "challenge" });
     celebrating = CELEBRATION_PAUSE;
     const speedRising = current.difficulty === "automatic" && autoSpeed() > speed + 1;
-    celebrated = { word, text, number: completed, since: 0, rabbitY: rabbit.y, speedRising };
+    celebrated = { word: challenge.word, text: challenge.text, number: completed, since: 0, rabbitY: rabbit.y, speedRising };
   }
 
   /** After a Word's Celebration: the next Word, or the end of the Round. */
@@ -362,7 +352,7 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
       rabbit: { x: WORLD.rabbitX, ...rabbit },
       tiles: tiles.map((t) => ({ ...t })),
       landings: landings.map((l) => ({ ...l })),
-      challenge: { word, text, letters, next },
+      challenge: { ...challenge },
       celebrated,
     }),
     act: (action) => {
@@ -400,8 +390,8 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     },
     configure: (changes) => {
       if (changes.niqqud !== undefined) current = { ...current, niqqud: changes.niqqud };
-      const difficulty = RABBIT_DIFFICULTIES.find((d) => d === changes.difficulty);
-      if (difficulty === undefined || difficulty === current.difficulty) return;
+      const { difficulty } = changes;
+      if (!isRabbitDifficulty(difficulty) || difficulty === current.difficulty) return;
       current = { ...current, difficulty };
       // A change applies at once: a fixed speed, or what the Words have earned for automatic.
       // Only automatic's own step-ups after a Celebration ease in.
