@@ -12,6 +12,7 @@
     "test:build": "node scripts/check-production-build.mjs",
     "pictures": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/copy-pictures.mjs",
     "voice-clips": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/voice-clips.mjs",
+    "voice-check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/voice-check.mjs",
     "test:all": "npm run typecheck && npm test && npm run test:e2e && npm run test:build"
   },
   "dependencies": {
