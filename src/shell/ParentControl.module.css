@@ -1,0 +1,19 @@
+/* Bottom corner on the reading end's far side (left in RTL), over the Menu. */
+.parent {
+  position: fixed;
+  inset-block-end: max(var(--space-3), var(--safe-bottom));
+  inset-inline-end: max(var(--space-3), var(--safe-left));
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-width: var(--touch-parent);
+  min-height: var(--touch-parent);
+  padding-inline: var(--space-3);
+  border: var(--border-width) solid var(--color-ink-faint);
+  border-radius: 999px;
+  background: var(--color-panel);
+  color: var(--color-ink-soft);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
