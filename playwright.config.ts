@@ -2,8 +2,9 @@ import { defineConfig, devices } from "@playwright/test";
 
 // Seam 3: the running app. Tests drive it through keys and taps only.
 // Port 3100 and a separate build folder keep the test server apart from a
-// dev server the developer may already have running on 3000.
-const PORT = 3100;
+// dev server the developer may already have running on 3000. Set E2E_PORT
+// to run beside another checkout's test server.
+const PORT = Number(process.env.E2E_PORT ?? 3100);
 
 export default defineConfig({
   testDir: "./tests/e2e",
