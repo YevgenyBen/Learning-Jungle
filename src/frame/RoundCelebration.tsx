@@ -1,8 +1,29 @@
 "use client";
 
-import { useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import type { GameState } from "@/games/contract";
 import { moveFocus } from "@/menus/focus";
+import type { Frames } from "./frames";
 import styles from "./RoundCelebration.module.css";
+
+/**
+ * Whether the running Game's Round is over, so the Game Frame can show the
+ * Round Celebration screen. Re-renders only when that changes.
+ */
+export function useRoundOver(frames: Frames<GameState> | undefined): boolean {
+  const [over, setOver] = useState(false);
+  useEffect(() => {
+    if (!frames) return;
+    let last = frames.current().roundOver;
+    setOver(last);
+    return frames.subscribe((state) => {
+      if (state.roundOver === last) return;
+      last = state.roundOver;
+      setOver(last);
+    });
+  }, [frames]);
+  return over;
+}
 
 export interface RoundCelebrationProps {
   /** Starts a new Round of the same Game. */
@@ -22,9 +43,10 @@ const PICK_KEYS = new Set(["Enter", "NumpadEnter", "Space"]);
  * Round is over: a big "well done" and two big choices, another Round or
  * back to the Menu. Works by touch, mouse, and arrow keys plus Enter.
  *
- * It handles its own keys and keeps them from the Game Frame's other key
- * handlers (the main action, restart), so a key meant for a choice never
- * also reaches the Game behind it.
+ * It handles its own keys (arrows, Enter, Space) and keeps them from the
+ * Game Frame's key handlers, so a key meant for a choice never also reaches
+ * the Game behind it. The Game Frame also stands down its own Enter
+ * (restart) and main action while this screen shows.
  */
 export function RoundCelebration({ onAnotherRound, onBack }: RoundCelebrationProps) {
   const buttons = useRef(new Map<ChoiceId, HTMLButtonElement>());
@@ -37,28 +59,32 @@ export function RoundCelebration({ onAnotherRound, onBack }: RoundCelebrationPro
   const actions: Record<ChoiceId, () => void> = { "another-round": onAnotherRound, back: onBack };
 
   // A keyboard Player can press Enter straight away.
-  useEffect(() => buttons.current.get("another-round")?.focus({ preventScroll: true }), []);
+  useEffect(() => {
+    buttons.current.get("another-round")?.focus({ preventScroll: true });
+  }, []);
 
   const focusedChoice = (): ChoiceId | null =>
     [...buttons.current].find(([, element]) => element === document.activeElement)?.[0] ?? null;
 
   const onKeyDown = (event: ReactKeyboardEvent) => {
     if (event.altKey || event.ctrlKey || event.metaKey) return;
-    event.stopPropagation();
     if (PICK_KEYS.has(event.code)) {
       // The choice is picked when the key comes up, so the rest of the press
       // can't reach the next screen.
       event.preventDefault();
+      event.stopPropagation();
       if (!event.repeat) armed.current = event.code;
       return;
     }
     const next = moveFocus(LAYOUT, focusedChoice(), event.key) as ChoiceId | null;
     if (next === null) return;
     event.preventDefault();
+    event.stopPropagation();
     buttons.current.get(next)?.focus({ preventScroll: true });
   };
 
   const onKeyUp = (event: ReactKeyboardEvent) => {
+    if (!PICK_KEYS.has(event.code) && moveFocus(LAYOUT, null, event.key) === null) return;
     event.stopPropagation();
     if (event.code !== armed.current) return;
     event.preventDefault();

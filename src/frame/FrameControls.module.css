@@ -1,0 +1,91 @@
+/* The Game Frame's two rails of controls. The Frame's grid places them
+   (grid areas "start" and "end", see GameFrame.module.css). Right-to-left:
+   the start rail, with "back" first, sits at the right edge. */
+.rail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: var(--touch-min);
+}
+
+.rail[data-rail="start"] {
+  grid-area: start;
+}
+
+.rail[data-rail="end"] {
+  grid-area: end;
+  justify-content: flex-end;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding-inline: var(--space-4) var(--space-5);
+  border: var(--border-width) solid var(--color-line);
+  border-radius: 999px;
+  background: var(--color-panel);
+  color: var(--color-ink);
+  font-weight: 700;
+  font-size: clamp(18px, 4vmin, 26px);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.control[aria-pressed="true"] {
+  background: var(--color-sun);
+}
+
+.control:focus-visible {
+  outline: var(--focus-ring) solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.icon {
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.label {
+  line-height: 1;
+}
+
+/* Phones held sideways: little height, plenty of width. The controls stand
+   in columns at the side edges, icons only (the label still names them). */
+@media (max-height: 500px) {
+  .rail {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--space-2);
+  }
+
+  .group {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .control {
+    width: var(--touch-min);
+    height: var(--touch-min);
+    padding: 0;
+  }
+
+  .label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

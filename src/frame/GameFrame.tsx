@@ -1,17 +1,21 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { contentBank } from "@/content";
-import type { GameModel, GameRequest, GameState } from "@/games/contract";
+import type { GameModel, GameRequest, GameState, PlayerAction } from "@/games/contract";
 import type { GameDefinition } from "@/games/definition";
-import { createFrames, useFrameSelector, type FramePublisher } from "./frames";
+import { createSoundEffects } from "@/sound/soundEffects";
+import { FrameControls } from "./FrameControls";
+import { useFrameKeys } from "./frameKeys";
+import { createFrames, type FramePublisher } from "./frames";
+import { useGameScreen } from "./fullScreen";
 import styles from "./GameFrame.module.css";
-import { RoundCelebration } from "./RoundCelebration";
+import { createGameOutput, silentVoice, type GameOutput } from "./output";
+import { PauseScreen } from "./PauseScreen";
+import { RoundCelebration, useRoundOver } from "./RoundCelebration";
 import { installTestHook } from "./testHook";
 
-/** The shared main-action key; a Game may add its own (GameDefinition.mainActionKeys). */
-const MAIN_ACTION_KEYS = ["Space"];
 /** Longest time step per frame, so a stalled tab doesn't make the Game leap ahead. */
 const MAX_FRAME_STEP = 0.033;
 const HOOK_STEP = 1 / 60;
@@ -26,7 +30,10 @@ export interface GameFrameProps<S extends GameState> {
   readonly backHref: string;
 }
 
+/** One run of a Game's model, from its start or restart. */
 interface RunningGame<S extends GameState> {
+  /** Counts restarts, so a restarted Game's View starts fresh. */
+  readonly run: number;
   readonly model: GameModel<S>;
   readonly frames: FramePublisher<S>;
   /** Recent requests, for the test hook. */
@@ -35,7 +42,7 @@ interface RunningGame<S extends GameState> {
   sync(): void;
 }
 
-function startGame<S extends GameState>(game: GameDefinition<S, string>): RunningGame<S> {
+function startGame<S extends GameState>(game: GameDefinition<S, string>, output: GameOutput, run: number) {
   const model = game.createModel({
     settings: { niqqud: true, difficulty: game.difficulties[0] },
     content: contentBank,
@@ -43,119 +50,149 @@ function startGame<S extends GameState>(game: GameDefinition<S, string>): Runnin
   });
   const frames = createFrames(model.state());
   const requestLog: GameRequest[] = [];
-  return {
+  const running: RunningGame<S> = {
+    run,
     model,
     frames,
     requestLog,
     sync() {
-      // Requests are only logged for now: the Sound Effects module (#7) and
-      // the voice player (#9) will carry them out here.
-      requestLog.push(...model.takeRequests());
+      const requests = model.takeRequests();
+      // Sound Effects and voice; Celebrations are carried out by the screens.
+      output.carryOut(requests);
+      requestLog.push(...requests);
       if (requestLog.length > REQUEST_LOG_SIZE) requestLog.splice(0, requestLog.length - REQUEST_LOG_SIZE);
       frames.publish(model.state());
     },
   };
+  return running;
 }
 
 /**
  * The Game Frame: the shared surround of every Game. It creates the Game's
- * model, runs time, turns keys, taps and clicks into Player actions, hands
- * the Game's View the model's state, and carries out the model's requests.
- * For now its only control is "back to Menu".
+ * model, runs time (or not, while paused), turns keys, taps and clicks into
+ * Player actions, hands the Game's View the model's state, carries out the
+ * model's requests, and holds the controls: back, pause, restart, mute.
  */
 export function GameFrame<S extends GameState>({ game, name, backHref }: GameFrameProps<S>) {
   const router = useRouter();
+  const [output] = useState(() => createGameOutput({ effects: createSoundEffects(), voice: silentVoice }));
   // The model starts in the browser only: it draws random Words, so a model
   // made while prerendering the page would not match the browser's.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  // Each Round is a fresh <Play>, and so a fresh model.
-  const [round, setRound] = useState(0);
+  const [running, setRunning] = useState<RunningGame<S> | null>(null);
+  const [paused, setPaused] = useState(false);
+  const [muted, setMuted] = useState(false);
+
+  useEffect(() => {
+    setRunning(startGame(game, output, 0));
+    return () => output.silence();
+  }, [game, output]);
+  useEffect(() => output.setMuted(muted), [output, muted]);
+  // Pausing lets go of a held main action and cuts off sound in progress.
+  useEffect(() => {
+    if (!paused) return;
+    running?.model.act({ kind: "main-release" });
+    output.silence();
+  }, [paused, running, output]);
+
+  const restart = () => {
+    output.silence();
+    setRunning((current) => startGame(game, output, (current?.run ?? 0) + 1));
+    setPaused(false);
+  };
+  const togglePause = () => setPaused((p) => !p);
+  const toggleMute = () => setMuted((m) => !m);
+  const act = (action: PlayerAction) => {
+    if (!paused) running?.model.act(action);
+  };
+  // Once the Round is over, the Round Celebration screen takes the keys:
+  // Enter and Space pick its focused choice instead of restarting or jumping.
+  const roundOver = useRoundOver(running?.frames);
+
+  useFrameKeys(
+    {
+      main(down) {
+        if (roundOver) return;
+        if (!paused) act({ kind: down ? "main-press" : "main-release" });
+        else if (down) setPaused(false);
+      },
+      move: (direction) => act({ kind: "move", direction }),
+      togglePause: () => {
+        if (!roundOver) togglePause();
+      },
+      restart: () => {
+        if (!roundOver) restart();
+      },
+      toggleMute,
+    },
+    game.mainActionKeys,
+  );
+  useAutoPause(() => setPaused(true));
+  useGameScreen();
+  // Every tap, click or key may be the gesture that lets locked audio start.
+  useEffect(() => {
+    const unlock = () => output.unlock();
+    window.addEventListener("pointerdown", unlock, true);
+    window.addEventListener("keydown", unlock, true);
+    return () => {
+      window.removeEventListener("pointerdown", unlock, true);
+      window.removeEventListener("keydown", unlock, true);
+    };
+  }, [output]);
+  useTestHook(game, running, output, { paused, muted });
 
   return (
     <main className={styles.frame} aria-label={name} data-game={game.id}>
-      <header className={styles.controls}>
-        <button type="button" className={styles.control} onClick={() => router.push(backHref)}>
-          <span aria-hidden="true" className={styles.controlIcon}>
-            ➜
-          </span>
-          <span className={styles.controlLabel}>חזרה</span>
-        </button>
-      </header>
-      {mounted && (
-        <Play
-          key={round}
-          game={game}
-          onAnotherRound={() => setRound((r) => r + 1)}
-          onBack={() => router.push(backHref)}
-        />
-      )}
+      <FrameControls
+        onBack={() => router.push(backHref)}
+        paused={paused}
+        onPause={togglePause}
+        onRestart={restart}
+        muted={muted}
+        onMute={toggleMute}
+      />
+      <div className={styles.stage}>
+        {running && <Play key={running.run} game={game} running={running} paused={paused} />}
+        {paused && !roundOver && <PauseScreen onResume={() => setPaused(false)} />}
+        {roundOver && <RoundCelebration onAnotherRound={restart} onBack={() => router.push(backHref)} />}
+      </div>
     </main>
   );
 }
 
-const selectRoundOver = (state: GameState) => state.roundOver;
-
-interface PlayProps<S extends GameState> {
-  readonly game: GameDefinition<S, string>;
-  readonly onAnotherRound: () => void;
-  readonly onBack: () => void;
+/** Pauses when the Player switches to another tab or app, or the window loses focus. */
+function useAutoPause(pause: () => void): void {
+  const latest = useRef(pause);
+  useEffect(() => {
+    latest.current = pause;
+  });
+  useEffect(() => {
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") latest.current();
+    };
+    const onBlur = () => latest.current();
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("blur", onBlur);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("blur", onBlur);
+    };
+  }, []);
 }
 
-/**
- * The running Game: its model, time, input, the test hook, and its View,
- * with the Round Celebration screen over it once the Round is over.
- */
-function Play<S extends GameState>({ game, onAnotherRound, onBack }: PlayProps<S>) {
-  const [running] = useState(() => startGame(game));
-  const { model, frames } = running;
-  const roundOver = useFrameSelector(frames, selectRoundOver, Object.is);
-
-  // Time: one model step per animation frame.
+/** Lets Playwright see and drive the running Game (dev and test builds only). */
+function useTestHook<S extends GameState>(
+  game: GameDefinition<S, string>,
+  running: RunningGame<S> | null,
+  output: GameOutput,
+  frame: { paused: boolean; muted: boolean },
+): void {
+  const latest = useRef(frame);
   useEffect(() => {
-    let frame = 0;
-    let last: number | null = null;
-    const loop = (now: number) => {
-      if (last !== null) model.advance(Math.min(MAX_FRAME_STEP, (now - last) / 1000));
-      last = now;
-      running.sync();
-      frame = requestAnimationFrame(loop);
-    };
-    frame = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(frame);
-  }, [running, model]);
-
-  // Keys: the main action goes down on keydown and up on keyup.
+    latest.current = frame;
+  });
   useEffect(() => {
-    const keys = new Set([...MAIN_ACTION_KEYS, ...(game.mainActionKeys ?? [])]);
-    const onKey = (event: KeyboardEvent) => {
-      if (event.altKey || event.ctrlKey || event.metaKey || !keys.has(event.code)) return;
-      // Also stops Space from pressing a focused control or scrolling.
-      event.preventDefault();
-      if (event.repeat) return;
-      model.act({ kind: event.type === "keydown" ? "main-press" : "main-release" });
-    };
-    window.addEventListener("keydown", onKey);
-    window.addEventListener("keyup", onKey);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("keyup", onKey);
-    };
-  }, [game, model]);
-
-  // A press that starts on the play area may end anywhere.
-  useEffect(() => {
-    const release = () => model.act({ kind: "main-release" });
-    window.addEventListener("pointerup", release);
-    window.addEventListener("pointercancel", release);
-    return () => {
-      window.removeEventListener("pointerup", release);
-      window.removeEventListener("pointercancel", release);
-    };
-  }, [model]);
-
-  useEffect(() => {
-    if (process.env.NODE_ENV === "production") return;
+    if (process.env.NODE_ENV === "production" || !running) return;
+    const { model } = running;
     const solveStep = () => {
       if (!game.testDriver) throw new Error(`${game.id} has no test driver`);
       game.testDriver.solveStep(model);
@@ -173,6 +210,12 @@ function Play<S extends GameState>({ game, onAnotherRound, onBack }: PlayProps<S
         running.sync();
         return [...running.requestLog];
       },
+      paused: () => latest.current.paused,
+      muted: () => latest.current.muted,
+      soundsPlayed: () => {
+        running.sync();
+        return output.played();
+      },
       act: andSync((action) => model.act(action)),
       advance: andSync((seconds: number) => {
         for (let left = seconds; left > 1e-9; left -= HOOK_STEP) model.advance(Math.min(HOOK_STEP, left));
@@ -183,21 +226,61 @@ function Play<S extends GameState>({ game, onAnotherRound, onBack }: PlayProps<S
         while (model.state().progress.completed === done) solveStep();
       }),
     });
-  }, [game, model, running]);
+  }, [game, running, output]);
+}
+
+/** The running Game: time, pointer input on the play area, and the Game's View. */
+function Play<S extends GameState>({
+  game,
+  running,
+  paused,
+}: {
+  game: GameDefinition<S, string>;
+  running: RunningGame<S>;
+  paused: boolean;
+}) {
+  const { model, frames } = running;
+  const pausedNow = useRef(paused);
+  // Before the browser can run another frame: once the pause screen shows, time has stopped.
+  useLayoutEffect(() => {
+    pausedNow.current = paused;
+  }, [paused]);
+
+  // Time: one model step per animation frame, none while paused.
+  useEffect(() => {
+    let frame = 0;
+    let last: number | null = null;
+    const loop = (now: number) => {
+      if (last !== null && !pausedNow.current) model.advance(Math.min(MAX_FRAME_STEP, (now - last) / 1000));
+      last = now;
+      running.sync();
+      frame = requestAnimationFrame(loop);
+    };
+    frame = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(frame);
+  }, [running, model]);
+
+  // A press that starts on the play area may end anywhere.
+  useEffect(() => {
+    const release = () => model.act({ kind: "main-release" });
+    window.addEventListener("pointerup", release);
+    window.addEventListener("pointercancel", release);
+    return () => {
+      window.removeEventListener("pointerup", release);
+      window.removeEventListener("pointercancel", release);
+    };
+  }, [model]);
 
   const onPointerDown = (event: ReactPointerEvent) => {
-    if (!event.isPrimary || event.button > 0) return;
+    if (!event.isPrimary || event.button > 0 || pausedNow.current) return;
     event.preventDefault();
     model.act({ kind: "main-press" });
   };
 
   const View = game.View;
   return (
-    <>
-      <div className={styles.surface} onPointerDown={onPointerDown} data-testid="game-surface">
-        <View frames={frames} />
-      </div>
-      {roundOver && <RoundCelebration onAnotherRound={onAnotherRound} onBack={onBack} />}
-    </>
+    <div className={styles.surface} onPointerDown={onPointerDown} data-testid="game-surface">
+      <View frames={frames} />
+    </div>
   );
 }

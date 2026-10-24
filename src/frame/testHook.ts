@@ -4,7 +4,7 @@
  * development and test builds; it never exists in a production build
  * (`npm run test:build` checks the exported files).
  */
-import type { GameRequest, GameState, PlayerAction } from "@/games/contract";
+import type { GameRequest, GameState, PlayerAction, SoundEffect } from "@/games/contract";
 
 export interface GameTestHook<S extends GameState = GameState> {
   /** The running Game's id, e.g. "rabbit". */
@@ -13,6 +13,12 @@ export interface GameTestHook<S extends GameState = GameState> {
   state(): S;
   /** Every request the model has emitted since the Game started, oldest first. */
   requests(): GameRequest[];
+  /** Whether the Game Frame is paused (time stands still). */
+  paused(): boolean;
+  /** Whether the Game Frame is muted. */
+  muted(): boolean;
+  /** The Sound Effects played out loud (not silenced by mute) since the Game opened, oldest first. */
+  soundsPlayed(): SoundEffect[];
   /** Feeds the model a Player action, exactly as a key or tap would. */
   act(action: PlayerAction): void;
   /** Lets this much game time pass at once, on top of the real-time loop. */
