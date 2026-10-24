@@ -20,7 +20,7 @@ export interface SpokenItem {
   readonly pronunciation?: string;
 }
 
-export type Category = "fruits" | "vegetables" | "animals" | "home-objects";
+export type Category = "fruits" | "vegetables" | "animals" | "home-objects" | "other";
 
 /**
  * The image that stands for a Word: a file named by the Word's identity

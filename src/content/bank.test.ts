@@ -117,7 +117,7 @@ describe("integrity of the whole bank", () => {
   });
 
   it("every Word has a Category and a Picture file that exists", () => {
-    const categories = ["fruits", "vegetables", "animals", "home-objects"];
+    const categories = ["fruits", "vegetables", "animals", "home-objects", "other"];
     for (const w of contentBank.words()) {
       expect(categories, w.id).toContain(w.category);
       const file = join(PUBLIC, ...w.picture.src.split("/"));
