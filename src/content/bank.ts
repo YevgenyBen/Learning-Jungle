@@ -7,6 +7,7 @@ import type {
   Letter,
   NiqqudSetting,
   SpelledLetter,
+  SpokenItem,
   Spelling,
   Word,
 } from "./types";
@@ -26,6 +27,12 @@ export interface ContentBank extends LetterSoundQueries, NumberQueries {
   letters(): readonly Letter[];
   /** A letter (final forms included) by its bare character. */
   letter(letter: string): Letter | undefined;
+  /**
+   * Everything that is said aloud, each once: Words, letters, the spoken
+   * sounds Letter Sounds share (one per sound, not one per Letter Sound) and
+   * numbers 0-100. These are the items with a Voice Clip.
+   */
+  spokenItems(): readonly SpokenItem[];
 }
 
 const HEBREW_LETTER = /[א-ת]/;
@@ -65,9 +72,19 @@ function createContentBank(): ContentBank {
   }));
   const byLetter = new Map(letters.map((l) => [l.letter, l]));
 
+  const letterSoundQueries = createLetterSoundQueries();
+  const numberQueries = createNumberQueries();
+  const spokenItems: readonly SpokenItem[] = [
+    ...words,
+    ...letters,
+    ...new Set(letterSoundQueries.letterSounds().map((s) => s.sound)),
+    ...numberQueries.numbers(),
+  ];
+
   return {
-    ...createLetterSoundQueries(),
-    ...createNumberQueries(),
+    ...letterSoundQueries,
+    ...numberQueries,
+    spokenItems: () => spokenItems,
     words: (filter) =>
       filter?.category ? words.filter((w) => w.category === filter.category) : words,
     wordsStartingWith: (letter) => words.filter((w) => splitLetters(w.plain)[0]?.letter === letter),

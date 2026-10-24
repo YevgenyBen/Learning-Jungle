@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { contentBank } from "@/content";
 
 // The Voice Clip manifest shipped with the app (public/voice/manifest.json).
-// The generation script (#10) writes it; these checks keep it honest.
+// The generation script (`npm run voice-clips`) writes it; these checks keep it honest.
 
 const VOICE_DIR = fileURLToPath(new URL("../../public/voice/", import.meta.url));
 const manifest = JSON.parse(readFileSync(`${VOICE_DIR}manifest.json`, "utf8")) as {
@@ -12,12 +12,7 @@ const manifest = JSON.parse(readFileSync(`${VOICE_DIR}manifest.json`, "utf8")) a
 };
 
 /** Everything in the Content Bank that can be said aloud. */
-const spokenIds = new Set([
-  ...contentBank.words().map((w) => w.id),
-  ...contentBank.letters().map((l) => l.id),
-  ...contentBank.letterSounds().map((s) => s.sound.id),
-  ...contentBank.numbers().map((n) => n.id),
-]);
+const spokenIds = new Set(contentBank.spokenItems().map((item) => item.id));
 
 describe("the shipped Voice Clip manifest", () => {
   it("lists clips by item identity", () => {
