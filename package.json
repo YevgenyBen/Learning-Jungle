@@ -10,6 +10,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:build": "node scripts/check-production-build.mjs",
+    "pictures": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/copy-pictures.mjs",
     "test:all": "npm run typecheck && npm test && npm run test:e2e && npm run test:build"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
+    "@twemoji/svg": "15.0.0",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

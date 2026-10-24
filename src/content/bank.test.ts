@@ -1,5 +1,10 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { contentBank } from "./index";
+
+const PUBLIC = fileURLToPath(new URL("../../public", import.meta.url));
 
 const word = (plain: string) => {
   const found = contentBank.words().find((w) => w.plain === plain);
@@ -37,14 +42,36 @@ describe("Words", () => {
     expect(fruits.every((w) => w.category === "fruits")).toBe(true);
   });
 
+  it("can be found by the letter their spelling starts with", () => {
+    const gimel = contentBank.wordsStartingWith("ג").map((w) => w.plain);
+    expect(gimel).toContain("גזר");
+    expect(gimel).not.toContain("תפוח");
+    expect(contentBank.wordsStartingWith("ת").map((w) => w.plain)).toEqual(
+      expect.arrayContaining(["תפוח", "תות"]),
+    );
+  });
+
+  it("starting with a letter are the same with and without Niqqud", () => {
+    for (const letter of contentBank.letters()) {
+      for (const w of contentBank.wordsStartingWith(letter.letter)) {
+        expect(contentBank.spelling(w, { niqqud: true }).letters[0].letter, w.id).toBe(letter.letter);
+        expect(contentBank.spelling(w, { niqqud: false }).letters[0].letter, w.id).toBe(letter.letter);
+      }
+    }
+  });
+
+  it("start with no final letter form", () => {
+    expect(contentBank.wordsStartingWith("ם")).toEqual([]);
+  });
+
   it("are said aloud from their Voweled Spelling", () => {
     const apple = word("תפוח");
     expect(apple.voweledText).toBe("תַּפּוּחַ");
     expect(apple.id).toMatch(/^word-[a-z-]+$/);
   });
 
-  it("each have a Picture", () => {
-    expect(word("גזר").picture.emoji).toBe("🥕");
+  it("each have a Picture file named by the Word's identity", () => {
+    expect(word("גזר").picture.src).toBe("/pictures/word-carrot.svg");
   });
 });
 
@@ -73,6 +100,44 @@ describe("integrity of the whole bank", () => {
       expect(w.voweled, w.id).toMatch(voweled);
       expect(w.voweled, w.id).not.toMatch(plain);
       expect(w.plain, w.id).toMatch(plain);
+    }
+  });
+
+  it("every Plain Spelling is its Voweled Spelling's letters with only ו and י added (full spelling)", () => {
+    for (const w of contentBank.words()) {
+      const voweledLetters = contentBank.spelling(w, { niqqud: true }).letters.map((l) => l.letter);
+      const plainLetters = contentBank.spelling(w, { niqqud: false }).letters.map((l) => l.letter);
+      let i = 0;
+      for (const letter of plainLetters) {
+        if (letter === voweledLetters[i]) i++;
+        else expect(["ו", "י"], `${w.id}: unexpected ${letter} in ${w.plain}`).toContain(letter);
+      }
+      expect(i, `${w.id}: ${w.plain} is missing letters of ${w.voweled}`).toBe(voweledLetters.length);
+    }
+  });
+
+  it("every Word has a Category and a Picture file that exists", () => {
+    const categories = ["fruits", "vegetables", "animals", "home-objects"];
+    for (const w of contentBank.words()) {
+      expect(categories, w.id).toContain(w.category);
+      const file = join(PUBLIC, ...w.picture.src.split("/"));
+      expect(existsSync(file), `${w.id}: ${w.picture.src}`).toBe(true);
+      expect(readFileSync(file, "utf8"), w.id).toMatch(/<svg[\s>]/);
+    }
+  });
+
+  it("every one of the 22 letters starts at least two Words", () => {
+    const base = contentBank.letters().filter((l) => !l.final);
+    expect(base).toHaveLength(22);
+    for (const letter of base) {
+      expect(contentBank.wordsStartingWith(letter.letter).length, letter.letter).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it("holds about 80 Words in each of the four Categories", () => {
+    expect(contentBank.words().length).toBeGreaterThanOrEqual(75);
+    for (const category of ["fruits", "vegetables", "animals", "home-objects"] as const) {
+      expect(contentBank.words({ category }).length, category).toBeGreaterThanOrEqual(10);
     }
   });
 

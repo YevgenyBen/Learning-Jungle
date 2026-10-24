@@ -5,6 +5,7 @@
  * (`npm run test:build` checks the exported files).
  */
 import type { GameRequest, GameState, PlayerAction, SoundEffect } from "@/games/contract";
+import type { Said } from "@/voice/voicePlayer";
 
 export interface GameTestHook<S extends GameState = GameState> {
   /** The running Game's id, e.g. "rabbit". */
@@ -19,6 +20,12 @@ export interface GameTestHook<S extends GameState = GameState> {
   muted(): boolean;
   /** The Sound Effects played out loud (not silenced by mute) since the Game opened, oldest first. */
   soundsPlayed(): SoundEffect[];
+  /**
+   * What the voice player said out loud (not cut off, not silenced by mute),
+   * oldest first: each item's id and whether its Voice Clip or Speech
+   * Fallback said it.
+   */
+  voiceSaid(): Said[];
   /** Feeds the model a Player action, exactly as a key or tap would. */
   act(action: PlayerAction): void;
   /** Lets this much game time pass at once, on top of the real-time loop. */

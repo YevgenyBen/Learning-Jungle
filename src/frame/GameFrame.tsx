@@ -11,7 +11,8 @@ import { useFrameKeys } from "./frameKeys";
 import { createFrames, type FramePublisher } from "./frames";
 import { useGameScreen } from "./fullScreen";
 import styles from "./GameFrame.module.css";
-import { createGameOutput, silentVoice, type GameOutput } from "./output";
+import { createBrowserVoicePlayer, type VoicePlayerWithLog } from "@/voice/voicePlayer";
+import { createGameOutput, type GameOutput } from "./output";
 import { PauseScreen } from "./PauseScreen";
 import { usePreferences, type Preferences } from "./preferences";
 import { RoundCelebration, useRoundOver } from "./RoundCelebration";
@@ -86,7 +87,8 @@ function startGame<S extends GameState>(
  */
 export function GameFrame<S extends GameState>({ game, name, backHref }: GameFrameProps<S>) {
   const router = useRouter();
-  const [output] = useState(() => createGameOutput({ effects: createSoundEffects(), voice: silentVoice }));
+  const [voice] = useState(createBrowserVoicePlayer);
+  const [output] = useState(() => createGameOutput({ effects: createSoundEffects(), voice }));
   // The model starts in the browser only: it draws random Words, so a model
   // made while prerendering the page would not match the browser's.
   const [running, setRunning] = useState<RunningGame<S> | null>(null);
@@ -182,7 +184,7 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
       window.removeEventListener("keydown", unlock, true);
     };
   }, [output]);
-  useTestHook(game, running, output, { paused, muted });
+  useTestHook(game, running, output, voice, { paused, muted });
 
   return (
     <main className={styles.frame} aria-label={name} data-game={game.id}>
@@ -237,6 +239,7 @@ function useTestHook<S extends GameState>(
   game: GameDefinition<S, string>,
   running: RunningGame<S> | null,
   output: GameOutput,
+  voice: VoicePlayerWithLog,
   frame: { paused: boolean; muted: boolean },
 ): void {
   const latest = useRef(frame);
@@ -269,6 +272,10 @@ function useTestHook<S extends GameState>(
         running.sync();
         return output.played();
       },
+      voiceSaid: () => {
+        running.sync();
+        return voice.said();
+      },
       act: andSync((action) => model.act(action)),
       advance: andSync((seconds: number) => {
         for (let left = seconds; left > 1e-9; left -= HOOK_STEP) model.advance(Math.min(HOOK_STEP, left));
@@ -279,7 +286,7 @@ function useTestHook<S extends GameState>(
         while (model.state().progress.completed === done) solveStep();
       }),
     });
-  }, [game, running, output]);
+  }, [game, running, output, voice]);
 }
 
 /** The running Game: time, pointer input on the play area, and the Game's View. */

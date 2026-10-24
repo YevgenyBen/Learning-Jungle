@@ -9,8 +9,8 @@ import type { SoundEffects } from "@/sound/soundEffects";
 
 /**
  * Says items aloud: their Voice Clip, else Speech Fallback, else nothing
- * (ADR-0002). The voice player itself comes with #9; until then the Frame
- * uses `silentVoice`.
+ * (ADR-0002). The Game Frame uses `createBrowserVoicePlayer()` from
+ * src/voice/voicePlayer.ts.
  */
 export interface VoicePlayer {
   /** `interrupt` stops whatever is being said; otherwise it queues behind it. */
@@ -20,8 +20,6 @@ export interface VoicePlayer {
   /** Call from inside a Player's gesture, for browsers that keep audio locked until one. */
   unlock?(): void;
 }
-
-export const silentVoice: VoicePlayer = { say() {}, stop() {} };
 
 /** How many recent Sound Effects the test hook can see. */
 const PLAYED_LOG_SIZE = 200;
