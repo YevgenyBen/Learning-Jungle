@@ -1,26 +1,8 @@
+/* Square; the art leaves its own margin, so it can fill most of the short side. */
 .logo {
-  display: grid;
-  justify-items: center;
-  gap: var(--space-2);
+  width: clamp(220px, 70vmin, 440px);
+  height: auto;
   animation: arrive 600ms ease-out both;
-}
-
-.mark {
-  font-size: clamp(56px, 18vmin, 120px);
-  line-height: 1;
-}
-
-.name {
-  font-family: var(--font-display);
-  font-size: clamp(40px, 12vmin, 88px);
-  line-height: 1;
-  color: var(--color-ink);
-}
-
-.tagline {
-  font-size: clamp(18px, 4vmin, 28px);
-  font-weight: 600;
-  color: var(--color-ink-soft);
 }
 
 @keyframes arrive {
