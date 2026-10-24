@@ -72,4 +72,52 @@ test.describe("Voice Clip review page", () => {
     await press(row(page, "word-apple").getByRole("button", { name: "השמעה" }));
     await expect(row(page, "word-apple")).toContainText("לא מתנגן");
   });
+
+  test("flagged identities make up the regeneration command, in list order", async ({ page }) => {
+    await serveManifest(page, {});
+    await openReview(page);
+    const command = page.getByRole("textbox", { name: "פקודה" });
+    await expect(page.getByRole("button", { name: "העתקה" })).toHaveAttribute("aria-disabled", "true");
+
+    await press(row(page, "sound-ba").getByRole("checkbox"));
+    await press(row(page, "word-apple").getByRole("checkbox"));
+    await press(row(page, "number-21").getByRole("checkbox"));
+    await expect(command).toHaveValue("npm run voice-clips -- word-apple sound-ba number-21");
+
+    await press(row(page, "word-apple").getByRole("checkbox"));
+    await expect(command).toHaveValue("npm run voice-clips -- sound-ba number-21");
+    await expect(page.getByTestId("review-summary")).toContainText("2 מסומנים");
+  });
+
+  test("copying puts the command on the clipboard", async ({ page, context, browserName }) => {
+    test.skip(browserName !== "chromium", "Only Chromium lets a test read the clipboard");
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await serveManifest(page, {});
+    await openReview(page);
+
+    await press(row(page, "sound-ba").getByRole("checkbox"));
+    await press(page.getByRole("button", { name: "העתקה" }));
+    await expect(page.getByRole("status")).toHaveText("הועתק");
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("npm run voice-clips -- sound-ba");
+  });
+
+  test("without a clipboard, the command is selected to copy by hand", async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, "clipboard", {
+        value: { writeText: () => Promise.reject(new DOMException("blocked", "NotAllowedError")) },
+        configurable: true,
+      });
+    });
+    await serveManifest(page, {});
+    await openReview(page);
+
+    await press(row(page, "sound-ba").getByRole("checkbox"));
+    await press(page.getByRole("button", { name: "העתקה" }));
+    await expect(page.getByRole("status")).toContainText("להעתיק ידנית");
+    const command = page.getByRole("textbox", { name: "פקודה" });
+    await expect(command).toBeFocused();
+    expect(await command.evaluate((box: HTMLTextAreaElement) => box.value.slice(box.selectionStart, box.selectionEnd))).toBe(
+      "npm run voice-clips -- sound-ba",
+    );
+  });
 });

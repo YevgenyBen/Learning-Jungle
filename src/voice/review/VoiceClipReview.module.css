@@ -3,16 +3,66 @@
   position: fixed;
   inset: 0;
   overflow-y: auto;
-  padding: var(--space-4) var(--space-5);
+  padding: 0 var(--space-5) var(--space-5);
   background: var(--color-page);
   user-select: text;
   -webkit-user-select: text;
 }
 
+/* Title, counts and the command stay in view while scrolling. */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-block: var(--space-3);
+  border-bottom: var(--border-width) solid var(--color-line);
+  background: var(--color-page);
+}
+
+.header p {
+  margin: var(--space-1) 0;
+}
+
 .title {
-  margin: 0 0 var(--space-4);
+  margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
+}
+
+.help {
+  color: var(--color-ink-soft);
+}
+
+.copy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.commandLabel {
+  display: grid;
+  flex: 1 1 24em;
+  gap: var(--space-1);
+  font-weight: 700;
+}
+
+.command {
+  width: 100%;
+  padding: var(--space-2);
+  border: 2px solid var(--color-line);
+  border-radius: var(--radius-s);
+  background: var(--color-panel);
+  font-family: ui-monospace, Consolas, monospace;
+  font-weight: 400;
+  resize: vertical;
+}
+
+.copied {
+  flex-basis: 100%;
+  min-height: 1.5em;
+  font-weight: 700;
 }
 
 .table {
@@ -36,7 +86,13 @@
   background: var(--color-unavailable);
 }
 
-.play {
+.missing .status {
+  font-weight: 700;
+  color: var(--color-berry);
+}
+
+.play,
+.copyButton {
   min-height: var(--touch-parent);
   padding-inline: var(--space-3);
   border: 2px solid var(--color-line);
@@ -45,8 +101,14 @@
   cursor: pointer;
 }
 
-.play[aria-disabled="true"] {
+.play[aria-disabled="true"],
+.copyButton[aria-disabled="true"] {
   border-color: var(--color-unavailable-ink);
   color: var(--color-unavailable-ink);
   cursor: default;
+}
+
+.flag {
+  width: var(--space-5);
+  height: var(--space-5);
 }

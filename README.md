@@ -26,6 +26,12 @@ It generates a clip for every spoken item that has none yet, saves it as `public
 
 Then listen to the clips, and commit `public/voice/`.
 
+### Listen and flag: the review page
+
+With `npm run dev` running, open `http://localhost:3000/dev/voice-clips`. It lists every spoken item with its identity, text and a play button; items without a clip are greyed out and marked "חסר". Tick the bad clips and press "העתקה": the page copies the ready `npm run voice-clips -- <identities>` command (if the browser won't allow the clipboard, for example over plain http from a phone, the command is selected in its box to copy by hand). Flags live only on the page and are gone on reload.
+
+The page exists only under `next dev`: development-only pages are named `page.dev.tsx`, which only the dev server routes (`next.config.ts`), and `npm run test:build` checks that a production build has neither the route nor its code.
+
 ### Regenerate flagged clips
 
 Pass the identities to redo, separated by spaces, exactly as the Voice Clip review page copies them:
