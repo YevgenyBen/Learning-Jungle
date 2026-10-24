@@ -23,11 +23,14 @@ export interface SpokenItem {
 export type Category = "fruits" | "vegetables" | "animals" | "home-objects";
 
 /**
- * The image that stands for a Word. Draw it with `<WordPicture>` only, so it
- * can change from an emoji to a file without touching any Game.
+ * The image that stands for a Word: a file named by the Word's identity
+ * (`/pictures/word-apple.svg`). Phase 1 ships Twemoji SVGs; replacing the file
+ * under the same name replaces the Picture without touching any Game.
+ * Draw it with `<WordPicture>` only.
  */
 export interface Picture {
-  readonly emoji: string;
+  /** The file's path in the app's public assets. */
+  readonly src: string;
 }
 
 export interface Word extends SpokenItem {

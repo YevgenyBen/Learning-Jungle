@@ -19,8 +19,9 @@
 }
 
 .picture {
-  font-size: clamp(32px, 9vmin, 52px);
-  line-height: 1;
+  display: block;
+  width: clamp(32px, 9vmin, 52px);
+  height: clamp(32px, 9vmin, 52px);
 }
 
 .slots {
