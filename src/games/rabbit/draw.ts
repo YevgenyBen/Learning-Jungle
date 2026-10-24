@@ -1,7 +1,8 @@
 /**
  * Draws the rabbit Game's meadow from the model's state, in the model's
  * logical coordinates (WORLD). Shapes and colours are ported from the
- * bunny-hop.html prototype. Drawing only: nothing here changes the state.
+ * single-page prototype (see docs/prototype-parity.md). Drawing only:
+ * nothing here changes the state.
  */
 import { WORLD, type CelebratedWord, type Landing, type RabbitState, type Tile } from "./model";
 

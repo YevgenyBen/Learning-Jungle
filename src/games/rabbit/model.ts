@@ -5,7 +5,7 @@
  *
  * The world is in logical pixels (WORLD), y grows downward, and the rabbit
  * stays at a fixed x while the world scrolls past it. Numbers are ported
- * from the bunny-hop.html prototype.
+ * from the single-page prototype (deleted; see docs/prototype-parity.md).
  */
 import type { Letter, SpelledLetter, Word } from "@/content";
 import type { CreateGameModel, GameModel, GameRequest, GameSettings, GameState } from "../contract";
