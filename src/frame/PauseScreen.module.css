@@ -1,0 +1,44 @@
+/* Over the Game's play area only: the Frame's controls stay in reach. */
+.screen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--color-page) 75%, transparent);
+  touch-action: manipulation;
+}
+
+.resume {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: var(--icon-choice);
+  min-height: var(--icon-choice);
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-l);
+  background: var(--color-grass);
+  color: var(--color-panel);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 6vmin, 40px);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.resume:focus-visible {
+  outline: var(--focus-ring) solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.icon {
+  font-size: 1.8em;
+  line-height: 1;
+}
+
+.label {
+  line-height: 1;
+}

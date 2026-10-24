@@ -1,5 +1,7 @@
 import { LETTERS } from "./data/letters";
 import { WORDS } from "./data/words";
+import { createLetterSoundQueries, type LetterSoundQueries } from "./letterSounds";
+import { createNumberQueries, type NumberQueries } from "./numbers";
 import type {
   Category,
   Letter,
@@ -13,7 +15,7 @@ import type {
  * The Content Bank: the only source of learning content. Games ask it
  * questions; they never read the authored data directly.
  */
-export interface ContentBank {
+export interface ContentBank extends LetterSoundQueries, NumberQueries {
   /** Every Word, or only those in one Category. */
   words(filter?: { readonly category?: Category }): readonly Word[];
   /** The Words whose spelling (with or without Niqqud) starts with a letter. */
@@ -64,6 +66,8 @@ function createContentBank(): ContentBank {
   const byLetter = new Map(letters.map((l) => [l.letter, l]));
 
   return {
+    ...createLetterSoundQueries(),
+    ...createNumberQueries(),
     words: (filter) =>
       filter?.category ? words.filter((w) => w.category === filter.category) : words,
     wordsStartingWith: (letter) => words.filter((w) => splitLetters(w.plain)[0]?.letter === letter),

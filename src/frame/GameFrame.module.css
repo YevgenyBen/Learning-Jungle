@@ -1,7 +1,13 @@
+/* The Game Frame: the controls' rails (FrameControls) and the stage where
+   the Game is played. Right-to-left, so "start" is the right edge. */
 .frame {
   position: fixed;
   inset: 0;
   display: grid;
+  grid-template-areas:
+    "start end"
+    "stage stage";
+  grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
   gap: var(--space-2);
   padding-block: max(var(--space-2), var(--safe-top)) max(var(--space-2), var(--safe-bottom));
@@ -9,42 +15,28 @@
   background: var(--color-page);
 }
 
-/* The Game Frame's controls, always in the same places. Right-to-left:
-   "back" sits at the start (right) edge. */
-.controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-height: var(--touch-min);
+/* Phones held sideways: the rails stand at the side edges and the stage
+   takes the full height. */
+@media (max-height: 500px) {
+  .frame {
+    grid-template-areas: "start stage end";
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr;
+    gap: var(--space-3);
+    padding-block: max(var(--space-1), var(--safe-top)) max(var(--space-1), var(--safe-bottom));
+  }
 }
 
-.control {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-width: var(--touch-min);
-  min-height: var(--touch-min);
-  padding-inline: var(--space-4) var(--space-5);
-  border: var(--border-width) solid var(--color-line);
-  border-radius: 999px;
-  background: var(--color-panel);
-  font-weight: 700;
-  font-size: clamp(18px, 4vmin, 26px);
-  cursor: pointer;
-}
-
-.controlIcon {
-  font-size: 1.4em;
-  line-height: 1;
-}
-
-.controlLabel {
-  line-height: 1;
+.stage {
+  grid-area: stage;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
 }
 
 /* Where the Game is drawn; a press anywhere on it is the main action. */
 .surface {
-  position: relative;
-  min-height: 0;
+  position: absolute;
+  inset: 0;
   touch-action: none;
 }
