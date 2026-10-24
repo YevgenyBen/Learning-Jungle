@@ -1,6 +1,7 @@
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import { contentBank } from "../../src/content/bank";
+import { press } from "./helpers";
 
 // The Voice Clip review page (development only). Each test serves its own
 // Voice Clip manifest, so the result never depends on which clips have
@@ -37,5 +38,38 @@ test.describe("Voice Clip review page", () => {
       const item = items.find((i) => i.id === id)!;
       await expect(row(page, id)).toContainText(item.voweledText);
     }
+  });
+
+  test("items without a clip are marked missing, with no clip to play", async ({ page }) => {
+    await serveManifest(page, { "word-apple": "test-clip.wav" });
+    await openReview(page);
+
+    await expect(row(page, "letter-gimel")).toContainText("חסר");
+    await expect(row(page, "letter-gimel").getByRole("button", { name: "השמעה" })).toHaveAttribute("aria-disabled", "true");
+    await expect(row(page, "word-apple")).not.toContainText("חסר");
+    await expect(row(page, "word-apple").getByRole("button", { name: "השמעה" })).not.toHaveAttribute("aria-disabled", "true");
+    await expect(page.getByTestId("review-summary")).toContainText(`${contentBank.spokenItems().length - 1} חסרים`);
+  });
+
+  test("the play button plays the item's clip file", async ({ page, browserName }) => {
+    test.skip(
+      browserName === "webkit" && process.platform === "win32",
+      "Playwright's WebKit for Windows has no media playback (every clip fails with NotSupportedError)",
+    );
+    await serveManifest(page, { "word-apple": "test-clip.wav" });
+    await openReview(page);
+
+    const fetched = page.waitForRequest("**/voice/test-clip.wav");
+    await press(row(page, "word-apple").getByRole("button", { name: "השמעה" }));
+    await fetched;
+  });
+
+  test("a clip whose file can't be played is marked", async ({ page }) => {
+    await serveManifest(page, { "word-apple": "gone.mp3" });
+    await page.route("**/voice/gone.mp3", (route) => route.fulfill({ status: 404 }));
+    await openReview(page);
+
+    await press(row(page, "word-apple").getByRole("button", { name: "השמעה" }));
+    await expect(row(page, "word-apple")).toContainText("לא מתנגן");
   });
 });
