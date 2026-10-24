@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { contentBank, type SpokenItem } from "@/content";
-import type { GameRequest, SoundEffect } from "@/games/contract";
+import type { CelebrationKind, GameRequest, SoundEffect } from "@/games/contract";
 import type { SoundEffects } from "@/sound/soundEffects";
 import { createVoicePlayer, type ClipAudio } from "@/voice/voicePlayer";
 import { createGameOutput } from "./output";
@@ -36,7 +36,8 @@ async function setUp() {
   });
   const effectsPlayed: SoundEffect[] = [];
   const effects: SoundEffects = { play: (e) => effectsPlayed.push(e), unlock() {}, stop() {} };
-  const output = createGameOutput({ effects, voice });
+  const celebrated: CelebrationKind[] = [];
+  const output = createGameOutput({ effects, voice, celebrate: (celebration) => celebrated.push(celebration) });
   await settle();
   return {
     output,
@@ -44,6 +45,7 @@ async function setUp() {
     clipsPlayed: () => played.filter((src) => src.startsWith("/voice/")),
     pauses: () => pauses,
     effectsPlayed,
+    celebrated,
     finishClip: () => audio.onended?.(),
   };
 }
@@ -83,5 +85,25 @@ describe("mute silences the voice and Sound Effects alike", () => {
     await settle();
 
     expect(voice.said()).toEqual([{ id: alef.id, via: "clip" }]);
+  });
+});
+
+describe("Celebration requests", () => {
+  it("are handed to the Game Frame in order, the Round's after the Word's", async () => {
+    const { output, celebrated } = await setUp();
+    output.carryOut([
+      { kind: "celebrate", celebration: "challenge" },
+      { kind: "sound", effect: "challenge-complete" },
+      { kind: "celebrate", celebration: "round" },
+    ]);
+    expect(celebrated).toEqual(["challenge", "round"]);
+  });
+
+  it("are carried out while muted: a Celebration is seen, not only heard", async () => {
+    const { output, celebrated, effectsPlayed } = await setUp();
+    output.setMuted(true);
+    output.carryOut([{ kind: "celebrate", celebration: "round" }, { kind: "sound", effect: "round-complete" }]);
+    expect(celebrated).toEqual(["round"]);
+    expect(effectsPlayed).toEqual([]);
   });
 });

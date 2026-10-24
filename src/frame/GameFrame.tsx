@@ -15,7 +15,7 @@ import { createBrowserVoicePlayer, type VoicePlayerWithLog } from "@/voice/voice
 import { createGameOutput, type GameOutput } from "./output";
 import { PauseScreen } from "./PauseScreen";
 import { usePreferences, type Preferences } from "./preferences";
-import { RoundCelebration, useRoundOver } from "./RoundCelebration";
+import { RoundCelebration } from "./RoundCelebration";
 import { SettingsControls } from "./SettingsControls";
 import { installTestHook } from "./testHook";
 
@@ -65,7 +65,7 @@ function startGame<S extends GameState>(
     requestLog,
     sync() {
       const requests = model.takeRequests();
-      // Sound Effects and voice; Celebrations are carried out by the screens.
+      // Sound Effects, voice and the Round Celebration screen.
       output.carryOut(requests);
       requestLog.push(...requests);
       if (requestLog.length > REQUEST_LOG_SIZE) requestLog.splice(0, requestLog.length - REQUEST_LOG_SIZE);
@@ -86,7 +86,17 @@ function startGame<S extends GameState>(
 export function GameFrame<S extends GameState>({ game, backHref }: GameFrameProps<S>) {
   const router = useRouter();
   const [voice] = useState(createBrowserVoicePlayer);
-  const [output] = useState(() => createGameOutput({ effects: createSoundEffects(), voice }));
+  // Shown when the model asks for the Round's Celebration, until another Round or a restart.
+  const [roundCelebration, setRoundCelebration] = useState(false);
+  const [output] = useState(() =>
+    createGameOutput({
+      effects: createSoundEffects(),
+      voice,
+      celebrate: (celebration) => {
+        if (celebration === "round") setRoundCelebration(true);
+      },
+    }),
+  );
   // The model starts in the browser only: it draws random Words, so a model
   // made while prerendering the page would not match the browser's.
   const [running, setRunning] = useState<RunningGame<S> | null>(null);
@@ -103,6 +113,7 @@ export function GameFrame<S extends GameState>({ game, backHref }: GameFrameProp
   useEffect(() => {
     if (!loaded) return;
     setRunning(startGame(game, output, 0, settingsOf(latestPreferences.current!)));
+    setRoundCelebration(false);
     return () => output.silence();
   }, [game, output, loaded]);
   useEffect(() => output.setMuted(muted), [output, muted]);
@@ -125,6 +136,7 @@ export function GameFrame<S extends GameState>({ game, backHref }: GameFrameProp
     output.silence();
     const settings = settingsOf(preferences);
     setRunning((current) => startGame(game, output, (current?.run ?? 0) + 1, settings));
+    setRoundCelebration(false);
     setPaused(false);
   };
   // Another Round goes on with the same model, so automatic Difficulty carries on.
@@ -133,6 +145,7 @@ export function GameFrame<S extends GameState>({ game, backHref }: GameFrameProp
     output.silence();
     running.model.nextRound();
     running.sync();
+    setRoundCelebration(false);
     setPaused(false);
   };
   const togglePause = () => setPaused((p) => !p);
@@ -146,9 +159,9 @@ export function GameFrame<S extends GameState>({ game, backHref }: GameFrameProp
   const act = (action: PlayerAction) => {
     if (!paused) running?.model.act(action);
   };
-  // Once the Round is over, the Round Celebration screen takes the keys:
-  // Enter and Space pick its focused choice instead of restarting or jumping.
-  const roundOver = useRoundOver(running?.frames);
+  // While the Round Celebration screen shows, it takes the keys: Enter and
+  // Space pick its focused choice instead of restarting or jumping.
+  const roundOver = roundCelebration;
 
   useFrameKeys(
     {

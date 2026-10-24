@@ -1,29 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
-import type { GameState } from "@/games/contract";
+import { useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { moveFocus } from "@/menus/focus";
-import type { Frames } from "./frames";
 import styles from "./RoundCelebration.module.css";
-
-/**
- * Whether the running Game's Round is over, so the Game Frame can show the
- * Round Celebration screen. Re-renders only when that changes.
- */
-export function useRoundOver(frames: Frames<GameState> | undefined): boolean {
-  const [over, setOver] = useState(false);
-  useEffect(() => {
-    if (!frames) return;
-    let last = frames.current().roundOver;
-    setOver(last);
-    return frames.subscribe((state) => {
-      if (state.roundOver === last) return;
-      last = state.roundOver;
-      setOver(last);
-    });
-  }, [frames]);
-  return over;
-}
 
 export interface RoundCelebrationProps {
   /** Starts a new Round of the same Game. */
@@ -39,8 +18,8 @@ const LAYOUT = [["another-round", "back"]] as const;
 const PICK_KEYS = new Set(["Enter", "NumpadEnter", "Space"]);
 
 /**
- * The Game Frame's Round Celebration screen, shown over any Game whose
- * Round is over: a big "well done" and two big choices, another Round or
+ * The Game Frame's Round Celebration screen, shown over any Game whose model
+ * asks for its Round's Celebration (`celebrate` "round"): a big "well done" and two big choices, another Round or
  * back to the Menu. Works by touch, mouse, and arrow keys plus Enter.
  *
  * It handles its own keys (arrows, Enter, Space) and keeps them from the

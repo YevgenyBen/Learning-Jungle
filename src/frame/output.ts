@@ -1,10 +1,11 @@
 /**
- * Where the Game Frame sends what a model asks to be heard: Sound Effects
- * and the voice player. Mute silences both. Nothing here ever waits for
- * sound (ADR-0004).
+ * Where the Game Frame carries out a model's requests: what is to be heard
+ * goes to Sound Effects and the voice player, Celebrations to the Frame's
+ * screens. Mute silences sound only; a Celebration is always seen
+ * (ADR-0004). Nothing here ever waits for sound.
  */
 import type { SpokenItem } from "@/content";
-import type { GameRequest, SoundEffect } from "@/games/contract";
+import type { CelebrationKind, GameRequest, SoundEffect } from "@/games/contract";
 import type { SoundEffects } from "@/sound/soundEffects";
 
 /**
@@ -25,7 +26,7 @@ export interface VoicePlayer {
 const PLAYED_LOG_SIZE = 200;
 
 export interface GameOutput {
-  /** Carries out the model's `say` and `sound` requests (others are not for it). */
+  /** Carries out the model's requests, oldest first. */
   carryOut(requests: readonly GameRequest[]): void;
   setMuted(muted: boolean): void;
   /** Cuts off anything still sounding: pause, restart, leaving the Game. */
@@ -36,7 +37,18 @@ export interface GameOutput {
   played(): SoundEffect[];
 }
 
-export function createGameOutput({ effects, voice }: { effects: SoundEffects; voice: VoicePlayer }): GameOutput {
+export interface GameOutputDeps {
+  readonly effects: SoundEffects;
+  readonly voice: VoicePlayer;
+  /**
+   * Carries out a `celebrate` request. The Game Frame shows its Round
+   * Celebration screen for "round"; a Game draws its own Challenge
+   * Celebration from its state.
+   */
+  readonly celebrate: (celebration: CelebrationKind) => void;
+}
+
+export function createGameOutput({ effects, voice, celebrate }: GameOutputDeps): GameOutput {
   let muted = false;
   const played: SoundEffect[] = [];
   const silence = () => {
@@ -45,9 +57,12 @@ export function createGameOutput({ effects, voice }: { effects: SoundEffects; vo
   };
   return {
     carryOut(requests) {
-      if (muted) return;
       for (const request of requests) {
-        if (request.kind === "sound") {
+        if (request.kind === "celebrate") {
+          celebrate(request.celebration);
+        } else if (muted) {
+          continue;
+        } else if (request.kind === "sound") {
           effects.play(request.effect);
           played.push(request.effect);
           if (played.length > PLAYED_LOG_SIZE) played.shift();
