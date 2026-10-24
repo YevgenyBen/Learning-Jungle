@@ -401,10 +401,11 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     configure: (changes) => {
       if (changes.niqqud !== undefined) current = { ...current, niqqud: changes.niqqud };
       const difficulty = RABBIT_DIFFICULTIES.find((d) => d === changes.difficulty);
-      if (difficulty === undefined) return;
+      if (difficulty === undefined || difficulty === current.difficulty) return;
       current = { ...current, difficulty };
-      // A fixed speed applies at once; automatic eases from here toward what the Words have earned.
-      if (difficulty !== "automatic") speed = SPEEDS[difficulty];
+      // A change applies at once: a fixed speed, or what the Words have earned for automatic.
+      // Only automatic's own step-ups after a Celebration ease in.
+      speed = difficulty === "automatic" ? autoSpeed() : SPEEDS[difficulty];
     },
   };
 };

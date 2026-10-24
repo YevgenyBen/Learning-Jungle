@@ -33,7 +33,8 @@ Paths are relative to `src/`. The rabbit's model is `games/rabbit/model.ts`, its
 |---|---|---|
 | Slow 170, medium 280, fast 400 px/s; automatic is the default (L278-280) | ported | model `SPEEDS`, `RABBIT_DIFFICULTIES` |
 | Automatic: slow + 30 px/s per two completed Words, capped at fast, easing at 40 px/s², frozen during a Celebration (L444-446, L566-571) | ported | model `autoSpeed`, `AUTO_SPEED_EASING`, `playing()` |
-| A fixed speed applies at once; switching to automatic eases from the current speed (L988-992) | ported | model `configure` |
+| A fixed speed applies at once (L988-992) | ported | model `configure` |
+| Switching to automatic eases from the current speed toward the Words' speed (L988-992) | deliberate change | #8: a change of speed applies at once, so switching to automatic sets the speed the completed Words have earned straight away (model `configure`; tested). Only automatic's own step-ups after a Celebration ease in |
 | Restart resets automatic speed (L387) | ported | restart makes a fresh model (`GameFrame.tsx` `restart`) |
 | — (no Rounds) | deliberate change | spec #1: automatic speed carries into "another Round" (`nextRound`) |
 | Speed not stored | deliberate change | spec #1 story 26 / #8: Difficulty is remembered per Game on the device (`frame/preferences.ts`) |

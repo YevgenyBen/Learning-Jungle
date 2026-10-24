@@ -55,8 +55,8 @@ test.describe("the Difficulty control", () => {
     }
     await press(difficultyControl(page));
     await expectDifficulty(page, "אוטומטי");
-    // Automatic eases back down to slow, since no Word has been completed yet.
-    await expect.poll(() => speed(page), { timeout: 15_000 }).toBe(170);
+    // Automatic is back to slow at once, since no Word has been completed yet.
+    await expect.poll(() => speed(page)).toBe(170);
   });
 
   test("D moves on to the next Difficulty", async ({ page }) => {

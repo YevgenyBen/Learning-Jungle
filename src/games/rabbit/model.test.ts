@@ -624,13 +624,37 @@ describe("changing the Difficulty of a running Game", () => {
     expect(model.state().speed).toBe(280);
   });
 
-  it("automatic eases from the current speed toward the speed the completed Words have earned", () => {
+  it("switching to automatic applies at once the speed the completed Words have earned", () => {
     const model = create(2, { difficulty: "fast" });
     model.configure({ difficulty: "automatic" });
-    run(model, 1);
-    expect(model.state().speed).toBeLessThan(400);
-    expect(model.state().speed).toBeGreaterThan(300);
-    run(model, 10);
     expect(model.state().speed).toBe(170);
+    run(model, 5);
+    expect(model.state().speed).toBe(170);
+
+    // Two Words completed at a fixed speed have earned automatic its first step.
+    model.configure({ difficulty: "slow" });
+    completeWord(model);
+    waitOutCelebration(model);
+    completeWord(model);
+    waitOutCelebration(model);
+    expect(model.state().speed).toBe(170);
+    model.configure({ difficulty: "automatic" });
+    expect(model.state().speed).toBe(200);
+  });
+
+  it("the same Difficulty again changes nothing: automatic's own step-up keeps easing in", () => {
+    const model = create(11);
+    completeWord(model);
+    waitOutCelebration(model);
+    completeWord(model);
+    waitOutCelebration(model);
+    run(model, 0.3);
+    const easing = model.state().speed;
+    expect(easing).toBeGreaterThan(170);
+    expect(easing).toBeLessThan(200);
+
+    // The Game Frame passes every setting when only Niqqud changes.
+    model.configure({ niqqud: false, difficulty: "automatic" });
+    expect(model.state().speed).toBe(easing);
   });
 });
