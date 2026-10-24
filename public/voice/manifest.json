@@ -1,3 +1,1654 @@
 {
-  "clips": {}
+  "clips": {
+    "word-watermelon": {
+      "file": "word-watermelon.mp3",
+      "text": "אֲבַטִּיחַ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-pear": {
+      "file": "word-pear.mp3",
+      "text": "אַגָּס",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-pineapple": {
+      "file": "word-pineapple.mp3",
+      "text": "אֲנָנָס",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-banana": {
+      "file": "word-banana.mp3",
+      "text": "בָּנָנָה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-cherry": {
+      "file": "word-cherry.mp3",
+      "text": "דֻּבְדְּבָן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-olive": {
+      "file": "word-olive.mp3",
+      "text": "זַיִת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-lemon": {
+      "file": "word-lemon.mp3",
+      "text": "לִימוֹן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-melon": {
+      "file": "word-melon.mp3",
+      "text": "מֶלוֹן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-mango": {
+      "file": "word-mango.mp3",
+      "text": "מַנְגּוֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-grapes": {
+      "file": "word-grapes.mp3",
+      "text": "עֲנָבִים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-coconut": {
+      "file": "word-coconut.mp3",
+      "text": "קוֹקוֹס",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-kiwi": {
+      "file": "word-kiwi.mp3",
+      "text": "קִיוִי",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-strawberry": {
+      "file": "word-strawberry.mp3",
+      "text": "תּוּת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-apple": {
+      "file": "word-apple.mp3",
+      "text": "תַּפּוּחַ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-orange": {
+      "file": "word-orange.mp3",
+      "text": "תַּפּוּז",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-peas": {
+      "file": "word-peas.mp3",
+      "text": "אֲפוּנָה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-broccoli": {
+      "file": "word-broccoli.mp3",
+      "text": "בְּרוֹקוֹלִי",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-sweet-potato": {
+      "file": "word-sweet-potato.mp3",
+      "text": "בָּטָטָה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-onion": {
+      "file": "word-onion.mp3",
+      "text": "בָּצָל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-carrot": {
+      "file": "word-carrot.mp3",
+      "text": "גֶּזֶר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-lettuce": {
+      "file": "word-lettuce.mp3",
+      "text": "חַסָּה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-eggplant": {
+      "file": "word-eggplant.mp3",
+      "text": "חָצִיל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-cucumber": {
+      "file": "word-cucumber.mp3",
+      "text": "מְלָפְפוֹן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-tomato": {
+      "file": "word-tomato.mp3",
+      "text": "עַגְבָנִיָּה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-mushroom": {
+      "file": "word-mushroom.mp3",
+      "text": "פִּטְרִיָּה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-pepper": {
+      "file": "word-pepper.mp3",
+      "text": "פִּלְפֵּל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-garlic": {
+      "file": "word-garlic.mp3",
+      "text": "שׁוּם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-corn": {
+      "file": "word-corn.mp3",
+      "text": "תִּירָס",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-lion": {
+      "file": "word-lion.mp3",
+      "text": "אַרְיֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-rabbit": {
+      "file": "word-rabbit.mp3",
+      "text": "אַרְנָב",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-duck": {
+      "file": "word-duck.mp3",
+      "text": "בַּרְוָז",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-camel": {
+      "file": "word-camel.mp3",
+      "text": "גָּמָל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-bear": {
+      "file": "word-bear.mp3",
+      "text": "דֹּב",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-fish": {
+      "file": "word-fish.mp3",
+      "text": "דָּג",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-hippo": {
+      "file": "word-hippo.mp3",
+      "text": "הִיפּוֹפּוֹטָם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-wolf": {
+      "file": "word-wolf.mp3",
+      "text": "זְאֵב",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-zebra": {
+      "file": "word-zebra.mp3",
+      "text": "זֶבְּרָה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-cat": {
+      "file": "word-cat.mp3",
+      "text": "חָתוּל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-peacock": {
+      "file": "word-peacock.mp3",
+      "text": "טַוָּס",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-dove": {
+      "file": "word-dove.mp3",
+      "text": "יוֹנָה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-owl": {
+      "file": "word-owl.mp3",
+      "text": "יַנְשׁוּף",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-dog": {
+      "file": "word-dog.mp3",
+      "text": "כֶּלֶב",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-lizard": {
+      "file": "word-lizard.mp3",
+      "text": "לְטָאָה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-snake": {
+      "file": "word-snake.mp3",
+      "text": "נָחָשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-tiger": {
+      "file": "word-tiger.mp3",
+      "text": "נָמֵר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-squirrel": {
+      "file": "word-squirrel.mp3",
+      "text": "סְנָאִי",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-horse": {
+      "file": "word-horse.mp3",
+      "text": "סוּס",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-mouse": {
+      "file": "word-mouse.mp3",
+      "text": "עַכְבָּר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-elephant": {
+      "file": "word-elephant.mp3",
+      "text": "פִּיל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-cow": {
+      "file": "word-cow.mp3",
+      "text": "פָּרָה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-butterfly": {
+      "file": "word-butterfly.mp3",
+      "text": "פַּרְפַּר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-turtle": {
+      "file": "word-turtle.mp3",
+      "text": "צָב",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-bird": {
+      "file": "word-bird.mp3",
+      "text": "צִפּוֹר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-frog": {
+      "file": "word-frog.mp3",
+      "text": "צְפַרְדֵּעַ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-monkey": {
+      "file": "word-monkey.mp3",
+      "text": "קוֹף",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-hedgehog": {
+      "file": "word-hedgehog.mp3",
+      "text": "קִפּוֹד",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-snail": {
+      "file": "word-snail.mp3",
+      "text": "שַׁבְּלוּל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-fox": {
+      "file": "word-fox.mp3",
+      "text": "שׁוּעָל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-rooster": {
+      "file": "word-rooster.mp3",
+      "text": "תַּרְנְגוֹל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-socks": {
+      "file": "word-socks.mp3",
+      "text": "גַּרְבַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-door": {
+      "file": "word-door.mp3",
+      "text": "דֶּלֶת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-hook": {
+      "file": "word-hook.mp3",
+      "text": "וָו",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-window": {
+      "file": "word-window.mp3",
+      "text": "חַלּוֹן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-television": {
+      "file": "word-television.mp3",
+      "text": "טֶלֶוִיזְיָה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-telephone": {
+      "file": "word-telephone.mp3",
+      "text": "טֶלֶפוֹן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-ball": {
+      "file": "word-ball.mp3",
+      "text": "כַּדּוּר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-chair": {
+      "file": "word-chair.mp3",
+      "text": "כִּסֵּא",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-spoon": {
+      "file": "word-spoon.mp3",
+      "text": "כַּף",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-bed": {
+      "file": "word-bed.mp3",
+      "text": "מִטָּה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-key": {
+      "file": "word-key.mp3",
+      "text": "מַפְתֵּחַ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-shoe": {
+      "file": "word-shoe.mp3",
+      "text": "נַעַל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-candle": {
+      "file": "word-candle.mp3",
+      "text": "נֵר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-soap": {
+      "file": "word-soap.mp3",
+      "text": "סַבּוֹן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-sofa": {
+      "file": "word-sofa.mp3",
+      "text": "סַפָּה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-kite": {
+      "file": "word-kite.mp3",
+      "text": "עֲפִיפוֹן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-plate": {
+      "file": "word-plate.mp3",
+      "text": "צַלַּחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-radio": {
+      "file": "word-radio.mp3",
+      "text": "רַדְיוֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-clock": {
+      "file": "word-clock.mp3",
+      "text": "שָׁעוֹן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-helicopter": {
+      "file": "word-helicopter.mp3",
+      "text": "הֶלִיקוֹפְּטֶר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-hamburger": {
+      "file": "word-hamburger.mp3",
+      "text": "הַמְבּוּרְגֶּר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-waffle": {
+      "file": "word-waffle.mp3",
+      "text": "וַפֶל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-rose": {
+      "file": "word-rose.mp3",
+      "text": "וֶרֶד",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-train": {
+      "file": "word-train.mp3",
+      "text": "רַכֶּבֶת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "word-leg": {
+      "file": "word-leg.mp3",
+      "text": "רֶגֶל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-alef": {
+      "file": "letter-alef.mp3",
+      "text": "אָלֶף",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-bet": {
+      "file": "letter-bet.mp3",
+      "text": "בֵּית",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-gimel": {
+      "file": "letter-gimel.mp3",
+      "text": "גִּימֶל",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-dalet": {
+      "file": "letter-dalet.mp3",
+      "text": "דָּלֶת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-he": {
+      "file": "letter-he.mp3",
+      "text": "הֵא",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-vav": {
+      "file": "letter-vav.mp3",
+      "text": "וָו",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-zayin": {
+      "file": "letter-zayin.mp3",
+      "text": "זַיִן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-het": {
+      "file": "letter-het.mp3",
+      "text": "חֵית",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-tet": {
+      "file": "letter-tet.mp3",
+      "text": "טֵית",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-yod": {
+      "file": "letter-yod.mp3",
+      "text": "יוּד",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-kaf": {
+      "file": "letter-kaf.mp3",
+      "text": "כַּף",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-final-kaf": {
+      "file": "letter-final-kaf.mp3",
+      "text": "כַף סוֹפִית",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-lamed": {
+      "file": "letter-lamed.mp3",
+      "text": "לָמֶד",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-mem": {
+      "file": "letter-mem.mp3",
+      "text": "מֵם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-final-mem": {
+      "file": "letter-final-mem.mp3",
+      "text": "מֵם סוֹפִית",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-nun": {
+      "file": "letter-nun.mp3",
+      "text": "נוּן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-final-nun": {
+      "file": "letter-final-nun.mp3",
+      "text": "נוּן סוֹפִית",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-samekh": {
+      "file": "letter-samekh.mp3",
+      "text": "סָמֶךְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-ayin": {
+      "file": "letter-ayin.mp3",
+      "text": "עַיִן",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-pe": {
+      "file": "letter-pe.mp3",
+      "text": "פֵּא",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-final-pe": {
+      "file": "letter-final-pe.mp3",
+      "text": "פֵא סוֹפִית",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-tsadi": {
+      "file": "letter-tsadi.mp3",
+      "text": "צָדִי",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-final-tsadi": {
+      "file": "letter-final-tsadi.mp3",
+      "text": "צָדִי סוֹפִית",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-qof": {
+      "file": "letter-qof.mp3",
+      "text": "קוֹף",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-resh": {
+      "file": "letter-resh.mp3",
+      "text": "רֵישׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-shin": {
+      "file": "letter-shin.mp3",
+      "text": "שִׁין",
+      "voice": "he-IL-HilaNeural"
+    },
+    "letter-tav": {
+      "file": "letter-tav.mp3",
+      "text": "תָּו",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-a": {
+      "file": "sound-a.mp3",
+      "text": "אָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-e": {
+      "file": "sound-e.mp3",
+      "text": "אֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-i": {
+      "file": "sound-i.mp3",
+      "text": "אִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-o": {
+      "file": "sound-o.mp3",
+      "text": "אֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-u": {
+      "file": "sound-u.mp3",
+      "text": "אֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ba": {
+      "file": "sound-ba.mp3",
+      "text": "בָּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-be": {
+      "file": "sound-be.mp3",
+      "text": "בֵּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-bi": {
+      "file": "sound-bi.mp3",
+      "text": "בִּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-bo": {
+      "file": "sound-bo.mp3",
+      "text": "בֹּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-bu": {
+      "file": "sound-bu.mp3",
+      "text": "בֻּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-b": {
+      "file": "sound-b.mp3",
+      "text": "בְּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-va": {
+      "file": "sound-va.mp3",
+      "text": "בָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ve": {
+      "file": "sound-ve.mp3",
+      "text": "בֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-vi": {
+      "file": "sound-vi.mp3",
+      "text": "בִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-vo": {
+      "file": "sound-vo.mp3",
+      "text": "בֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-vu": {
+      "file": "sound-vu.mp3",
+      "text": "בֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-v": {
+      "file": "sound-v.mp3",
+      "text": "בְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ga": {
+      "file": "sound-ga.mp3",
+      "text": "גָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ge": {
+      "file": "sound-ge.mp3",
+      "text": "גֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-gi": {
+      "file": "sound-gi.mp3",
+      "text": "גִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-go": {
+      "file": "sound-go.mp3",
+      "text": "גֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-gu": {
+      "file": "sound-gu.mp3",
+      "text": "גֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-g": {
+      "file": "sound-g.mp3",
+      "text": "גְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-da": {
+      "file": "sound-da.mp3",
+      "text": "דָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-de": {
+      "file": "sound-de.mp3",
+      "text": "דֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-di": {
+      "file": "sound-di.mp3",
+      "text": "דִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-do": {
+      "file": "sound-do.mp3",
+      "text": "דֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-du": {
+      "file": "sound-du.mp3",
+      "text": "דֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-d": {
+      "file": "sound-d.mp3",
+      "text": "דְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ha": {
+      "file": "sound-ha.mp3",
+      "text": "הָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-he": {
+      "file": "sound-he.mp3",
+      "text": "הֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-hi": {
+      "file": "sound-hi.mp3",
+      "text": "הִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ho": {
+      "file": "sound-ho.mp3",
+      "text": "הֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-hu": {
+      "file": "sound-hu.mp3",
+      "text": "הֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-za": {
+      "file": "sound-za.mp3",
+      "text": "זָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ze": {
+      "file": "sound-ze.mp3",
+      "text": "זֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-zi": {
+      "file": "sound-zi.mp3",
+      "text": "זִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-zo": {
+      "file": "sound-zo.mp3",
+      "text": "זֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-zu": {
+      "file": "sound-zu.mp3",
+      "text": "זֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-z": {
+      "file": "sound-z.mp3",
+      "text": "זְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-kha": {
+      "file": "sound-kha.mp3",
+      "text": "חָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-khe": {
+      "file": "sound-khe.mp3",
+      "text": "חֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-khi": {
+      "file": "sound-khi.mp3",
+      "text": "חִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-kho": {
+      "file": "sound-kho.mp3",
+      "text": "חֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-khu": {
+      "file": "sound-khu.mp3",
+      "text": "חֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-kh": {
+      "file": "sound-kh.mp3",
+      "text": "חְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ta": {
+      "file": "sound-ta.mp3",
+      "text": "טָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-te": {
+      "file": "sound-te.mp3",
+      "text": "טֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ti": {
+      "file": "sound-ti.mp3",
+      "text": "טִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-to": {
+      "file": "sound-to.mp3",
+      "text": "טֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-tu": {
+      "file": "sound-tu.mp3",
+      "text": "טֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-t": {
+      "file": "sound-t.mp3",
+      "text": "טְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ya": {
+      "file": "sound-ya.mp3",
+      "text": "יָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ye": {
+      "file": "sound-ye.mp3",
+      "text": "יֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-yi": {
+      "file": "sound-yi.mp3",
+      "text": "יִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-yo": {
+      "file": "sound-yo.mp3",
+      "text": "יֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-yu": {
+      "file": "sound-yu.mp3",
+      "text": "יֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-y": {
+      "file": "sound-y.mp3",
+      "text": "יְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ka": {
+      "file": "sound-ka.mp3",
+      "text": "כָּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ke": {
+      "file": "sound-ke.mp3",
+      "text": "כֵּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ki": {
+      "file": "sound-ki.mp3",
+      "text": "כִּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ko": {
+      "file": "sound-ko.mp3",
+      "text": "כֹּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ku": {
+      "file": "sound-ku.mp3",
+      "text": "כֻּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-k": {
+      "file": "sound-k.mp3",
+      "text": "כְּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-la": {
+      "file": "sound-la.mp3",
+      "text": "לָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-le": {
+      "file": "sound-le.mp3",
+      "text": "לֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-li": {
+      "file": "sound-li.mp3",
+      "text": "לִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-lo": {
+      "file": "sound-lo.mp3",
+      "text": "לֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-lu": {
+      "file": "sound-lu.mp3",
+      "text": "לֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-l": {
+      "file": "sound-l.mp3",
+      "text": "לְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ma": {
+      "file": "sound-ma.mp3",
+      "text": "מָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-me": {
+      "file": "sound-me.mp3",
+      "text": "מֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-mi": {
+      "file": "sound-mi.mp3",
+      "text": "מִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-mo": {
+      "file": "sound-mo.mp3",
+      "text": "מֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-mu": {
+      "file": "sound-mu.mp3",
+      "text": "מֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-m": {
+      "file": "sound-m.mp3",
+      "text": "מְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-na": {
+      "file": "sound-na.mp3",
+      "text": "נָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ne": {
+      "file": "sound-ne.mp3",
+      "text": "נֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ni": {
+      "file": "sound-ni.mp3",
+      "text": "נִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-no": {
+      "file": "sound-no.mp3",
+      "text": "נֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-nu": {
+      "file": "sound-nu.mp3",
+      "text": "נֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-n": {
+      "file": "sound-n.mp3",
+      "text": "נְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-sa": {
+      "file": "sound-sa.mp3",
+      "text": "סָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-se": {
+      "file": "sound-se.mp3",
+      "text": "סֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-si": {
+      "file": "sound-si.mp3",
+      "text": "סִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-so": {
+      "file": "sound-so.mp3",
+      "text": "סֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-su": {
+      "file": "sound-su.mp3",
+      "text": "סֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-s": {
+      "file": "sound-s.mp3",
+      "text": "סְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-pa": {
+      "file": "sound-pa.mp3",
+      "text": "פָּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-pe": {
+      "file": "sound-pe.mp3",
+      "text": "פֵּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-pi": {
+      "file": "sound-pi.mp3",
+      "text": "פִּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-po": {
+      "file": "sound-po.mp3",
+      "text": "פֹּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-pu": {
+      "file": "sound-pu.mp3",
+      "text": "פֻּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-p": {
+      "file": "sound-p.mp3",
+      "text": "פְּ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-fa": {
+      "file": "sound-fa.mp3",
+      "text": "פָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-fe": {
+      "file": "sound-fe.mp3",
+      "text": "פֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-fi": {
+      "file": "sound-fi.mp3",
+      "text": "פִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-fo": {
+      "file": "sound-fo.mp3",
+      "text": "פֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-fu": {
+      "file": "sound-fu.mp3",
+      "text": "פֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-f": {
+      "file": "sound-f.mp3",
+      "text": "פְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-tsa": {
+      "file": "sound-tsa.mp3",
+      "text": "צָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-tse": {
+      "file": "sound-tse.mp3",
+      "text": "צֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-tsi": {
+      "file": "sound-tsi.mp3",
+      "text": "צִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-tso": {
+      "file": "sound-tso.mp3",
+      "text": "צֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-tsu": {
+      "file": "sound-tsu.mp3",
+      "text": "צֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ts": {
+      "file": "sound-ts.mp3",
+      "text": "צְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ra": {
+      "file": "sound-ra.mp3",
+      "text": "רָ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-re": {
+      "file": "sound-re.mp3",
+      "text": "רֵ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ri": {
+      "file": "sound-ri.mp3",
+      "text": "רִ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ro": {
+      "file": "sound-ro.mp3",
+      "text": "רֹ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-ru": {
+      "file": "sound-ru.mp3",
+      "text": "רֻ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-r": {
+      "file": "sound-r.mp3",
+      "text": "רְ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-sha": {
+      "file": "sound-sha.mp3",
+      "text": "שָׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-she": {
+      "file": "sound-she.mp3",
+      "text": "שֵׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-shi": {
+      "file": "sound-shi.mp3",
+      "text": "שִׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-sho": {
+      "file": "sound-sho.mp3",
+      "text": "שֹׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-shu": {
+      "file": "sound-shu.mp3",
+      "text": "שֻׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "sound-sh": {
+      "file": "sound-sh.mp3",
+      "text": "שְׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-0": {
+      "file": "number-0.mp3",
+      "text": "אֶפֶס",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-1": {
+      "file": "number-1.mp3",
+      "text": "אַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-2": {
+      "file": "number-2.mp3",
+      "text": "שְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-3": {
+      "file": "number-3.mp3",
+      "text": "שָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-4": {
+      "file": "number-4.mp3",
+      "text": "אַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-5": {
+      "file": "number-5.mp3",
+      "text": "חָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-6": {
+      "file": "number-6.mp3",
+      "text": "שֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-7": {
+      "file": "number-7.mp3",
+      "text": "שֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-8": {
+      "file": "number-8.mp3",
+      "text": "שְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-9": {
+      "file": "number-9.mp3",
+      "text": "תֵּשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-10": {
+      "file": "number-10.mp3",
+      "text": "עֶשֶׂר",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-11": {
+      "file": "number-11.mp3",
+      "text": "אַחַת עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-12": {
+      "file": "number-12.mp3",
+      "text": "שְׁתֵּים עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-13": {
+      "file": "number-13.mp3",
+      "text": "שְׁלוֹשׁ עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-14": {
+      "file": "number-14.mp3",
+      "text": "אַרְבַּע עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-15": {
+      "file": "number-15.mp3",
+      "text": "חֲמֵשׁ עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-16": {
+      "file": "number-16.mp3",
+      "text": "שֵׁשׁ עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-17": {
+      "file": "number-17.mp3",
+      "text": "שְׁבַע עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-18": {
+      "file": "number-18.mp3",
+      "text": "שְׁמוֹנֶה עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-19": {
+      "file": "number-19.mp3",
+      "text": "תְּשַׁע עֶשְׂרֵה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-20": {
+      "file": "number-20.mp3",
+      "text": "עֶשְׂרִים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-21": {
+      "file": "number-21.mp3",
+      "text": "עֶשְׂרִים וְאַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-22": {
+      "file": "number-22.mp3",
+      "text": "עֶשְׂרִים וּשְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-23": {
+      "file": "number-23.mp3",
+      "text": "עֶשְׂרִים וְשָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-24": {
+      "file": "number-24.mp3",
+      "text": "עֶשְׂרִים וְאַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-25": {
+      "file": "number-25.mp3",
+      "text": "עֶשְׂרִים וְחָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-26": {
+      "file": "number-26.mp3",
+      "text": "עֶשְׂרִים וְשֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-27": {
+      "file": "number-27.mp3",
+      "text": "עֶשְׂרִים וְשֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-28": {
+      "file": "number-28.mp3",
+      "text": "עֶשְׂרִים וּשְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-29": {
+      "file": "number-29.mp3",
+      "text": "עֶשְׂרִים וְתֵשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-30": {
+      "file": "number-30.mp3",
+      "text": "שְׁלוֹשִׁים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-31": {
+      "file": "number-31.mp3",
+      "text": "שְׁלוֹשִׁים וְאַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-32": {
+      "file": "number-32.mp3",
+      "text": "שְׁלוֹשִׁים וּשְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-33": {
+      "file": "number-33.mp3",
+      "text": "שְׁלוֹשִׁים וְשָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-34": {
+      "file": "number-34.mp3",
+      "text": "שְׁלוֹשִׁים וְאַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-35": {
+      "file": "number-35.mp3",
+      "text": "שְׁלוֹשִׁים וְחָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-36": {
+      "file": "number-36.mp3",
+      "text": "שְׁלוֹשִׁים וְשֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-37": {
+      "file": "number-37.mp3",
+      "text": "שְׁלוֹשִׁים וְשֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-38": {
+      "file": "number-38.mp3",
+      "text": "שְׁלוֹשִׁים וּשְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-39": {
+      "file": "number-39.mp3",
+      "text": "שְׁלוֹשִׁים וְתֵשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-40": {
+      "file": "number-40.mp3",
+      "text": "אַרְבָּעִים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-41": {
+      "file": "number-41.mp3",
+      "text": "אַרְבָּעִים וְאַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-42": {
+      "file": "number-42.mp3",
+      "text": "אַרְבָּעִים וּשְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-43": {
+      "file": "number-43.mp3",
+      "text": "אַרְבָּעִים וְשָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-44": {
+      "file": "number-44.mp3",
+      "text": "אַרְבָּעִים וְאַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-45": {
+      "file": "number-45.mp3",
+      "text": "אַרְבָּעִים וְחָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-46": {
+      "file": "number-46.mp3",
+      "text": "אַרְבָּעִים וְשֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-47": {
+      "file": "number-47.mp3",
+      "text": "אַרְבָּעִים וְשֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-48": {
+      "file": "number-48.mp3",
+      "text": "אַרְבָּעִים וּשְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-49": {
+      "file": "number-49.mp3",
+      "text": "אַרְבָּעִים וְתֵשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-50": {
+      "file": "number-50.mp3",
+      "text": "חֲמִשִּׁים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-51": {
+      "file": "number-51.mp3",
+      "text": "חֲמִשִּׁים וְאַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-52": {
+      "file": "number-52.mp3",
+      "text": "חֲמִשִּׁים וּשְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-53": {
+      "file": "number-53.mp3",
+      "text": "חֲמִשִּׁים וְשָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-54": {
+      "file": "number-54.mp3",
+      "text": "חֲמִשִּׁים וְאַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-55": {
+      "file": "number-55.mp3",
+      "text": "חֲמִשִּׁים וְחָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-56": {
+      "file": "number-56.mp3",
+      "text": "חֲמִשִּׁים וְשֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-57": {
+      "file": "number-57.mp3",
+      "text": "חֲמִשִּׁים וְשֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-58": {
+      "file": "number-58.mp3",
+      "text": "חֲמִשִּׁים וּשְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-59": {
+      "file": "number-59.mp3",
+      "text": "חֲמִשִּׁים וְתֵשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-60": {
+      "file": "number-60.mp3",
+      "text": "שִׁשִּׁים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-61": {
+      "file": "number-61.mp3",
+      "text": "שִׁשִּׁים וְאַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-62": {
+      "file": "number-62.mp3",
+      "text": "שִׁשִּׁים וּשְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-63": {
+      "file": "number-63.mp3",
+      "text": "שִׁשִּׁים וְשָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-64": {
+      "file": "number-64.mp3",
+      "text": "שִׁשִּׁים וְאַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-65": {
+      "file": "number-65.mp3",
+      "text": "שִׁשִּׁים וְחָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-66": {
+      "file": "number-66.mp3",
+      "text": "שִׁשִּׁים וְשֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-67": {
+      "file": "number-67.mp3",
+      "text": "שִׁשִּׁים וְשֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-68": {
+      "file": "number-68.mp3",
+      "text": "שִׁשִּׁים וּשְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-69": {
+      "file": "number-69.mp3",
+      "text": "שִׁשִּׁים וְתֵשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-70": {
+      "file": "number-70.mp3",
+      "text": "שִׁבְעִים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-71": {
+      "file": "number-71.mp3",
+      "text": "שִׁבְעִים וְאַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-72": {
+      "file": "number-72.mp3",
+      "text": "שִׁבְעִים וּשְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-73": {
+      "file": "number-73.mp3",
+      "text": "שִׁבְעִים וְשָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-74": {
+      "file": "number-74.mp3",
+      "text": "שִׁבְעִים וְאַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-75": {
+      "file": "number-75.mp3",
+      "text": "שִׁבְעִים וְחָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-76": {
+      "file": "number-76.mp3",
+      "text": "שִׁבְעִים וְשֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-77": {
+      "file": "number-77.mp3",
+      "text": "שִׁבְעִים וְשֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-78": {
+      "file": "number-78.mp3",
+      "text": "שִׁבְעִים וּשְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-79": {
+      "file": "number-79.mp3",
+      "text": "שִׁבְעִים וְתֵשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-80": {
+      "file": "number-80.mp3",
+      "text": "שְׁמוֹנִים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-81": {
+      "file": "number-81.mp3",
+      "text": "שְׁמוֹנִים וְאַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-82": {
+      "file": "number-82.mp3",
+      "text": "שְׁמוֹנִים וּשְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-83": {
+      "file": "number-83.mp3",
+      "text": "שְׁמוֹנִים וְשָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-84": {
+      "file": "number-84.mp3",
+      "text": "שְׁמוֹנִים וְאַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-85": {
+      "file": "number-85.mp3",
+      "text": "שְׁמוֹנִים וְחָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-86": {
+      "file": "number-86.mp3",
+      "text": "שְׁמוֹנִים וְשֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-87": {
+      "file": "number-87.mp3",
+      "text": "שְׁמוֹנִים וְשֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-88": {
+      "file": "number-88.mp3",
+      "text": "שְׁמוֹנִים וּשְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-89": {
+      "file": "number-89.mp3",
+      "text": "שְׁמוֹנִים וְתֵשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-90": {
+      "file": "number-90.mp3",
+      "text": "תִּשְׁעִים",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-91": {
+      "file": "number-91.mp3",
+      "text": "תִּשְׁעִים וְאַחַת",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-92": {
+      "file": "number-92.mp3",
+      "text": "תִּשְׁעִים וּשְׁתַּיִם",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-93": {
+      "file": "number-93.mp3",
+      "text": "תִּשְׁעִים וְשָׁלוֹשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-94": {
+      "file": "number-94.mp3",
+      "text": "תִּשְׁעִים וְאַרְבַּע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-95": {
+      "file": "number-95.mp3",
+      "text": "תִּשְׁעִים וְחָמֵשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-96": {
+      "file": "number-96.mp3",
+      "text": "תִּשְׁעִים וְשֵׁשׁ",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-97": {
+      "file": "number-97.mp3",
+      "text": "תִּשְׁעִים וְשֶׁבַע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-98": {
+      "file": "number-98.mp3",
+      "text": "תִּשְׁעִים וּשְׁמוֹנֶה",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-99": {
+      "file": "number-99.mp3",
+      "text": "תִּשְׁעִים וְתֵשַׁע",
+      "voice": "he-IL-HilaNeural"
+    },
+    "number-100": {
+      "file": "number-100.mp3",
+      "text": "מֵאָה",
+      "voice": "he-IL-HilaNeural"
+    }
+  }
 }
