@@ -49,3 +49,12 @@ Give the item a `pronunciation` in the Content Bank's data (`src/content/data/`)
 ### Replace a clip with your own file
 
 Delete the item's old file from `public/voice/`, put yours there under the same identity (`word-apple.wav`, `.mp3`, `.m4a`, `.ogg`, ...) and run `npm run voice-clips`: it takes the file into the manifest and generates nothing. Two files for one identity are refused. Regenerating that identity later replaces your file with a generated one.
+
+### Beyond what #10 asked for
+
+The script does a little more than generate missing clips and regenerate listed ones. Each is kept on purpose:
+
+- **Adopts dropped-in files** into the manifest: so a hand-made clip needs no manual manifest edit.
+- **Refuses two files for one identity** before generating anything: otherwise which one plays would be a guess.
+- **Drops manifest entries for items no longer in the Content Bank**, keeping their files: the manifest stays exactly the spoken items, and nothing you made is deleted.
+- **Reports clips made from text that has changed since**, with the command to regenerate them: a new pronunciation override is never silently ignored, and never costs a request on its own.

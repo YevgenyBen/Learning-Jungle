@@ -133,6 +133,17 @@ Paths are relative to `src/`. The rabbit's model is `games/rabbit/model.ts`, its
 | Draw order: sky, hills, ground, tiles, dust, rabbit, sign (L912-925) | ported | `drawMeadow`; the sign is DOM above the canvas |
 | Red tile for a wrong letter (L752) | deliberate change | wrong letters aren't collected (ADR-0005): a grey, shaking tile instead |
 
+## Deliberate additions beyond the spec
+
+Kept on purpose, though spec #1 doesn't ask for them:
+
+| Addition | Where | Why it stays |
+|---|---|---|
+| Space (the main action) resumes a pause, as in the prototype (L970-972) | `GameFrame.tsx` (`main` while paused) | A keyboard Player resumes with the key they already play with, without finding "המשך" |
+| N switches Niqqud on or off, D moves on to the next Difficulty | `frame/frameKeys.ts` | A Parent at a keyboard can change the settings without the mouse; no Game uses N or D |
+| Integrity test: every Plain Spelling is its Voweled Spelling's letters with only ו and י added | `content/bank.test.ts` | Stricter than the glossary's "not simply the marks removed": it catches a Word whose two spellings disagree on a letter, a typo the Player would see |
+| The Voice Clip script adopts dropped-in files, drops entries for removed items, refuses two files for one identity, and reports clips made from changed text | `scripts/voice-clips/` | See README.md, "Generating Voice Clips" |
+
 ## Covered by tests
 
 - Seam 1 (`games/rabbit/model.test.ts`): the rules above marked tested, including landing dust.
