@@ -1,17 +1,24 @@
 import { describe, expect, it } from "vitest";
 import { contentBank, type ContentBank } from "@/content";
-import type { GameRequest } from "../contract";
+import type { GameRequest, GameSettings } from "../contract";
 import { seededRandom } from "../random";
-import { createRabbitModel, type RabbitModel, type RabbitState, type Tile, WORLD } from "./model";
+import {
+  createRabbitModel,
+  type RabbitDifficulty,
+  type RabbitModel,
+  type RabbitState,
+  type Tile,
+  WORLD,
+} from "./model";
 import { rabbitTestDriver } from "./testDriver";
 
 // Seam 1: the rabbit Game Model, driven only by Player actions and time.
 
 const STEP = 1 / 60;
 
-function create(seed = 1): RabbitModel {
+function create(seed = 1, settings: Partial<GameSettings<RabbitDifficulty>> = {}): RabbitModel {
   return createRabbitModel({
-    settings: { niqqud: true, difficulty: "automatic" },
+    settings: { niqqud: true, difficulty: "automatic", ...settings },
     content: contentBank,
     random: seededRandom(seed),
   });
@@ -432,5 +439,174 @@ describe("jumping", () => {
     run(model, 2);
     expect(model.state().rabbit.onGround).toBe(true);
     expect(model.state().rabbit.y).toBe(WORLD.ground);
+  });
+});
+
+describe("automatic speed", () => {
+  /** Completes a Word and lets its Celebration play out. */
+  const playWord = (model: RabbitModel) => {
+    completeWord(model);
+    return waitOutCelebration(model);
+  };
+
+  it("starts slow and rises one step after the second completed Word, easing in after the Celebration", () => {
+    const model = create(11);
+    expect(model.state().speed).toBe(170);
+    playWord(model);
+    run(model, 3);
+    expect(model.state().speed).toBe(170);
+
+    const complete = completeWord(model);
+    expect(complete.speed).toBe(170);
+    const after = waitOutCelebration(model);
+    // Frozen during the Celebration, then eased in rather than jumped to.
+    expect(after.speed).toBeLessThan(171);
+    run(model, 0.3);
+    expect(model.state().speed).toBeGreaterThan(170);
+    expect(model.state().speed).toBeLessThan(200);
+    run(model, 1);
+    expect(model.state().speed).toBe(200);
+  });
+
+  it("never rises with time or distance alone", () => {
+    const model = create(2);
+    run(model, 90);
+    expect(model.state().distance).toBeGreaterThan(10_000);
+    expect(model.state().speed).toBe(170);
+  });
+
+  it("carries into another Round, which starts afresh with the next Word", () => {
+    const model = create(11);
+    const seen = [0, 1, 2].map(() => {
+      const word = model.state().challenge.word.id;
+      playWord(model);
+      return word;
+    });
+    expect(model.state().roundOver).toBe(true);
+    expect(model.state().speed).toBe(200);
+
+    model.nextRound();
+    const state = model.state();
+    expect(state.roundOver).toBe(false);
+    expect(state.celebration).toBeNull();
+    expect(state.progress).toEqual({ completed: 0, total: 3 });
+    expect(state.challenge.next).toBe(0);
+    expect(seen).not.toContain(state.challenge.word.id);
+    expect(state.speed).toBe(200);
+
+    // The fourth Word completed since the start brings the next step.
+    playWord(model);
+    run(model, 1);
+    expect(model.state().speed).toBe(230);
+  });
+
+  it("caps at fast", () => {
+    const model = create(4);
+    const speeds: number[] = [];
+    for (let word = 0; word < 18; word++) {
+      if (playWord(model).roundOver) model.nextRound();
+      run(model, 1);
+      speeds.push(model.state().speed);
+    }
+    expect(speeds).toEqual([
+      170, 200, 200, 230, 230, 260, 260, 290, 290, 320, 320, 350, 350, 380, 380, 400, 400, 400,
+    ]);
+  });
+
+  it("is announced on the Celebration sign of each Word that brings a rise, and only then", () => {
+    const model = create(4);
+    const announced: boolean[] = [];
+    for (let word = 0; word < 18; word++) {
+      announced.push(completeWord(model).celebrated!.speedRising);
+      if (waitOutCelebration(model).roundOver) model.nextRound();
+    }
+    const rises = announced.flatMap((rising, i) => (rising ? [i + 1] : []));
+    expect(rises).toEqual([2, 4, 6, 8, 10, 12, 14, 16]);
+  });
+});
+
+describe("fixed speeds", () => {
+  for (const [difficulty, speed] of [
+    ["slow", 170],
+    ["medium", 280],
+    ["fast", 400],
+  ] as const) {
+    it(`${difficulty} never changes on its own and is never announced`, () => {
+      const model = create(4, { difficulty });
+      expect(model.state().speed).toBe(speed);
+      for (let word = 0; word < 6; word++) {
+        expect(completeWord(model).celebrated!.speedRising).toBe(false);
+        if (waitOutCelebration(model).roundOver) model.nextRound();
+        run(model, 1);
+        expect(model.state().speed).toBe(speed);
+      }
+    });
+  }
+});
+
+describe("Niqqud", () => {
+  const tomato = contentBank.words().find((w) => w.id === "word-tomato")!;
+  /** A model whose every Challenge is the tomato. */
+  const tomatoModel = (niqqud: boolean) =>
+    createRabbitModel({
+      settings: { niqqud, difficulty: "automatic" },
+      content: { ...contentBank, words: () => [tomato] },
+      random: seededRandom(1),
+    });
+  const letters = (state: RabbitState) => state.challenge.letters.map((l) => l.letter).join("");
+
+  it("on: the Challenge is the Voweled Spelling, and עַגְבָנִיָּה gives six letters", () => {
+    const { challenge } = tomatoModel(true).state();
+    expect(challenge.text).toBe("עַגְבָנִיָּה");
+    expect(challenge.letters.map((l) => l.letter)).toEqual(["ע", "ג", "ב", "נ", "י", "ה"]);
+    expect(challenge.letters.map((l) => l.marked)).toEqual(["עַ", "גְ", "בָ", "נִ", "יָּ", "ה"]);
+  });
+
+  it("off: the Challenge is the Plain Spelling, and עגבנייה gives seven letters", () => {
+    const { challenge } = tomatoModel(false).state();
+    expect(challenge.text).toBe("עגבנייה");
+    expect(challenge.letters.map((l) => l.letter)).toEqual(["ע", "ג", "ב", "נ", "י", "י", "ה"]);
+    expect(challenge.letters.map((l) => l.marked)).toEqual(["ע", "ג", "ב", "נ", "י", "י", "ה"]);
+  });
+
+  it("a change applies from the next Challenge, not to the Word being built", () => {
+    const model = tomatoModel(true);
+    jumpUnder(model, waitForTile(model, (t, s) => t.letter === neededLetter(s)).id);
+    model.configure({ niqqud: false });
+    expect(model.state().challenge.text).toBe("עַגְבָנִיָּה");
+    expect(model.state().challenge.next).toBe(1);
+
+    const complete = completeWord(model);
+    expect(complete.celebrated?.text).toBe("עַגְבָנִיָּה");
+    const next = waitOutCelebration(model);
+    expect(next.challenge.text).toBe("עגבנייה");
+    expect(letters(next)).toBe("עגבנייה");
+
+    model.configure({ niqqud: true });
+    completeWord(model);
+    expect(letters(waitOutCelebration(model))).toBe("עגבניה");
+  });
+});
+
+describe("changing the Difficulty of a running Game", () => {
+  it("a fixed speed applies at once, also from another fixed speed", () => {
+    const model = create(2);
+    run(model, 2);
+    model.configure({ difficulty: "fast" });
+    expect(model.state().speed).toBe(400);
+    model.configure({ difficulty: "medium" });
+    expect(model.state().speed).toBe(280);
+    run(model, 5);
+    expect(model.state().speed).toBe(280);
+  });
+
+  it("automatic eases from the current speed toward the speed the completed Words have earned", () => {
+    const model = create(2, { difficulty: "fast" });
+    model.configure({ difficulty: "automatic" });
+    run(model, 1);
+    expect(model.state().speed).toBeLessThan(400);
+    expect(model.state().speed).toBeGreaterThan(300);
+    run(model, 10);
+    expect(model.state().speed).toBe(170);
   });
 });

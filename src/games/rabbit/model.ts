@@ -8,7 +8,7 @@
  * from the bunny-hop.html prototype.
  */
 import type { Letter, SpelledLetter, Word } from "@/content";
-import type { CreateGameModel, GameModel, GameRequest, GameState } from "../contract";
+import type { CreateGameModel, GameModel, GameRequest, GameSettings, GameState } from "../contract";
 import { between, pick, shuffled, type Random } from "../random";
 
 export const WORLD = {
@@ -53,7 +53,13 @@ const CELEBRATION_SHOWN = 2.6; // s
 /** After this many wrong letters in one Challenge, the Hint highlights the needed letter. */
 const HINT_AFTER_MISTAKES = 2;
 
-export const SPEEDS ={ slow: 170, medium: 280, fast: 400 } as const; // px/s
+export const SPEEDS = { slow: 170, medium: 280, fast: 400 } as const; // px/s
+
+/** Automatic speed rises this much after every WORDS_PER_SPEED_STEP completed Words, up to fast. */
+const AUTO_SPEED_STEP = 30; // px/s
+const WORDS_PER_SPEED_STEP = 2;
+/** Automatic speed eases toward its target at most this fast. */
+const AUTO_SPEED_EASING = 40; // px/s per second
 
 export type RabbitDifficulty = "automatic" | keyof typeof SPEEDS;
 export const RABBIT_DIFFICULTIES: readonly RabbitDifficulty[] = ["automatic", "slow", "medium", "fast"];
@@ -88,6 +94,8 @@ export interface CelebratedWord {
   readonly since: number;
   /** Where the rabbit's feet were when it completed the Word: the star burst starts there. */
   readonly rabbitY: number;
+  /** Automatic speed is about to rise after this Celebration: the sign says so. */
+  readonly speedRising: boolean;
 }
 
 export interface RabbitState extends GameState {
@@ -140,7 +148,13 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
   random,
 }) => {
   const decoys = content.letters().filter((l) => !l.final);
-  const speed = settings.difficulty === "automatic" ? SPEEDS.slow : SPEEDS[settings.difficulty];
+  /** The settings in force; configure() changes them on the running model. */
+  let current: GameSettings<RabbitDifficulty> = { niqqud: settings.niqqud, difficulty: settings.difficulty };
+  let speed: number = current.difficulty === "automatic" ? SPEEDS.slow : SPEEDS[current.difficulty];
+  /** Words completed since the model was made: automatic speed follows these. */
+  let wordsDone = 0;
+  const autoSpeed = () =>
+    Math.min(SPEEDS.fast, SPEEDS.slow + AUTO_SPEED_STEP * Math.floor(wordsDone / WORDS_PER_SPEED_STEP));
   const words = createWordBag(content.words(), random);
 
   let time = 0;
@@ -169,7 +183,7 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
 
   function startChallenge(): void {
     word = words.next();
-    const spelling = content.spelling(word, settings);
+    const spelling = content.spelling(word, current);
     text = spelling.text;
     letters = spelling.letters;
     next = 0;
@@ -238,13 +252,15 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
       return;
     }
     completed++;
+    wordsDone++;
     // The Challenge has ended, and its Hint with it.
     mistakes = 0;
     emit({ kind: "say", item: word, interrupt: false });
     emit({ kind: "sound", effect: "challenge-complete" });
     emit({ kind: "celebrate", celebration: "challenge" });
     celebrating = CELEBRATION_PAUSE;
-    celebrated = { word, text, number: completed, since: 0, rabbitY: rabbit.y };
+    const speedRising = current.difficulty === "automatic" && autoSpeed() > speed + 1;
+    celebrated = { word, text, number: completed, since: 0, rabbitY: rabbit.y, speedRising };
   }
 
   /** After a Word's Celebration: the next Word, or the end of the Round. */
@@ -267,6 +283,11 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     if (celebrating > 0) {
       celebrating = Math.max(0, celebrating - dt);
       if (celebrating === 0) endChallenge();
+    }
+    // Automatic speed changes only between Celebrations, easing toward its target.
+    if (current.difficulty === "automatic" && playing()) {
+      const target = autoSpeed();
+      speed += Math.max(-AUTO_SPEED_EASING * dt, Math.min(AUTO_SPEED_EASING * dt, target - speed));
     }
     const dx = speed * dt;
     distance += dx;
@@ -345,6 +366,26 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
       const taken = requests;
       requests = [];
       return taken;
+    },
+    nextRound: () => {
+      if (!roundOver) return;
+      // A fresh meadow and the next Word; speed and the Word bag carry on.
+      roundOver = false;
+      completed = 0;
+      mistakes = 0;
+      celebrated = null;
+      tiles = [];
+      spawnCursor = WORLD.width + 220;
+      jumpBuffer = 0;
+      startChallenge();
+    },
+    configure: (changes) => {
+      if (changes.niqqud !== undefined) current = { ...current, niqqud: changes.niqqud };
+      const difficulty = RABBIT_DIFFICULTIES.find((d) => d === changes.difficulty);
+      if (difficulty === undefined) return;
+      current = { ...current, difficulty };
+      // A fixed speed applies at once; automatic eases from here toward what the Words have earned.
+      if (difficulty !== "automatic") speed = SPEEDS[difficulty];
     },
   };
 };

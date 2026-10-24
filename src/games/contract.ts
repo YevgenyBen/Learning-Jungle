@@ -9,9 +9,11 @@
  *   driven by      act(PlayerAction), advance(seconds)
  *   exposes        state()            for drawing and for the test hook
  *   emits          takeRequests()     say / sound / celebrate
+ *   changed by     configure(settings), nextRound()
  *
  * Pause is the Game Frame not calling advance(). Restart is creating a
- * fresh model with the same settings.
+ * fresh model with the same settings. "Another Round" is nextRound() on
+ * the same model, so what the Game adjusted to the Player carries on.
  */
 import type { ContentBank, SpokenItem } from "@/content";
 import type { Random } from "./random";
@@ -73,6 +75,18 @@ export interface GameModel<S extends GameState = GameState> {
   advance(seconds: number): void;
   /** The requests emitted since the last call, oldest first. */
   takeRequests(): GameRequest[];
+  /**
+   * Starts another Round on this model once the Round is over. What the
+   * Game has learnt about the Player (the rabbit's automatic speed) carries
+   * on, and so do the Words already shown. A restart makes a fresh model
+   * instead, which carries nothing on.
+   */
+  nextRound(): void;
+  /**
+   * Changes settings on the running model: Difficulty applies at once,
+   * Niqqud from the next Challenge.
+   */
+  configure(settings: Partial<GameSettings>): void;
 }
 
 export interface GameModelDeps<D extends string = string> {

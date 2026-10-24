@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { contentBank } from "@/content";
-import type { GameModel, GameRequest, GameState, PlayerAction } from "@/games/contract";
+import type { GameModel, GameRequest, GameSettings, GameState, PlayerAction } from "@/games/contract";
 import type { GameDefinition } from "@/games/definition";
 import { createSoundEffects } from "@/sound/soundEffects";
 import { FrameControls } from "./FrameControls";
@@ -14,7 +14,9 @@ import styles from "./GameFrame.module.css";
 import { createBrowserVoicePlayer, type VoicePlayerWithLog } from "@/voice/voicePlayer";
 import { createGameOutput, type GameOutput } from "./output";
 import { PauseScreen } from "./PauseScreen";
+import { usePreferences, type Preferences } from "./preferences";
 import { RoundCelebration, useRoundOver } from "./RoundCelebration";
+import { SettingsControls } from "./SettingsControls";
 import { installTestHook } from "./testHook";
 
 /** Longest time step per frame, so a stalled tab doesn't make the Game leap ahead. */
@@ -43,9 +45,16 @@ interface RunningGame<S extends GameState> {
   sync(): void;
 }
 
-function startGame<S extends GameState>(game: GameDefinition<S, string>, output: GameOutput, run: number) {
+const settingsOf = ({ niqqud, difficulty }: Preferences): GameSettings => ({ niqqud, difficulty });
+
+function startGame<S extends GameState>(
+  game: GameDefinition<S, string>,
+  output: GameOutput,
+  run: number,
+  settings: GameSettings,
+) {
   const model = game.createModel({
-    settings: { niqqud: true, difficulty: game.difficulties[0] },
+    settings,
     content: contentBank,
     random: Math.random,
   });
@@ -72,7 +81,9 @@ function startGame<S extends GameState>(game: GameDefinition<S, string>, output:
  * The Game Frame: the shared surround of every Game. It creates the Game's
  * model, runs time (or not, while paused), turns keys, taps and clicks into
  * Player actions, hands the Game's View the model's state, carries out the
- * model's requests, and holds the controls: back, pause, restart, mute.
+ * model's requests, and holds the controls: back, pause, restart, mute,
+ * Niqqud and Difficulty, remembering mute, Niqqud and Difficulty on the
+ * device.
  */
 export function GameFrame<S extends GameState>({ game, name, backHref }: GameFrameProps<S>) {
   const router = useRouter();
@@ -82,13 +93,27 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
   // made while prerendering the page would not match the browser's.
   const [running, setRunning] = useState<RunningGame<S> | null>(null);
   const [paused, setPaused] = useState(false);
-  const [muted, setMuted] = useState(false);
+  // Mute, Niqqud and Difficulty, as remembered on this device (null until read).
+  const [preferences, changePreferences] = usePreferences(game.id, game.difficulties);
+  const muted = preferences?.muted ?? false;
+  const loaded = preferences !== null;
+  const latestPreferences = useRef(preferences);
+  useEffect(() => {
+    latestPreferences.current = preferences;
+  });
 
   useEffect(() => {
-    setRunning(startGame(game, output, 0));
+    if (!loaded) return;
+    setRunning(startGame(game, output, 0, settingsOf(latestPreferences.current!)));
     return () => output.silence();
-  }, [game, output]);
+  }, [game, output, loaded]);
   useEffect(() => output.setMuted(muted), [output, muted]);
+  // A change of Niqqud or Difficulty applies to the running model.
+  const niqqud = preferences?.niqqud;
+  const difficulty = preferences?.difficulty;
+  useEffect(() => {
+    if (niqqud !== undefined && difficulty !== undefined) running?.model.configure({ niqqud, difficulty });
+  }, [running, niqqud, difficulty]);
   // Pausing lets go of a held main action and cuts off sound in progress.
   useEffect(() => {
     if (!paused) return;
@@ -96,13 +121,30 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
     output.silence();
   }, [paused, running, output]);
 
+  // Restart makes a fresh model: nothing the Game adjusted to the Player carries on.
   const restart = () => {
+    if (!preferences) return;
     output.silence();
-    setRunning((current) => startGame(game, output, (current?.run ?? 0) + 1));
+    const settings = settingsOf(preferences);
+    setRunning((current) => startGame(game, output, (current?.run ?? 0) + 1, settings));
+    setPaused(false);
+  };
+  // Another Round goes on with the same model, so automatic Difficulty carries on.
+  const anotherRound = () => {
+    if (!running) return;
+    output.silence();
+    running.model.nextRound();
+    running.sync();
     setPaused(false);
   };
   const togglePause = () => setPaused((p) => !p);
-  const toggleMute = () => setMuted((m) => !m);
+  const toggleMute = () => changePreferences((p) => ({ muted: !p.muted }));
+  const toggleNiqqud = () => changePreferences((p) => ({ niqqud: !p.niqqud }));
+  const nextDifficulty = () =>
+    changePreferences((p) => {
+      const options = game.difficulties;
+      return { difficulty: options[(options.indexOf(p.difficulty) + 1) % options.length] };
+    });
   const act = (action: PlayerAction) => {
     if (!paused) running?.model.act(action);
   };
@@ -125,6 +167,8 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
         if (!roundOver) restart();
       },
       toggleMute,
+      toggleNiqqud,
+      nextDifficulty,
     },
     game.mainActionKeys,
   );
@@ -151,11 +195,20 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
         onRestart={restart}
         muted={muted}
         onMute={toggleMute}
+        settings={
+          <SettingsControls
+            control={game.difficultyControl}
+            niqqud={preferences?.niqqud ?? true}
+            onNiqqud={toggleNiqqud}
+            difficulty={preferences?.difficulty ?? game.difficulties[0]}
+            onDifficulty={nextDifficulty}
+          />
+        }
       />
       <div className={styles.stage}>
         {running && <Play key={running.run} game={game} running={running} paused={paused} />}
         {paused && !roundOver && <PauseScreen onResume={() => setPaused(false)} />}
-        {roundOver && <RoundCelebration onAnotherRound={restart} onBack={() => router.push(backHref)} />}
+        {roundOver && <RoundCelebration onAnotherRound={anotherRound} onBack={() => router.push(backHref)} />}
       </div>
     </main>
   );
