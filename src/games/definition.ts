@@ -27,12 +27,21 @@ export interface TestDriver<S extends GameState> {
   solveStep(model: GameModel<S>): void;
 }
 
+/** How the Game Frame's Difficulty control names the Game's Difficulty and each option. */
+export interface DifficultyControl<D extends string> {
+  /** What Difficulty is in this Game, e.g. "מהירות" (speed) for the rabbit. */
+  readonly label: string;
+  /** Each option's name, and an icon that stands for it where labels are hidden. */
+  readonly options: Readonly<Record<D, { readonly name: string; readonly icon: string }>>;
+}
+
 export interface GameDefinition<S extends GameState = GameState, D extends string = string> {
   /** Same id as the Game's catalog entry and route (/games/<id>). */
   readonly id: string;
   readonly createModel: CreateGameModel<S, D>;
   /** The Game's Difficulty options; the first is the default ("automatic"). */
   readonly difficulties: readonly D[];
+  readonly difficultyControl: DifficultyControl<D>;
   /** Draws the state. Pointer input on it is handled by the Game Frame. */
   readonly View: ComponentType<GameViewProps<S>>;
   /**

@@ -65,7 +65,7 @@ function WordBar({ frames }: { frames: Frames<RabbitState> }) {
 }
 
 /** The Word whose sign is up, if any. */
-type Sign = Pick<CelebratedWord, "word" | "text" | "number"> | null;
+type Sign = Pick<CelebratedWord, "word" | "text" | "number" | "speedRising"> | null;
 const selectSign = (state: RabbitState): Sign =>
   state.celebrated && state.celebrated.since < SIGN_SECONDS ? state.celebrated : null;
 const sameSign = (a: Sign, b: Sign) => a?.number === b?.number;
@@ -78,6 +78,7 @@ function CelebrationSign({ frames }: { frames: Frames<RabbitState> }) {
     <div key={sign.number} className={styles.sign} data-testid="celebration-sign">
       <WordPicture word={sign.word} className={styles.signPicture} />
       <span className={styles.signWord}>{sign.text}</span>
+      {sign.speedRising && <span className={styles.signNote}>מהירות עולה!</span>}
     </div>
   );
 }
