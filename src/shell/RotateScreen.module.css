@@ -1,0 +1,72 @@
+.rotate {
+  display: none;
+}
+
+/* A phone or tablet (coarse pointer) held upright. */
+@media (orientation: portrait) and (pointer: coarse) {
+  .rotate {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-5);
+    padding: var(--space-5);
+    background: var(--color-panel);
+    color: var(--color-ink);
+    touch-action: none;
+  }
+}
+
+.picture {
+  width: min(70vw, 50vh);
+  height: auto;
+}
+
+.device {
+  fill: var(--color-sky);
+  stroke: var(--color-line);
+  stroke-width: 6;
+  transform-origin: 100px 90px;
+  animation: turn 2.4s ease-in-out infinite;
+}
+
+.device circle {
+  fill: var(--color-line);
+  stroke: none;
+}
+
+.arrow,
+.arrowHead {
+  fill: none;
+  stroke: var(--color-carrot);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.message {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 8vw, 56px);
+  line-height: 1.1;
+  text-align: center;
+}
+
+@keyframes turn {
+  0%,
+  25% {
+    transform: rotate(0deg);
+  }
+  60%,
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .device {
+    animation: none;
+  }
+}

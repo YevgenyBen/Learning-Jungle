@@ -1,0 +1,57 @@
+/*
+ * Design tokens. Every colour, font, size and spacing value in a CSS Module
+ * should come from here (var(--…)), so the whole app can be restyled in one
+ * place. The palette follows the prototype's meadow look.
+ */
+:root {
+  /* Colours */
+  --color-page: #e6f1ea;
+  --color-panel: #fbfdf9;
+  --color-ink: #22302a;
+  --color-ink-soft: #4d5f56;
+  --color-line: #22302a;
+  --color-sky: #9fd3ec;
+  --color-grass: #5aa34a;
+  --color-carrot: #e8742b;
+  --color-sun: #f5c542;
+  --color-berry: #c94f7c;
+  --color-unavailable: #c9d3cd;
+  --color-unavailable-ink: #7d8a83;
+  --color-focus: #1f6fd1;
+
+  /* Subjects get their own bright colour */
+  --color-subject-hebrew: var(--color-carrot);
+  --color-subject-math: #3f8fd8;
+
+  /* Fonts (the families are loaded by next/font in the root layout) */
+  --font-display: var(--font-secular-one), "Arial Hebrew", "Segoe UI", sans-serif;
+  --font-body: var(--font-assistant), "Segoe UI", Arial, sans-serif;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Shapes */
+  --radius-s: 8px;
+  --radius-m: 16px;
+  --radius-l: 28px;
+  --border-width: 3px;
+
+  /* Sizes: nothing a finger presses is smaller than --touch-min */
+  --touch-min: 64px;
+  --icon-choice: clamp(120px, 26vmin, 220px);
+  --focus-ring: 6px;
+
+  /* Respect notches and rounded corners on phones */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  color-scheme: light;
+}
