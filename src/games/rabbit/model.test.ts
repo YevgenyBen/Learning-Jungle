@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { contentBank } from "@/content";
+import { contentBank, type ContentBank } from "@/content";
 import type { GameRequest } from "../contract";
 import { seededRandom } from "../random";
 import { createRabbitModel, type RabbitModel, type RabbitState, type Tile, WORLD } from "./model";
+import { rabbitTestDriver } from "./testDriver";
 
 // Seam 1: the rabbit Game Model, driven only by Player actions and time.
 
@@ -161,6 +162,48 @@ describe("collecting letters", () => {
     const { word, text, letters } = model.state().challenge;
     expect(text).toBe(word.voweled);
     expect(letters).toEqual(contentBank.spelling(word, { niqqud: true }).letters);
+  });
+});
+
+describe("the Words of a Challenge", () => {
+  /** The Content Bank, with only these Words in it. */
+  const bankOf = (...ids: string[]): ContentBank => ({
+    ...contentBank,
+    words: () => contentBank.words().filter((w) => ids.includes(w.id)),
+  });
+
+  /** Plays until `count` Words are completed, returning them in order (as said aloud). */
+  const wordsPlayed = (model: RabbitModel, count: number): string[] => {
+    const said: string[] = [];
+    while (said.length < count) {
+      rabbitTestDriver.solveStep(model);
+      for (const r of model.takeRequests()) {
+        if (r.kind === "say" && r.item.id.startsWith("word-")) said.push(r.item.id);
+      }
+    }
+    return said;
+  };
+
+  it("come from the whole Content Bank", () => {
+    const ids = new Set(contentBank.words().map((w) => w.id));
+    for (let seed = 1; seed <= 20; seed++) {
+      expect(ids).toContain(create(seed).state().challenge.word.id);
+    }
+    const firsts = new Set(Array.from({ length: 20 }, (_, i) => create(i + 1).state().challenge.word.id));
+    expect(firsts.size).toBeGreaterThan(10);
+  });
+
+  it("don't repeat until the other Words have appeared, even when every Word has been used", () => {
+    for (let seed = 1; seed <= 12; seed++) {
+      const model = createRabbitModel({
+        settings: { niqqud: true, difficulty: "automatic" },
+        content: bankOf("word-fish", "word-turtle"),
+        random: seededRandom(seed),
+      });
+      const [first, second, third] = wordsPlayed(model, 3);
+      expect(second, `seed ${seed}`).not.toBe(first);
+      expect(third, `seed ${seed}`).not.toBe(second);
+    }
   });
 });
 
