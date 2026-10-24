@@ -12,7 +12,7 @@ test.describe("Menus by touch or mouse", () => {
   });
 
   for (const subject of [
-    { name: "עברית", games: ["ארנב קופץ", "האות הראשונה"], available: ["ארנב קופץ"] },
+    { name: "עברית", games: ["ארנב קופץ", "האות הראשונה"], available: ["ארנב קופץ", "האות הראשונה"] },
     { name: "חשבון", games: ["ספירה", "חיבור"], available: [] as string[] },
   ]) {
     test(`${subject.name} opens its Subject Menu, and back returns Home`, async ({ page }) => {
@@ -37,14 +37,14 @@ test.describe("Menus by touch or mouse", () => {
 
   test("an unavailable Game does nothing when chosen", async ({ page }) => {
     await page.goto("/home");
-    await press(entry(page, "עברית"));
-    await expect(page.getByRole("heading", { name: "עברית" })).toBeVisible();
+    await press(entry(page, "חשבון"));
+    await expect(page.getByRole("heading", { name: "חשבון" })).toBeVisible();
     const menuUrl = page.url();
 
-    await press(entry(page, "האות הראשונה"), { force: true });
+    await press(entry(page, "ספירה"), { force: true });
     await page.waitForTimeout(500);
     expect(page.url()).toBe(menuUrl);
-    await expect(page.getByRole("heading", { name: "עברית" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "חשבון" })).toBeVisible();
   });
 
   for (const path of ["/home", "/subjects/hebrew"]) {

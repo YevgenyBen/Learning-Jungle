@@ -7,7 +7,7 @@
 import type { ComponentType } from "react";
 import type { Ticks } from "@/frame/ticks";
 import type { SubjectId } from "@/menus/catalog";
-import type { CreateGameModel, GameModel, GameState } from "./contract";
+import type { CreateGameModel, GameModel, GameState, PlayerAction } from "./contract";
 
 export interface GameViewProps<S extends GameState> {
   /**
@@ -15,6 +15,12 @@ export interface GameViewProps<S extends GameState> {
    * `ticks.subscribe`; show DOM parts with `useTickSelector`.
    */
   readonly ticks: Ticks<S>;
+  /**
+   * Hands the model a Player action from the View's own controls, such as
+   * a tapped Choice ("pick"); ignored while paused. Presses on the rest of
+   * the play area are the main action, which the Game Frame sends itself.
+   */
+  readonly act: (action: PlayerAction) => void;
 }
 
 /**

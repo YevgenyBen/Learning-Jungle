@@ -26,6 +26,6 @@ describe("the Menu catalog", () => {
   it("can be played only where a Game is registered; planned Games show as unavailable", () => {
     expect(availableGames().map(({ game }) => game.id)).toEqual(registeredGames().map((game) => game.id));
     const planned = SUBJECTS.flatMap((subject) => subject.games).filter((entry) => !entry.available);
-    expect(planned.map((entry) => entry.id)).toEqual(["first-letter", "counting", "addition"]);
+    expect(planned.map((entry) => entry.id)).toEqual(["counting", "addition"]);
   });
 });

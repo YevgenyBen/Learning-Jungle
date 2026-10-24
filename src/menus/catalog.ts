@@ -37,7 +37,7 @@ const SUBJECT_PLANS: readonly (Omit<Subject, "games"> & { readonly planned: read
     id: "hebrew",
     name: "עברית",
     glyph: "אב",
-    planned: [{ id: "first-letter", name: "האות הראשונה", icon: "🍎" }],
+    planned: [],
   },
   {
     id: "math",

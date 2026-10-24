@@ -9,7 +9,8 @@
  */
 import type { Letter, SpelledLetter, Word } from "@/content";
 import type { CreateGameModel, GameModel, GameRequest, GameSettings, GameState } from "../contract";
-import { between, pick, shuffled, type Random } from "../random";
+import { between, pick } from "../random";
+import { createWordBag } from "../wordBag";
 
 export const WORLD = {
   width: 900,
@@ -399,22 +400,3 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     },
   };
 };
-
-/** Draws Words in a shuffled order, without repeats until every Word has come up. */
-function createWordBag(all: readonly Word[], random: Random) {
-  let bag: Word[] = [];
-  let last: Word | undefined;
-  return {
-    next(): Word {
-      if (bag.length === 0) {
-        bag = shuffled(random, all);
-        // A fresh bag must not start with the Word that ended the last one.
-        if (bag.length > 1 && bag[bag.length - 1] === last) {
-          [bag[0], bag[bag.length - 1]] = [bag[bag.length - 1], bag[0]];
-        }
-      }
-      last = bag.pop()!;
-      return last;
-    },
-  };
-}

@@ -1,0 +1,228 @@
+.view {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-2);
+}
+
+/* The Picture in the middle, Round progress at the end of the row. */
+.top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.top > .pictureCard {
+  grid-column: 2;
+}
+
+.progress {
+  grid-column: 3;
+  justify-self: end;
+}
+
+/* The Word's Picture: what the Player names to find its first letter. */
+.pictureCard {
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  padding: var(--space-1) var(--space-5);
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-m);
+  background: var(--color-panel);
+}
+
+.picture {
+  display: block;
+  width: clamp(48px, 15vmin, 100px);
+  height: clamp(48px, 15vmin, 100px);
+  animation: arrive 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes arrive {
+  from {
+    scale: 0.4;
+    opacity: 0;
+  }
+}
+
+.scene {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* The canvas, and the DOM parts drawn over it. */
+.stage {
+  --px: calc(var(--scene-scale, 1) * 1px);
+  position: relative;
+}
+
+.canvas {
+  display: block;
+  border-radius: var(--radius-m);
+}
+
+.signs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* A letter sign on a perch: one Choice. Hung from the middle of its top
+   edge (--x, --y, in scene pixels, set on every tick); never smaller than a
+   small finger needs. */
+.sign {
+  --size: max(calc(70 * var(--px)), var(--touch-min));
+  position: absolute;
+  left: calc(var(--x, 0) * var(--px));
+  top: calc(var(--y, 0) * var(--px));
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-s);
+  background: var(--color-panel);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: calc(var(--size) * 0.6);
+  line-height: 1;
+  opacity: var(--shown, 1);
+  translate: -50% 0;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: none;
+  box-shadow: 0 calc(4 * var(--px)) 0 rgba(34, 48, 42, 0.25);
+  transition:
+    background-color 150ms,
+    color 150ms;
+}
+
+.sign[aria-disabled="true"] {
+  cursor: default;
+}
+
+/* Highlighted with the arrow keys. */
+.sign[data-focused="true"] {
+  outline: var(--focus-ring) solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* A wrong Choice: a gentle shake, then it stays greyed. Nothing is lost. */
+.sign[data-look="rejected"] {
+  background: var(--color-unavailable);
+  color: var(--color-unavailable-ink);
+  box-shadow: none;
+  animation: shake 400ms ease-in-out;
+}
+
+/* The Hint: the right Choice glows. */
+.sign[data-look="hinted"] {
+  background: var(--color-sun);
+  animation: glow 900ms ease-in-out infinite alternate;
+}
+
+/* The right Choice, once picked. */
+.sign[data-look="right"] {
+  border-color: var(--color-carrot);
+  background: var(--color-carrot);
+  color: var(--color-panel);
+  animation: pop 300ms ease-out;
+}
+
+@keyframes shake {
+  20% {
+    transform: translateX(-6px) rotate(-4deg);
+  }
+  40% {
+    transform: translateX(6px) rotate(4deg);
+  }
+  60% {
+    transform: translateX(-4px) rotate(-2deg);
+  }
+  80% {
+    transform: translateX(4px) rotate(2deg);
+  }
+}
+
+@keyframes glow {
+  to {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(1.35);
+  }
+}
+
+/* The Challenge Celebration's springy sign: the Picture and the Word, its
+   first letter picked out. Sizes are in scene pixels. */
+.celebration {
+  position: absolute;
+  top: calc(28 * var(--px));
+  left: calc(var(--x) * var(--px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(16 * var(--px));
+  min-width: calc(300 * var(--px));
+  height: calc(80 * var(--px));
+  padding-inline: calc(24 * var(--px));
+  border: calc(3 * var(--px)) solid var(--color-line);
+  border-radius: calc(16 * var(--px));
+  background: color-mix(in srgb, var(--color-panel) 94%, transparent);
+  pointer-events: none;
+  translate: -50% 0;
+  animation:
+    sign-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    sign-fade 500ms linear 1.3s forwards;
+}
+
+.celebrationPicture {
+  display: block;
+  width: calc(52 * var(--px));
+  height: calc(52 * var(--px));
+}
+
+.celebrationWord {
+  font-family: var(--font-display);
+  font-size: calc(40 * var(--px));
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+.firstLetter {
+  color: var(--color-carrot);
+}
+
+@keyframes sign-pop {
+  from {
+    scale: 0;
+  }
+}
+
+@keyframes sign-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .picture,
+  .sign[data-look="rejected"],
+  .sign[data-look="hinted"],
+  .sign[data-look="right"] {
+    animation: none;
+  }
+
+  .celebration {
+    animation: sign-fade 500ms linear 1.3s forwards;
+  }
+}

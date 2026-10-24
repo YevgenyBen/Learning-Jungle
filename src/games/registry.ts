@@ -1,5 +1,6 @@
 import type { GameState } from "./contract";
 import type { GameDefinition } from "./definition";
+import { catGame } from "./cat";
 import { rabbitGame } from "./rabbit";
 
 /**
@@ -9,7 +10,7 @@ import { rabbitGame } from "./rabbit";
  */
 // Each Game has its own state and Difficulty types; the app only relies on
 // what they have in common.
-const GAMES: readonly GameDefinition<any, any>[] = [rabbitGame];
+const GAMES: readonly GameDefinition<any, any>[] = [rabbitGame, catGame];
 
 export function registeredGames(): readonly GameDefinition<GameState, string>[] {
   return GAMES;

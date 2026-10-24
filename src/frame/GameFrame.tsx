@@ -345,10 +345,15 @@ function Play<S extends GameState>({
     model.act({ kind: "main-press" });
   };
 
+  // The View's own controls (a tapped Choice); stable for the run, like `ticks`.
+  const [act] = useState(() => (action: PlayerAction) => {
+    if (!pausedNow.current) model.act(action);
+  });
+
   const View = game.View;
   return (
     <div className={styles.surface} onPointerDown={onPointerDown} data-testid="game-surface">
-      <View ticks={ticks} />
+      <View ticks={ticks} act={act} />
     </div>
   );
 }
