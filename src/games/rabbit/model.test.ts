@@ -440,6 +440,30 @@ describe("jumping", () => {
     expect(model.state().rabbit.onGround).toBe(true);
     expect(model.state().rabbit.y).toBe(WORLD.ground);
   });
+
+  it("each landing raises a puff of dust that settles within half a second", () => {
+    const model = create();
+    expect(model.state().landings).toEqual([]);
+
+    model.act({ kind: "main-press" });
+    model.act({ kind: "main-release" });
+    runUntil(model, (s) => !s.rabbit.onGround);
+    expect(model.state().landings).toEqual([]);
+    runUntil(model, (s) => s.rabbit.onGround);
+    const [first] = model.state().landings;
+    expect(first.since).toBeLessThan(STEP * 1.5);
+
+    // A second, short hop lands while the first puff is still settling: both show.
+    model.act({ kind: "main-press" });
+    runUntil(model, (s) => !s.rabbit.onGround);
+    model.act({ kind: "main-release" });
+    runUntil(model, (s) => s.rabbit.onGround);
+    expect(model.state().landings.map((l) => l.id)).toEqual([first.id, expect.any(Number)]);
+    expect(model.state().landings[1].id).not.toBe(first.id);
+
+    run(model, 0.5);
+    expect(model.state().landings).toEqual([]);
+  });
 });
 
 describe("automatic speed", () => {

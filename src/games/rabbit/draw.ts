@@ -3,7 +3,7 @@
  * logical coordinates (WORLD). Shapes and colours are ported from the
  * bunny-hop.html prototype. Drawing only: nothing here changes the state.
  */
-import { WORLD, type CelebratedWord, type RabbitState, type Tile } from "./model";
+import { WORLD, type CelebratedWord, type Landing, type RabbitState, type Tile } from "./model";
 
 const { width: W, height: H, ground: GROUND } = WORLD;
 
@@ -31,8 +31,31 @@ export function drawMeadow(ctx: CanvasRenderingContext2D, state: RabbitState, fo
   // The Hint highlights the needed letter's tiles.
   const hinted = state.hint ? state.challenge.letters[state.challenge.next]?.letter : undefined;
   for (const tile of state.tiles) drawTile(ctx, tile, fonts, tile.letter === hinted, state.time);
+  for (const landing of state.landings) drawLandingDust(ctx, landing, state.speed);
   if (state.celebrated) drawParty(ctx, state.celebrated);
   drawRabbit(ctx, state);
+}
+
+/**
+ * The little puff of dust where the rabbit lands (the prototype's puff()):
+ * six specks kicked up behind its feet that drift back with the meadow and fade.
+ */
+function drawLandingDust(ctx: CanvasRenderingContext2D, landing: Landing, speed: number) {
+  const t = landing.since;
+  const rand = seeded(landing.id + 0x5eed);
+  ctx.fillStyle = "#d2bea0";
+  for (let i = 0; i < 6; i++) {
+    const vx = rand(-90, 40);
+    const vy = rand(-80, -20);
+    const life = rand(0.3, 0.5);
+    const r = rand(3, 6);
+    if (t >= life) continue;
+    ctx.globalAlpha = Math.min(1, (life - t) * 1.6);
+    ctx.beginPath();
+    ctx.arc(WORLD.rabbitX - 10 + (vx - speed * 0.3) * t, GROUND + vy * t, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
 }
 
 const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
