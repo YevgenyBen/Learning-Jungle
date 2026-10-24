@@ -6,6 +6,9 @@ import { rabbitTestDriver } from "./testDriver";
 /** The rabbit Game: jump to collect a Word's letters in order. */
 export const rabbitGame: GameDefinition<RabbitState, RabbitDifficulty> = {
   id: "rabbit",
+  name: "ארנב קופץ",
+  icon: "🐇",
+  subject: "hebrew",
   createModel: createRabbitModel,
   difficulties: RABBIT_DIFFICULTIES,
   // Difficulty is the rabbit's speed.

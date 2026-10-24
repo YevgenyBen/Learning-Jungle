@@ -1,10 +1,12 @@
 /**
- * What a Game hands the Game Frame. A Game provides its model, its drawing
- * and its Difficulty options; the Game Frame does the rest (controls, keys,
- * the loop, requests, preferences).
+ * What a Game hands the app. A Game provides its model, its drawing, its
+ * Difficulty options and its Menu icon; the Menus and the Game Frame do the
+ * rest (the Menu entry and route, controls, keys, the loop, requests,
+ * preferences). Adding a Game is one entry in ./registry.ts.
  */
 import type { ComponentType } from "react";
 import type { Frames } from "@/frame/frames";
+import type { SubjectId } from "@/menus/catalog";
 import type { CreateGameModel, GameModel, GameState } from "./contract";
 
 export interface GameViewProps<S extends GameState> {
@@ -36,8 +38,14 @@ export interface DifficultyControl<D extends string> {
 }
 
 export interface GameDefinition<S extends GameState = GameState, D extends string = string> {
-  /** Same id as the Game's catalog entry and route (/games/<id>). */
+  /** Stable identity, also the Game's route segment: /games/<id>. */
   readonly id: string;
+  /** Hebrew name, shown under the Menu icon and read by screen readers. */
+  readonly name: string;
+  /** The Game's Menu icon: what is drawn inside its big Menu button. */
+  readonly icon: string;
+  /** The Subject whose Menu offers the Game. */
+  readonly subject: SubjectId;
   readonly createModel: CreateGameModel<S, D>;
   /** The Game's Difficulty options; the first is the default ("automatic"). */
   readonly difficulties: readonly D[];

@@ -27,8 +27,6 @@ const REQUEST_LOG_SIZE = 200;
 
 export interface GameFrameProps<S extends GameState> {
   readonly game: GameDefinition<S, string>;
-  /** The Game's Hebrew name, for the screen's accessible name. */
-  readonly name: string;
   /** Where "back to Menu" goes: the Game's Subject Menu. */
   readonly backHref: string;
 }
@@ -85,7 +83,7 @@ function startGame<S extends GameState>(
  * Niqqud and Difficulty, remembering mute, Niqqud and Difficulty on the
  * device.
  */
-export function GameFrame<S extends GameState>({ game, name, backHref }: GameFrameProps<S>) {
+export function GameFrame<S extends GameState>({ game, backHref }: GameFrameProps<S>) {
   const router = useRouter();
   const [voice] = useState(createBrowserVoicePlayer);
   const [output] = useState(() => createGameOutput({ effects: createSoundEffects(), voice }));
@@ -187,7 +185,7 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
   useTestHook(game, running, output, voice, { paused, muted });
 
   return (
-    <main className={styles.frame} aria-label={name} data-game={game.id}>
+    <main className={styles.frame} aria-label={game.name} data-game={game.id}>
       <FrameControls
         onBack={() => router.push(backHref)}
         paused={paused}

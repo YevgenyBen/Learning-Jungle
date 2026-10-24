@@ -15,6 +15,6 @@ export default async function GamePage({ params }: { params: Promise<{ game: str
   if (!found) notFound();
 
   return (
-    <GameScreen gameId={found.game.id} name={found.game.name} backHref={`/subjects/${found.subject.id}`} />
+    <GameScreen gameId={found.game.id} backHref={`/subjects/${found.subject.id}`} />
   );
 }

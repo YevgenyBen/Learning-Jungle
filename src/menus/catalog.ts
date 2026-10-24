@@ -1,10 +1,14 @@
 /**
  * What the Menus offer: the two Subjects and the Games in each.
  *
- * Adding a Game: add an entry to its Subject's `games`. While `available` is
- * false the Game shows as an unavailable icon that does nothing. When the
- * Game is built, set `available: true`; it then opens at /games/<id>.
+ * A built Game comes from the Game registry (src/games/registry.ts): its
+ * definition names its Subject, its Hebrew name and its Menu icon, so adding
+ * a Game is one entry there. Games that are planned but not built yet are
+ * listed below; they show as an unavailable icon that does nothing until a
+ * Game with the same id is registered.
  */
+import { registeredGames } from "@/games/registry";
+
 export type SubjectId = "hebrew" | "math";
 
 export interface GameEntry {
@@ -12,7 +16,7 @@ export interface GameEntry {
   readonly id: string;
   /** Hebrew name, read by screen readers and shown under the icon. */
   readonly name: string;
-  /** Placeholder icon until the Game supplies its own Menu icon. */
+  /** The Game's Menu icon (a placeholder for a planned Game). */
   readonly icon: string;
   readonly available: boolean;
 }
@@ -25,26 +29,40 @@ export interface Subject {
   readonly games: readonly GameEntry[];
 }
 
-export const SUBJECTS: readonly Subject[] = [
+type PlannedGame = Omit<GameEntry, "available">;
+
+/** The Subjects in Menu order, each with the Games planned for it but not built yet. */
+const SUBJECT_PLANS: readonly (Omit<Subject, "games"> & { readonly planned: readonly PlannedGame[] })[] = [
   {
     id: "hebrew",
     name: "עברית",
     glyph: "אב",
-    games: [
-      { id: "rabbit", name: "ארנב קופץ", icon: "🐇", available: true },
-      { id: "first-letter", name: "האות הראשונה", icon: "🍎", available: false },
-    ],
+    planned: [{ id: "first-letter", name: "האות הראשונה", icon: "🍎" }],
   },
   {
     id: "math",
     name: "חשבון",
     glyph: "1+2",
-    games: [
-      { id: "counting", name: "ספירה", icon: "🖐️", available: false },
-      { id: "addition", name: "חיבור", icon: "➕", available: false },
+    planned: [
+      { id: "counting", name: "ספירה", icon: "🖐️" },
+      { id: "addition", name: "חיבור", icon: "➕" },
     ],
   },
 ];
+
+/** Built Games first, in registry order, then the planned ones not built yet. */
+export const SUBJECTS: readonly Subject[] = SUBJECT_PLANS.map(({ planned, ...subject }) => {
+  const built = registeredGames().filter((game) => game.subject === subject.id);
+  return {
+    ...subject,
+    games: [
+      ...built.map(({ id, name, icon }) => ({ id, name, icon, available: true })),
+      ...planned
+        .filter((game) => !built.some((b) => b.id === game.id))
+        .map((game) => ({ ...game, available: false })),
+    ],
+  };
+});
 
 export function findSubject(id: string): Subject | undefined {
   return SUBJECTS.find((subject) => subject.id === id);
