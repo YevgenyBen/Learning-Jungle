@@ -1,0 +1,50 @@
+.frame {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-2);
+  padding-block: max(var(--space-2), var(--safe-top)) max(var(--space-2), var(--safe-bottom));
+  padding-inline: max(var(--space-3), var(--safe-right)) max(var(--space-3), var(--safe-left));
+  background: var(--color-page);
+}
+
+/* The Game Frame's controls, always in the same places. Right-to-left:
+   "back" sits at the start (right) edge. */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--touch-min);
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding-inline: var(--space-4) var(--space-5);
+  border: var(--border-width) solid var(--color-line);
+  border-radius: 999px;
+  background: var(--color-panel);
+  font-weight: 700;
+  font-size: clamp(18px, 4vmin, 26px);
+  cursor: pointer;
+}
+
+.controlIcon {
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.controlLabel {
+  line-height: 1;
+}
+
+/* Where the Game is drawn; a press anywhere on it is the main action. */
+.surface {
+  position: relative;
+  min-height: 0;
+  touch-action: none;
+}

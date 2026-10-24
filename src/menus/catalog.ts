@@ -31,7 +31,7 @@ export const SUBJECTS: readonly Subject[] = [
     name: "עברית",
     glyph: "אב",
     games: [
-      { id: "rabbit", name: "ארנב קופץ", icon: "🐇", available: false },
+      { id: "rabbit", name: "ארנב קופץ", icon: "🐇", available: true },
       { id: "first-letter", name: "האות הראשונה", icon: "🍎", available: false },
     ],
   },
@@ -48,6 +48,13 @@ export const SUBJECTS: readonly Subject[] = [
 
 export function findSubject(id: string): Subject | undefined {
   return SUBJECTS.find((subject) => subject.id === id);
+}
+
+/** Every Game that can be played, with the Subject it belongs to. */
+export function availableGames(): { game: GameEntry; subject: Subject }[] {
+  return SUBJECTS.flatMap((subject) =>
+    subject.games.filter((game) => game.available).map((game) => ({ game, subject })),
+  );
 }
 
 export function gameHref(game: GameEntry): string {

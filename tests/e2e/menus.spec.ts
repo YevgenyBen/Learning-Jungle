@@ -12,8 +12,8 @@ test.describe("Menus by touch or mouse", () => {
   });
 
   for (const subject of [
-    { name: "עברית", games: ["ארנב קופץ", "האות הראשונה"] },
-    { name: "חשבון", games: ["ספירה", "חיבור"] },
+    { name: "עברית", games: ["ארנב קופץ", "האות הראשונה"], available: ["ארנב קופץ"] },
+    { name: "חשבון", games: ["ספירה", "חיבור"], available: [] as string[] },
   ]) {
     test(`${subject.name} opens its Subject Menu, and back returns Home`, async ({ page }) => {
       await page.goto("/home");
@@ -22,7 +22,11 @@ test.describe("Menus by touch or mouse", () => {
       await expect(page.getByRole("heading", { name: subject.name })).toBeVisible();
       for (const game of subject.games) {
         await expect(choice(page, game)).toBeVisible();
-        await expect(choice(page, game)).toHaveAttribute("aria-disabled", "true");
+        if (subject.available.includes(game)) {
+          await expect(choice(page, game)).not.toHaveAttribute("aria-disabled", "true");
+        } else {
+          await expect(choice(page, game)).toHaveAttribute("aria-disabled", "true");
+        }
       }
 
       await press(back(page));
@@ -37,7 +41,7 @@ test.describe("Menus by touch or mouse", () => {
     await expect(page.getByRole("heading", { name: "עברית" })).toBeVisible();
     const menuUrl = page.url();
 
-    await press(choice(page, "ארנב קופץ"), { force: true });
+    await press(choice(page, "האות הראשונה"), { force: true });
     await page.waitForTimeout(500);
     expect(page.url()).toBe(menuUrl);
     await expect(page.getByRole("heading", { name: "עברית" })).toBeVisible();

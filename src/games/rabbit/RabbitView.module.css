@@ -1,0 +1,84 @@
+.view {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-2);
+}
+
+/* The word bar: the Word's Picture and one slot per letter. */
+.wordBar {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-4);
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-m);
+  background: var(--color-panel);
+}
+
+.picture {
+  font-size: clamp(32px, 9vmin, 52px);
+  line-height: 1;
+}
+
+.slots {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot {
+  display: grid;
+  place-items: center;
+  width: clamp(34px, 9vmin, 46px);
+  height: clamp(38px, 10vmin, 50px);
+  border: var(--border-width) solid var(--color-ink-faint);
+  border-radius: var(--radius-s);
+  background: var(--color-page);
+  color: var(--color-ink-faint);
+  font-family: var(--font-display);
+  font-size: clamp(22px, 6vmin, 30px);
+  line-height: 1;
+}
+
+/* The next needed letter. */
+.slot[data-slot="next"] {
+  border-style: dashed;
+  border-color: var(--color-carrot);
+  color: var(--color-ink-soft);
+}
+
+.slot[data-slot="filled"] {
+  border-color: var(--color-carrot);
+  background: var(--color-carrot);
+  color: var(--color-panel);
+  animation: pop 300ms ease-out;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot[data-slot="filled"] {
+    animation: none;
+  }
+}
+
+.meadow {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.canvas {
+  display: block;
+  border-radius: var(--radius-m);
+}
