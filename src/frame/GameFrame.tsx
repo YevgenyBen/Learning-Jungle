@@ -160,7 +160,7 @@ export function GameFrame<S extends GameState>({ game, backHref }: GameFrameProp
     if (!paused) running?.model.act(action);
   };
   // While the Round Celebration screen shows, it takes the keys: Enter and
-  // Space pick its focused choice instead of restarting or jumping.
+  // Space pick its focused option instead of restarting or jumping.
   const roundOver = roundCelebration;
 
   useFrameKeys(

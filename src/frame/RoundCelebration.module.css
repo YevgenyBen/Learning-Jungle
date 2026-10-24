@@ -60,12 +60,12 @@
   color: var(--color-carrot);
 }
 
-.choices {
+.options {
   display: flex;
   gap: clamp(var(--space-4), 6vmin, var(--space-7));
 }
 
-.choice {
+.option {
   display: grid;
   justify-items: center;
   gap: var(--space-1);
@@ -78,7 +78,7 @@
   cursor: pointer;
 }
 
-.choiceIcon {
+.optionIcon {
   display: grid;
   place-items: center;
   width: clamp(80px, 22vmin, 150px);
@@ -93,24 +93,24 @@
   transition: transform 120ms ease-out, box-shadow 120ms ease-out;
 }
 
-.anotherRound .choiceIcon {
+.anotherRound .optionIcon {
   background: var(--color-grass);
   color: var(--color-panel);
 }
 
-.choiceLabel {
+.optionLabel {
   font-family: var(--font-display);
   font-size: clamp(20px, 5vmin, 34px);
   line-height: 1.1;
 }
 
-.choice:active .choiceIcon {
+.option:active .optionIcon {
   transform: translateY(5px);
   box-shadow: 0 1px 0 var(--color-line);
 }
 
 @media (hover: hover) {
-  .choice:hover .choiceIcon {
+  .option:hover .optionIcon {
     transform: translateY(-3px);
     box-shadow: 0 9px 0 var(--color-line);
   }

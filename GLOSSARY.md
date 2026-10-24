@@ -23,7 +23,7 @@ One of the two areas the app teaches: Hebrew or Math.
 _Avoid_: Category, topic, course
 
 **Menu**:
-A screen for choosing a Subject or a Game, where every choice has a big, bright icon.
+A screen for choosing a Subject or a Game, where every entry has a big, bright icon.
 _Avoid_: Lobby, hub, launcher
 
 **Game Frame**:
@@ -97,6 +97,10 @@ _Avoid_: Vowels, nikud, nekudot
 **Voice Clip**:
 A prepared audio file of a Letter Name, Letter Sound, Word, number, spoken instruction or praise.
 _Avoid_: Recording, audio, sound
+
+**Spoken Item**:
+Anything in the Content Bank that is said aloud and so has its own Voice Clip: a Word, a Letter Name, the shared sound of Letter Sounds that are read the same, or a number.
+_Avoid_: Clip item, audio item, sayable
 
 **Speech Fallback**:
 Reading text aloud with the device's own voice when no Voice Clip exists for it.

@@ -47,7 +47,7 @@
   line-height: 1;
 }
 
-.choices {
+.entries {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -59,7 +59,7 @@
   gap: clamp(var(--space-4), 5vmin, var(--space-7));
 }
 
-.choice {
+.entry {
   display: grid;
   justify-items: center;
   gap: var(--space-2);
@@ -74,15 +74,15 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: var(--icon-choice);
-  height: var(--icon-choice);
+  width: var(--icon-menu-entry);
+  height: var(--icon-menu-entry);
   border: var(--border-width) solid var(--color-line);
   border-radius: var(--radius-l);
-  background: var(--choice-color, var(--color-grass));
+  background: var(--entry-color, var(--color-grass));
   box-shadow: 0 8px 0 var(--color-line);
   color: var(--color-panel);
   font-family: var(--font-display);
-  font-size: calc(var(--icon-choice) * 0.42);
+  font-size: calc(var(--icon-menu-entry) * 0.42);
   line-height: 1;
   transition: transform 120ms ease-out, box-shadow 120ms ease-out;
 }
@@ -93,24 +93,24 @@
   line-height: 1.1;
 }
 
-.choice:not([aria-disabled="true"]):active .icon {
+.entry:not([aria-disabled="true"]):active .icon {
   transform: translateY(6px);
   box-shadow: 0 2px 0 var(--color-line);
 }
 
 @media (hover: hover) {
-  .choice:not([aria-disabled="true"]):hover .icon {
+  .entry:not([aria-disabled="true"]):hover .icon {
     transform: translateY(-4px);
     box-shadow: 0 12px 0 var(--color-line);
   }
 }
 
 /* Unavailable Games: visible, clearly greyed out, and inert. */
-.choice[aria-disabled="true"] {
+.entry[aria-disabled="true"] {
   cursor: default;
 }
 
-.choice[aria-disabled="true"] .icon {
+.entry[aria-disabled="true"] .icon {
   background: var(--color-unavailable);
   filter: grayscale(1);
   opacity: 0.75;
@@ -118,7 +118,7 @@
   border-color: var(--color-unavailable-ink);
 }
 
-.choice[aria-disabled="true"] .label {
+.entry[aria-disabled="true"] .label {
   color: var(--color-unavailable-ink);
 }
 
@@ -134,7 +134,7 @@
   font-size: clamp(14px, 3vmin, 20px);
 }
 
-/* Holds a small control below the choices (the Parent control); it places itself. */
+/* Holds a small control below the entries (the Parent control); it places itself. */
 .footer {
   display: contents;
 }

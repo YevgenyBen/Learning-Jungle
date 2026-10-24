@@ -1,8 +1,8 @@
 /**
- * Arrow-key movement between Menu choices.
+ * Arrow-key movement between Menu entries (and the Round Celebration's options).
  *
  * A Menu's layout is a list of rows, top to bottom; each row lists its
- * choice ids in reading order. The app is right-to-left (ADR-0003), so the
+ * entry ids in reading order. The app is right-to-left (ADR-0003), so the
  * first id of a row is drawn furthest to the right: ArrowLeft moves forward
  * through a row and ArrowRight moves back. Movement stops at the edges.
  *
@@ -35,9 +35,17 @@ export function moveFocus(
 
   const nextRow = clamp(row + COLUMN_STEP[key], 0, rows.length - 1);
   if (nextRow === row) return current;
-  // Moving between rows always lands on the row's first choice: rows in the
+  // Moving between rows always lands on the row's first entry: rows in the
   // Menus are short, and a predictable landing spot is easiest for a Player.
   return rows[nextRow][0];
+}
+
+/**
+ * Alt, Ctrl or Cmd is held: the key combination belongs to the browser or
+ * the system (copy, reload, switching tabs), never to the app.
+ */
+export function hasModifierKey(event: { altKey: boolean; ctrlKey: boolean; metaKey: boolean }): boolean {
+  return event.altKey || event.ctrlKey || event.metaKey;
 }
 
 function clamp(value: number, min: number, max: number): number {

@@ -6,12 +6,12 @@ import { moveFocus } from "./focus";
 // item of a row is the one furthest to the right.
 const subjectMenu = [["back"], ["rabbit", "first-letter", "reading"]];
 
-describe("moving between Menu choices with arrow keys (right-to-left)", () => {
-  it("ArrowLeft moves to the next choice, the one to its left", () => {
+describe("moving between Menu entries with arrow keys (right-to-left)", () => {
+  it("ArrowLeft moves to the next entry, the one to its left", () => {
     expect(moveFocus(subjectMenu, "rabbit", "ArrowLeft")).toBe("first-letter");
   });
 
-  it("ArrowRight moves back to the previous choice, the one to its right", () => {
+  it("ArrowRight moves back to the previous entry, the one to its right", () => {
     expect(moveFocus(subjectMenu, "first-letter", "ArrowRight")).toBe("rabbit");
   });
 
@@ -33,7 +33,7 @@ describe("moving between Menu choices with arrow keys (right-to-left)", () => {
     expect(moveFocus(subjectMenu, "rabbit", "ArrowDown")).toBe("rabbit");
   });
 
-  it("starts at the first choice of the first row when nothing has focus yet", () => {
+  it("starts at the first entry of the first row when nothing has focus yet", () => {
     expect(moveFocus(subjectMenu, null, "ArrowLeft")).toBe("back");
     expect(moveFocus([["hebrew", "math"]], null, "ArrowDown")).toBe("hebrew");
   });

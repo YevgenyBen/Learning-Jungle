@@ -6,7 +6,7 @@ export default function HomePage() {
   return (
     <Menu
       title="מה נלמד היום?"
-      choices={SUBJECTS.map((subject) => ({
+      entries={SUBJECTS.map((subject) => ({
         id: subject.id,
         label: subject.name,
         icon: subject.glyph,

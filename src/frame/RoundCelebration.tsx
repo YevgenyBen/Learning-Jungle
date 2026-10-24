@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
-import { moveFocus } from "@/menus/focus";
+import { hasModifierKey, moveFocus } from "@/menus/focus";
+import { useFocusGroup } from "@/menus/focusGroup";
 import styles from "./RoundCelebration.module.css";
 
 export interface RoundCelebrationProps {
@@ -11,55 +12,48 @@ export interface RoundCelebrationProps {
   readonly onBack: () => void;
 }
 
-type ChoiceId = "another-round" | "back";
+/** What the Player can do once a Round is over. */
+type RoundEndOption = "another-round" | "back";
 /** One row, in reading order: right to left, "another Round" first. */
 const LAYOUT = [["another-round", "back"]] as const;
-/** Keys that pick the focused choice, when they are let go. */
+/** Keys that pick the focused option, when they are let go. */
 const PICK_KEYS = new Set(["Enter", "NumpadEnter", "Space"]);
 
 /**
  * The Game Frame's Round Celebration screen, shown over any Game whose model
- * asks for its Round's Celebration (`celebrate` "round"): a big "well done" and two big choices, another Round or
- * back to the Menu. Works by touch, mouse, and arrow keys plus Enter.
+ * asks for its Round's Celebration (`celebrate` "round"): a big "well done"
+ * and two big options, another Round or back to the Menu. Works by touch,
+ * mouse, and arrow keys plus Enter.
  *
  * It handles its own keys (arrows, Enter, Space) and keeps them from the
- * Game Frame's key handlers, so a key meant for a choice never also reaches
- * the Game behind it. The Game Frame also stands down its own Enter
+ * Game Frame's key handlers, so a key meant for an option never also
+ * reaches the Game behind it. The Game Frame also stands down its own Enter
  * (restart) and main action while this screen shows.
  */
 export function RoundCelebration({ onAnotherRound, onBack }: RoundCelebrationProps) {
-  const buttons = useRef(new Map<ChoiceId, HTMLButtonElement>());
-  /** The key that went down here and picks a choice when it comes up. */
+  const options = useFocusGroup<RoundEndOption>();
+  /** The key that went down here and picks an option when it comes up. */
   const armed = useRef<string | null>(null);
-  const register = (id: ChoiceId) => (element: HTMLButtonElement | null) => {
-    if (element) buttons.current.set(id, element);
-    else buttons.current.delete(id);
-  };
-  const actions: Record<ChoiceId, () => void> = { "another-round": onAnotherRound, back: onBack };
+  const actions: Record<RoundEndOption, () => void> = { "another-round": onAnotherRound, back: onBack };
 
   // A keyboard Player can press Enter straight away.
-  useEffect(() => {
-    buttons.current.get("another-round")?.focus({ preventScroll: true });
-  }, []);
-
-  const focusedChoice = (): ChoiceId | null =>
-    [...buttons.current].find(([, element]) => element === document.activeElement)?.[0] ?? null;
+  useEffect(() => options.focus("another-round"), [options]);
 
   const onKeyDown = (event: ReactKeyboardEvent) => {
-    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (hasModifierKey(event)) return;
     if (PICK_KEYS.has(event.code)) {
-      // The choice is picked when the key comes up, so the rest of the press
+      // The option is picked when the key comes up, so the rest of the press
       // can't reach the next screen.
       event.preventDefault();
       event.stopPropagation();
       if (!event.repeat) armed.current = event.code;
       return;
     }
-    const next = moveFocus(LAYOUT, focusedChoice(), event.key) as ChoiceId | null;
+    const next = moveFocus(LAYOUT, options.focused(), event.key) as RoundEndOption | null;
     if (next === null) return;
     event.preventDefault();
     event.stopPropagation();
-    buttons.current.get(next)?.focus({ preventScroll: true });
+    options.focus(next);
   };
 
   const onKeyUp = (event: ReactKeyboardEvent) => {
@@ -68,7 +62,7 @@ export function RoundCelebration({ onAnotherRound, onBack }: RoundCelebrationPro
     if (event.code !== armed.current) return;
     event.preventDefault();
     armed.current = null;
-    actions[focusedChoice() ?? "another-round"]();
+    actions[options.focused() ?? "another-round"]();
   };
 
   return (
@@ -91,23 +85,23 @@ export function RoundCelebration({ onAnotherRound, onBack }: RoundCelebrationPro
         <h2 id="round-celebration-title" className={styles.title}>
           כל הכבוד!
         </h2>
-        <div className={styles.choices}>
+        <div className={styles.options}>
           <button
             type="button"
-            ref={register("another-round")}
-            className={`${styles.choice} ${styles.anotherRound}`}
+            ref={options.register("another-round")}
+            className={`${styles.option} ${styles.anotherRound}`}
             onClick={onAnotherRound}
           >
-            <span aria-hidden="true" className={styles.choiceIcon}>
+            <span aria-hidden="true" className={styles.optionIcon}>
               ↻
             </span>
-            <span className={styles.choiceLabel}>עוד סיבוב</span>
+            <span className={styles.optionLabel}>עוד סיבוב</span>
           </button>
-          <button type="button" ref={register("back")} className={styles.choice} onClick={onBack}>
-            <span aria-hidden="true" className={styles.choiceIcon}>
+          <button type="button" ref={options.register("back")} className={styles.option} onClick={onBack}>
+            <span aria-hidden="true" className={styles.optionIcon}>
               ➜
             </span>
-            <span className={styles.choiceLabel}>חזרה</span>
+            <span className={styles.optionLabel}>חזרה</span>
           </button>
         </div>
       </div>

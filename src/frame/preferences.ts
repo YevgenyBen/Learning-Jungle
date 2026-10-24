@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * The Player's choices the Game Frame remembers on this device: mute for
+ * The settings the Game Frame remembers on this device: mute for
  * the whole app, and Niqqud and Difficulty for each Game. Nothing else is
  * ever stored: no progress, scores or identities.
  *
@@ -47,7 +47,7 @@ function write(key: string, value: unknown): void {
   try {
     storage()?.setItem(key, JSON.stringify(value));
   } catch {
-    // Full or blocked storage: the choice still holds until the page closes.
+    // Full or blocked storage: the setting still holds until the page closes.
   }
 }
 

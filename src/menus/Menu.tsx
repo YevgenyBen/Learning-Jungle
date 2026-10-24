@@ -2,19 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
-import { moveFocus, type MenuLayout } from "./focus";
+import { hasModifierKey, moveFocus, type MenuLayout } from "./focus";
+import { useFocusGroup } from "./focusGroup";
 import styles from "./Menu.module.css";
 
 const BACK_ID = "back";
 const FOOTER_ID = "footer";
 
-export interface MenuChoice {
+/** One big icon in a Menu: a Subject, or a Game of a Subject. */
+export interface MenuEntry {
   readonly id: string;
   /** Hebrew label shown under the icon and used as the accessible name. */
   readonly label: string;
   /** What is drawn inside the big icon. */
   readonly icon: ReactNode;
-  /** Where choosing it goes; omitted for an unavailable choice. */
+  /** Where picking it goes; omitted for an unavailable entry. */
   readonly href?: string;
   /** Background colour of the icon (a design token). */
   readonly color?: string;
@@ -22,11 +24,11 @@ export interface MenuChoice {
 
 export interface MenuProps {
   readonly title: string;
-  readonly choices: readonly MenuChoice[];
+  readonly entries: readonly MenuEntry[];
   /** The big back control; omitted on the Home Menu. */
   readonly back?: { readonly label: string; readonly href: string };
   /**
-   * A small control below the choices, such as the Parent control on Home.
+   * A small control below the entries, such as the Parent control on Home.
    * Its first link or button is the Menu's last row for the arrow keys.
    */
   readonly footer?: ReactNode;
@@ -34,44 +36,40 @@ export interface MenuProps {
 
 /**
  * A Menu: a row of big, bright icons and an optional big back control.
- * Every choice works by touch, mouse, and arrow keys plus Enter.
- * Unavailable choices stay visible but do nothing when chosen.
+ * Every entry works by touch, mouse, and arrow keys plus Enter.
+ * Unavailable entries stay visible but do nothing when picked.
  */
-export function Menu({ title, choices, back, footer }: MenuProps) {
+export function Menu({ title, entries, back, footer }: MenuProps) {
   const router = useRouter();
-  const buttons = useRef(new Map<string, HTMLElement>());
-  const register = (id: string) => (element: HTMLElement | null) => {
-    if (element) buttons.current.set(id, element);
-    else buttons.current.delete(id);
-  };
+  const controls = useFocusGroup<string>();
   const footerBox = useRef<HTMLDivElement>(null);
 
-  const choiceIds = choices.map((choice) => choice.id).join(" ");
+  const entryIds = entries.map((entry) => entry.id).join(" ");
   const hasBack = back !== undefined;
 
   useEffect(() => {
-    const ids = choiceIds.split(" ");
+    const ids = entryIds.split(" ");
     const footerControl = footerBox.current?.querySelector<HTMLElement>("a[href], button") ?? null;
-    if (footerControl) buttons.current.set(FOOTER_ID, footerControl);
+    const registerFooter = controls.register(FOOTER_ID);
+    registerFooter(footerControl);
     const layout: MenuLayout = [...(hasBack ? [[BACK_ID]] : []), ids, ...(footerControl ? [[FOOTER_ID]] : [])];
 
     // A keyboard Player can press Enter straight away.
-    buttons.current.get(ids[0])?.focus({ preventScroll: true });
+    controls.focus(ids[0]);
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
-      const focused = [...buttons.current].find(([, el]) => el === document.activeElement);
-      const next = moveFocus(layout, focused ? focused[0] : null, event.key);
+      if (hasModifierKey(event)) return;
+      const next = moveFocus(layout, controls.focused(), event.key);
       if (next === null) return;
       event.preventDefault();
-      buttons.current.get(next)?.focus({ preventScroll: true });
+      controls.focus(next);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       window.removeEventListener("keydown", onKeyDown);
-      buttons.current.delete(FOOTER_ID);
+      registerFooter(null);
     };
-  }, [choiceIds, hasBack]);
+  }, [entryIds, hasBack, controls]);
 
   return (
     <main className={styles.menu}>
@@ -79,7 +77,7 @@ export function Menu({ title, choices, back, footer }: MenuProps) {
         {back && (
           <button
             type="button"
-            ref={register(BACK_ID)}
+            ref={controls.register(BACK_ID)}
             className={styles.back}
             onClick={() => router.push(back.href)}
           >
@@ -91,26 +89,26 @@ export function Menu({ title, choices, back, footer }: MenuProps) {
         )}
         <h1 className={styles.title}>{title}</h1>
       </header>
-      <ul className={styles.choices}>
-        {choices.map((choice) => {
-          const available = choice.href !== undefined;
+      <ul className={styles.entries}>
+        {entries.map((entry) => {
+          const available = entry.href !== undefined;
           return (
-            <li key={choice.id}>
+            <li key={entry.id}>
               <button
                 type="button"
-                ref={register(choice.id)}
-                className={styles.choice}
+                ref={controls.register(entry.id)}
+                className={styles.entry}
                 aria-disabled={available ? undefined : true}
-                style={{ "--choice-color": choice.color } as CSSProperties}
+                style={{ "--entry-color": entry.color } as CSSProperties}
                 onClick={() => {
-                  if (choice.href) router.push(choice.href);
+                  if (entry.href) router.push(entry.href);
                 }}
               >
                 <span className={styles.icon} aria-hidden="true">
-                  {choice.icon}
+                  {entry.icon}
                   {!available && <span className={styles.soon}>בקרוב</span>}
                 </span>
-                <span className={styles.label}>{choice.label}</span>
+                <span className={styles.label}>{entry.label}</span>
               </button>
             </li>
           );

@@ -11,14 +11,14 @@ import {
 } from "./game";
 import { isTouch, press } from "./helpers";
 
-const choice = (page: Page, name: string) => page.getByRole("button", { name, exact: true });
+const menuEntry = (page: Page, name: string) => page.getByRole("button", { name, exact: true });
 const back = (page: Page) => page.getByRole("button", { name: /חזרה/ });
 const wordBar = (page: Page) => page.getByTestId("word-bar");
 const slots = (page: Page) => wordBar(page).getByRole("listitem");
 
 async function openFromMenu(page: Page) {
   await page.goto("/subjects/hebrew");
-  await press(choice(page, "ארנב קופץ"));
+  await press(menuEntry(page, "ארנב קופץ"));
   await expect(page).toHaveURL(/\/games\/rabbit$/);
   await waitForGame(page, "rabbit");
 }
@@ -31,7 +31,7 @@ test.describe("the rabbit Game", () => {
 
     await press(back(page));
     await expect(page.getByRole("heading", { name: "עברית" })).toBeVisible();
-    await expect(choice(page, "ארנב קופץ")).toBeVisible();
+    await expect(menuEntry(page, "ארנב קופץ")).toBeVisible();
   });
 
   test("opens straight from its address without errors", async ({ page }) => {

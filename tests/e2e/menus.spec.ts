@@ -1,14 +1,14 @@
 import { expect, test, type Page } from "@playwright/test";
 import { press } from "./helpers";
 
-const choice = (page: Page, name: string) => page.getByRole("button", { name, exact: true });
+const entry = (page: Page, name: string) => page.getByRole("button", { name, exact: true });
 const back = (page: Page) => page.getByRole("button", { name: /חזרה/ });
 
 test.describe("Menus by touch or mouse", () => {
   test("Home shows the Hebrew and Math Subject icons", async ({ page }) => {
     await page.goto("/home");
-    await expect(choice(page, "עברית")).toBeVisible();
-    await expect(choice(page, "חשבון")).toBeVisible();
+    await expect(entry(page, "עברית")).toBeVisible();
+    await expect(entry(page, "חשבון")).toBeVisible();
   });
 
   for (const subject of [
@@ -17,31 +17,31 @@ test.describe("Menus by touch or mouse", () => {
   ]) {
     test(`${subject.name} opens its Subject Menu, and back returns Home`, async ({ page }) => {
       await page.goto("/home");
-      await press(choice(page, subject.name));
+      await press(entry(page, subject.name));
 
       await expect(page.getByRole("heading", { name: subject.name })).toBeVisible();
       for (const game of subject.games) {
-        await expect(choice(page, game)).toBeVisible();
+        await expect(entry(page, game)).toBeVisible();
         if (subject.available.includes(game)) {
-          await expect(choice(page, game)).not.toHaveAttribute("aria-disabled", "true");
+          await expect(entry(page, game)).not.toHaveAttribute("aria-disabled", "true");
         } else {
-          await expect(choice(page, game)).toHaveAttribute("aria-disabled", "true");
+          await expect(entry(page, game)).toHaveAttribute("aria-disabled", "true");
         }
       }
 
       await press(back(page));
-      await expect(choice(page, "עברית")).toBeVisible();
-      await expect(choice(page, "חשבון")).toBeVisible();
+      await expect(entry(page, "עברית")).toBeVisible();
+      await expect(entry(page, "חשבון")).toBeVisible();
     });
   }
 
   test("an unavailable Game does nothing when chosen", async ({ page }) => {
     await page.goto("/home");
-    await press(choice(page, "עברית"));
+    await press(entry(page, "עברית"));
     await expect(page.getByRole("heading", { name: "עברית" })).toBeVisible();
     const menuUrl = page.url();
 
-    await press(choice(page, "האות הראשונה"), { force: true });
+    await press(entry(page, "האות הראשונה"), { force: true });
     await page.waitForTimeout(500);
     expect(page.url()).toBe(menuUrl);
     await expect(page.getByRole("heading", { name: "עברית" })).toBeVisible();
@@ -65,18 +65,18 @@ test.describe("Menus by keyboard", () => {
   test("arrow keys and Enter reach every Subject, its Games and back", async ({ page }) => {
     await page.goto("/home");
     // The first Subject has focus straight away.
-    await expect(choice(page, "עברית")).toBeFocused();
+    await expect(entry(page, "עברית")).toBeFocused();
 
     // Right-to-left: ArrowLeft moves to the next Subject.
     await page.keyboard.press("ArrowLeft");
-    await expect(choice(page, "חשבון")).toBeFocused();
+    await expect(entry(page, "חשבון")).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page.getByRole("heading", { name: "חשבון" })).toBeVisible();
 
     // The first Game has focus; an unavailable Game does nothing.
-    await expect(choice(page, "ספירה")).toBeFocused();
+    await expect(entry(page, "ספירה")).toBeFocused();
     await page.keyboard.press("ArrowLeft");
-    await expect(choice(page, "חיבור")).toBeFocused();
+    await expect(entry(page, "חיבור")).toBeFocused();
     await page.keyboard.press("Enter");
     await page.waitForTimeout(300);
     await expect(page.getByRole("heading", { name: "חשבון" })).toBeVisible();
@@ -85,11 +85,11 @@ test.describe("Menus by keyboard", () => {
     await page.keyboard.press("ArrowUp");
     await expect(back(page)).toBeFocused();
     await page.keyboard.press("Enter");
-    await expect(choice(page, "עברית")).toBeFocused();
+    await expect(entry(page, "עברית")).toBeFocused();
 
     await page.keyboard.press("Enter");
     await expect(page.getByRole("heading", { name: "עברית" })).toBeVisible();
-    await expect(choice(page, "ארנב קופץ")).toBeFocused();
+    await expect(entry(page, "ארנב קופץ")).toBeFocused();
   });
 
   test("ArrowDown on Home reaches the Parent control, ArrowUp leaves it, and Enter opens the credits", async ({
@@ -97,13 +97,13 @@ test.describe("Menus by keyboard", () => {
   }) => {
     const parentControl = page.getByRole("link", { name: "להורים" });
     await page.goto("/home");
-    await expect(choice(page, "עברית")).toBeFocused();
+    await expect(entry(page, "עברית")).toBeFocused();
     await page.keyboard.press("ArrowLeft");
 
     await page.keyboard.press("ArrowDown");
     await expect(parentControl).toBeFocused();
     await page.keyboard.press("ArrowUp");
-    await expect(choice(page, "עברית")).toBeFocused();
+    await expect(entry(page, "עברית")).toBeFocused();
 
     await page.keyboard.press("ArrowDown");
     await page.keyboard.press("Enter");
@@ -113,10 +113,10 @@ test.describe("Menus by keyboard", () => {
 
   test("an arrow key brings focus back to the Menu after a click elsewhere", async ({ page }) => {
     await page.goto("/home");
-    await expect(choice(page, "עברית")).toBeFocused();
+    await expect(entry(page, "עברית")).toBeFocused();
     await page.mouse.click(5, 5);
-    await expect(choice(page, "עברית")).not.toBeFocused();
+    await expect(entry(page, "עברית")).not.toBeFocused();
     await page.keyboard.press("ArrowLeft");
-    await expect(choice(page, "עברית")).toBeFocused();
+    await expect(entry(page, "עברית")).toBeFocused();
   });
 });

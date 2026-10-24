@@ -47,7 +47,7 @@
   --touch-min: 64px;
   /* Parent-only controls are smaller: big enough for a grown-up finger */
   --touch-parent: 48px;
-  --icon-choice: clamp(120px, 26vmin, 220px);
+  --icon-menu-entry: clamp(120px, 26vmin, 220px);
   --focus-ring: 6px;
 
   /* Respect notches and rounded corners on phones */

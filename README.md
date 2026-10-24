@@ -57,4 +57,4 @@ The script does a little more than generate missing clips and regenerate listed 
 - **Adopts dropped-in files** into the manifest: so a hand-made clip needs no manual manifest edit.
 - **Refuses two files for one identity** before generating anything: otherwise which one plays would be a guess.
 - **Drops manifest entries for items no longer in the Content Bank**, keeping their files: the manifest stays exactly the spoken items, and nothing you made is deleted.
-- **Reports clips made from text that has changed since**, with the command to regenerate them: a new pronunciation override is never silently ignored, and never costs a request on its own.
+- **Reports clips made from text that has changed since**, with the command to regenerate them: a new pronunciation override is never silently ignored, and nothing is regenerated without you asking.
