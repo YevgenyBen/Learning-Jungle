@@ -5,8 +5,9 @@ import { useEffect, useState, type PointerEvent as ReactPointerEvent } from "rea
 import { contentBank } from "@/content";
 import type { GameModel, GameRequest, GameState } from "@/games/contract";
 import type { GameDefinition } from "@/games/definition";
-import { createFrames, type FramePublisher } from "./frames";
+import { createFrames, useFrameSelector, type FramePublisher } from "./frames";
 import styles from "./GameFrame.module.css";
+import { RoundCelebration } from "./RoundCelebration";
 import { installTestHook } from "./testHook";
 
 /** The shared main-action key; a Game may add its own (GameDefinition.mainActionKeys). */
@@ -68,6 +69,8 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
   // made while prerendering the page would not match the browser's.
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  // Each Round is a fresh <Play>, and so a fresh model.
+  const [round, setRound] = useState(0);
 
   return (
     <main className={styles.frame} aria-label={name} data-game={game.id}>
@@ -79,15 +82,34 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
           <span className={styles.controlLabel}>חזרה</span>
         </button>
       </header>
-      {mounted && <Play game={game} />}
+      {mounted && (
+        <Play
+          key={round}
+          game={game}
+          onAnotherRound={() => setRound((r) => r + 1)}
+          onBack={() => router.push(backHref)}
+        />
+      )}
     </main>
   );
 }
 
-/** The running Game: its model, time, input, the test hook, and its View. */
-function Play<S extends GameState>({ game }: { game: GameDefinition<S, string> }) {
+const selectRoundOver = (state: GameState) => state.roundOver;
+
+interface PlayProps<S extends GameState> {
+  readonly game: GameDefinition<S, string>;
+  readonly onAnotherRound: () => void;
+  readonly onBack: () => void;
+}
+
+/**
+ * The running Game: its model, time, input, the test hook, and its View,
+ * with the Round Celebration screen over it once the Round is over.
+ */
+function Play<S extends GameState>({ game, onAnotherRound, onBack }: PlayProps<S>) {
   const [running] = useState(() => startGame(game));
   const { model, frames } = running;
+  const roundOver = useFrameSelector(frames, selectRoundOver, Object.is);
 
   // Time: one model step per animation frame.
   useEffect(() => {
@@ -171,8 +193,11 @@ function Play<S extends GameState>({ game }: { game: GameDefinition<S, string> }
 
   const View = game.View;
   return (
-    <div className={styles.surface} onPointerDown={onPointerDown} data-testid="game-surface">
-      <View frames={frames} />
-    </div>
+    <>
+      <div className={styles.surface} onPointerDown={onPointerDown} data-testid="game-surface">
+        <View frames={frames} />
+      </div>
+      {roundOver && <RoundCelebration onAnotherRound={onAnotherRound} onBack={onBack} />}
+    </>
   );
 }

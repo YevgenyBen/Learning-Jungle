@@ -105,14 +105,18 @@ test.describe("the rabbit Game", () => {
     await expect(wordBar(page).locator('[data-slot="filled"]')).toHaveCount(1);
   });
 
-  test("completing a Word through the test hook starts the next Word", async ({ page }) => {
+  test("completing a Word through the test hook starts the next Word after its Celebration", async ({ page }) => {
     await openFromMenu(page);
     const before = await gameState<RabbitState>(page);
 
     await completeChallenge(page);
-    const after = await gameState<RabbitState>(page);
+    const celebrating = await gameState<RabbitState>(page);
+    expect(celebrating.progress.completed).toBe(1);
+    expect(celebrating.celebration).toBe("challenge");
+    await expect(wordBar(page).locator('[data-slot="filled"]')).toHaveCount(before.challenge.letters.length);
 
-    expect(after.progress.completed).toBe(1);
+    await expect.poll(async () => (await gameState<RabbitState>(page)).celebration).toBeNull();
+    const after = await gameState<RabbitState>(page);
     expect(after.challenge.word.id).not.toBe(before.challenge.word.id);
     await expect(wordBar(page)).toHaveAttribute("data-word", after.challenge.word.id);
     await expect(wordBar(page).locator('[data-slot="filled"]')).toHaveCount(0);

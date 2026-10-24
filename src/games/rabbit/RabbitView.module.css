@@ -6,6 +6,23 @@
   gap: var(--space-2);
 }
 
+/* The word bar in the middle, Round progress at the end of the row. */
+.top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.top > .wordBar {
+  grid-column: 2;
+}
+
+.progress {
+  grid-column: 3;
+  justify-self: end;
+}
+
 /* The word bar: the Word's Picture and one slot per letter. */
 .wordBar {
   justify-self: center;
@@ -16,9 +33,24 @@
   border: var(--border-width) solid var(--color-line);
   border-radius: var(--radius-m);
   background: var(--color-panel);
+  transition: box-shadow 200ms ease-out;
+}
+
+/* The Word is complete: a carrot ring, hopping slots and a dancing Picture. */
+.wordBar[data-complete="true"] {
+  box-shadow: 0 0 0 4px var(--color-carrot);
+}
+
+.wordBar[data-complete="true"] .slot {
+  animation: hop 450ms ease-in-out calc(var(--slot-index) * 70ms) 3;
+}
+
+.wordBar[data-complete="true"] .picture {
+  animation: party 600ms ease-in-out 2;
 }
 
 .picture {
+  display: inline-block;
   font-size: clamp(32px, 9vmin, 52px);
   line-height: 1;
 }
@@ -52,6 +84,14 @@
   color: var(--color-ink-soft);
 }
 
+/* The Hint: the next needed letter glows, as its tiles do in the meadow. */
+.wordBar[data-hint="true"] .slot[data-slot="next"] {
+  border-style: solid;
+  background: var(--color-sun);
+  color: var(--color-ink);
+  animation: glow 900ms ease-in-out infinite alternate;
+}
+
 .slot[data-slot="filled"] {
   border-color: var(--color-carrot);
   background: var(--color-carrot);
@@ -65,9 +105,24 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .slot[data-slot="filled"] {
-    animation: none;
+@keyframes hop {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes party {
+  25% {
+    transform: rotate(-14deg) scale(1.15);
+  }
+  75% {
+    transform: rotate(14deg) scale(1.15);
+  }
+}
+
+@keyframes glow {
+  to {
+    transform: scale(1.12);
   }
 }
 
@@ -78,7 +133,98 @@
   overflow: hidden;
 }
 
+/* The canvas, and the DOM parts drawn over it. */
+.stage {
+  position: relative;
+}
+
 .canvas {
   display: block;
   border-radius: var(--radius-m);
+}
+
+/* The Challenge Celebration's springy sign: the Word and its Picture.
+   Sizes are in world pixels (the prototype's 320 x 80 card at y 92). */
+.sign {
+  --px: calc(var(--meadow-scale, 1) * 1px);
+  position: absolute;
+  top: calc(52 * var(--px));
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(16 * var(--px));
+  min-width: calc(320 * var(--px));
+  height: calc(80 * var(--px));
+  padding-inline: calc(24 * var(--px));
+  border: calc(3 * var(--px)) solid var(--color-line);
+  border-radius: calc(16 * var(--px));
+  background: color-mix(in srgb, var(--color-panel) 94%, transparent);
+  pointer-events: none;
+  translate: -50% 0;
+  animation:
+    sign-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    sign-wobble 1s linear,
+    sign-fade 500ms linear 1.3s forwards;
+}
+
+.signPicture {
+  font-size: calc(42 * var(--px));
+  line-height: 1;
+}
+
+.signWord {
+  font-family: var(--font-display);
+  font-size: calc(38 * var(--px));
+  line-height: 1;
+  color: var(--color-carrot);
+}
+
+@keyframes sign-pop {
+  from {
+    scale: 0;
+  }
+}
+
+@keyframes sign-wobble {
+  0% {
+    rotate: 0deg;
+  }
+  12% {
+    rotate: 2.5deg;
+  }
+  26% {
+    rotate: -2deg;
+  }
+  40% {
+    rotate: 1.4deg;
+  }
+  55% {
+    rotate: -0.9deg;
+  }
+  70% {
+    rotate: 0.5deg;
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+@keyframes sign-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot[data-slot="filled"],
+  .wordBar[data-complete="true"] .slot,
+  .wordBar[data-complete="true"] .picture,
+  .wordBar[data-hint="true"] .slot[data-slot="next"] {
+    animation: none;
+  }
+
+  .sign {
+    animation: sign-fade 500ms linear 1.3s forwards;
+  }
 }
