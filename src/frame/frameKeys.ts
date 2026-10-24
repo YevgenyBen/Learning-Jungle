@@ -1,16 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { hasModifierKey } from "@/menus/focus";
 
 /** The shared main-action key; a Game may add its own (GameDefinition.mainActionKeys). */
 const MAIN_ACTION_KEYS = ["Space"];
-const PAUSE_KEYS = ["Escape", "KeyP"];
-const RESTART_KEYS = ["Enter", "NumpadEnter"];
-const MUTE_KEYS = ["KeyM"];
-const NIQQUD_KEYS = ["KeyN"];
-const DIFFICULTY_KEYS = ["KeyD"];
-/** Moving between Choices. Hebrew reads right to left, so left is "next". */
-const MOVE_KEYS: Record<string, "next" | "previous"> = { ArrowLeft: "next", ArrowRight: "previous" };
 
 export interface FrameKeyHandlers {
   /** The main action went down (true) or up (false). */
@@ -23,6 +17,20 @@ export interface FrameKeyHandlers {
   /** Moves on to the next Difficulty option. */
   nextDifficulty(): void;
 }
+
+/** What every other Frame key does (KeyboardEvent.code -> action), on its way down. */
+const KEY_ACTIONS: ReadonlyMap<string, (on: FrameKeyHandlers) => void> = new Map([
+  // Moving between Choices. Hebrew reads right to left, so left is "next".
+  ["ArrowLeft", (on) => on.move("next")],
+  ["ArrowRight", (on) => on.move("previous")],
+  ["Escape", (on) => on.togglePause()],
+  ["KeyP", (on) => on.togglePause()],
+  ["Enter", (on) => on.restart()],
+  ["NumpadEnter", (on) => on.restart()],
+  ["KeyM", (on) => on.toggleMute()],
+  ["KeyN", (on) => on.toggleNiqqud()],
+  ["KeyD", (on) => on.nextDifficulty()],
+]);
 
 /**
  * The shared key layout of every Game: Space (and the Game's own extra
@@ -41,7 +49,7 @@ export function useFrameKeys(handlers: FrameKeyHandlers, gameMainKeys: readonly 
   useEffect(() => {
     const mainKeys = new Set([...MAIN_ACTION_KEYS, ...extraKeys.split(" ").filter(Boolean)]);
     const onKey = (event: KeyboardEvent) => {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (hasModifierKey(event)) return;
       const { code } = event;
       const down = event.type === "keydown";
       const on = latest.current;
@@ -50,19 +58,10 @@ export function useFrameKeys(handlers: FrameKeyHandlers, gameMainKeys: readonly 
         if (!event.repeat) on.main(down);
         return;
       }
-      const direction = MOVE_KEYS[code];
-      const known =
-        direction ||
-        [PAUSE_KEYS, RESTART_KEYS, MUTE_KEYS, NIQQUD_KEYS, DIFFICULTY_KEYS].some((keys) => keys.includes(code));
-      if (!known) return;
+      const action = KEY_ACTIONS.get(code);
+      if (!action) return;
       event.preventDefault();
-      if (!down || event.repeat) return;
-      if (direction) on.move(direction);
-      else if (PAUSE_KEYS.includes(code)) on.togglePause();
-      else if (RESTART_KEYS.includes(code)) on.restart();
-      else if (MUTE_KEYS.includes(code)) on.toggleMute();
-      else if (NIQQUD_KEYS.includes(code)) on.toggleNiqqud();
-      else on.nextDifficulty();
+      if (down && !event.repeat) action(on);
     };
     window.addEventListener("keydown", onKey);
     window.addEventListener("keyup", onKey);
