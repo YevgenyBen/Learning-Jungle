@@ -1,5 +1,5 @@
 import { CONSONANTS, MARK, SOUND_PRONUNCIATIONS, VOWELS } from "./data/letterSounds";
-import type { LetterSound, SpokenSound } from "./types";
+import type { LetterSound, SpokenItem } from "./types";
 
 /** The Content Bank's Letter Sound queries (part of `ContentBank`). */
 export interface LetterSoundQueries {
@@ -14,7 +14,7 @@ export interface LetterSoundQueries {
 
 /** Builds every Letter Sound from the consonant and vowel tables. */
 function buildLetterSounds(): LetterSound[] {
-  const sounds = new Map<string, SpokenSound>();
+  const sounds = new Map<string, SpokenItem>();
   const letterSounds: LetterSound[] = [];
 
   for (const consonant of CONSONANTS) {

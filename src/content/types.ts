@@ -75,12 +75,6 @@ export type Vowel = "a" | "e" | "i" | "o" | "u";
 /** A vowel mark a Letter Sound is written with. */
 export type VowelMark = "qamats" | "patah" | "tsere" | "segol" | "hiriq" | "holam" | "qubuts" | "shva";
 
-/**
- * How a Letter Sound is read aloud. Letter Sounds that sound the same share
- * one (בָּ and בַּ both point at `sound-ba`), so they share one Voice Clip.
- */
-export type SpokenSound = SpokenItem;
-
 /** A letter as written together with its vowel mark, such as בָּ. */
 export interface LetterSound {
   /** Stable identity: `letter-sound-` + letter form + vowel mark (`letter-sound-vet-patah`). */
@@ -92,8 +86,12 @@ export interface LetterSound {
   readonly mark: VowelMark;
   /** The vowel heard, or null for shva (the letter is read on its own). */
   readonly vowel: Vowel | null;
-  /** What is said aloud, shared with the Letter Sounds that sound the same. */
-  readonly sound: SpokenSound;
+  /**
+   * What is said aloud: a Spoken Item shared with the Letter Sounds that
+   * sound the same (בָּ and בַּ both point at `sound-ba`), so they share one
+   * Voice Clip.
+   */
+  readonly sound: SpokenItem;
 }
 
 /** A number from 0 to 100, said aloud in its feminine form. */
