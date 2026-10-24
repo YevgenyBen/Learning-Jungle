@@ -9,3 +9,5 @@ test-results/
 playwright-report/
 blob-report/
 .env*.local
+# The Azure Speech key for `npm run voice-clips` (covered above too; never commit it).
+.env.azure.local
