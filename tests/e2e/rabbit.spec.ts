@@ -54,7 +54,7 @@ test.describe("the rabbit Game", () => {
     await expect(wordBar(page).getByRole("img", { name: challenge.word.plain })).toBeVisible();
     await expect(slots(page)).toHaveCount(challenge.letters.length);
     await expect(slots(page).first()).toHaveAttribute("data-slot", "next");
-    await expect(slots(page).first()).toHaveText(challenge.letters[0].letter);
+    await expect(slots(page).first()).toHaveText(challenge.letters[0].marked);
     await expect(wordBar(page).locator('[data-slot="filled"]')).toHaveCount(0);
   });
 

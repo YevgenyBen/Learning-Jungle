@@ -610,6 +610,31 @@ describe("Niqqud", () => {
     completeWord(model);
     expect(letters(waitOutCelebration(model))).toBe("עגבניה");
   });
+  /** Every tile that comes in a few seconds of running without jumping: all spawned for the first letter. */
+  const tilesSeen = (model: RabbitModel) => {
+    const seen = new Map<number, Tile>();
+    for (let t = 0; t < 8; t += STEP) {
+      model.advance(STEP);
+      for (const tile of model.state().tiles) seen.set(tile.id, tile);
+    }
+    return [...seen.values()];
+  };
+
+  it("on: tiles show the needed letter as the Word marks it, and decoys with its vowel", () => {
+    const tiles = tilesSeen(tomatoModel(true));
+    expect(tiles.some((t) => t.letter === "ע")).toBe(true);
+    expect(tiles.some((t) => t.letter !== "ע")).toBe(true);
+    for (const t of tiles) {
+      if (t.letter === "ע") expect(t.marked).toBe("עַ");
+      else expect(contentBank.writtenLike(t.letter, "עַ")).toContain(t.marked);
+    }
+  });
+
+  it("off: tiles show the bare letter", () => {
+    const tiles = tilesSeen(tomatoModel(false));
+    expect(tiles.length).toBeGreaterThan(0);
+    for (const t of tiles) expect(t.marked).toBe(t.letter);
+  });
 });
 
 describe("changing the Difficulty of a running Game", () => {

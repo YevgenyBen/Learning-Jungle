@@ -71,8 +71,13 @@ const isRabbitDifficulty = (difficulty: string | undefined): difficulty is Rabbi
 export interface Tile {
   /** Unique within one model, for following a tile across snapshots. */
   readonly id: number;
-  /** The bare letter shown on the tile. */
+  /** The bare letter, what the Player matches. */
   readonly letter: string;
+  /**
+   * The letter as the tile shows it: with Niqqud on, the needed letter with
+   * its marks in the Word, and a decoy with the same vowel.
+   */
+  readonly marked: string;
   /** Centre of the tile. */
   readonly x: number;
   readonly y: number;
@@ -195,7 +200,7 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
   }
 
   const emit = (request: GameRequest) => requests.push(request);
-  const needed = () => challenge.letters[challenge.next].letter;
+  const needed = () => challenge.letters[challenge.next];
 
   function spawn(): void {
     while (spawnCursor < SPAWN_AHEAD) {
@@ -212,15 +217,16 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     // Slots that come up during a Celebration or after the Round stay empty.
     if (!playing()) return;
     const need = needed();
-    const pending = tiles.some((t) => !t.collected && t.letter === need && t.x > WORLD.rabbitX - PENDING_BEHIND);
+    const pending = tiles.some((t) => !t.collected && t.letter === need.letter && t.x > WORLD.rabbitX - PENDING_BEHIND);
     const y = WORLD.ground - between(random, TILE_HEIGHT.min, TILE_HEIGHT.max);
-    let letter: string | null = null;
+    let letter: SpelledLetter | null = null;
     if (!pending && random() < 0.85) letter = need;
     else if (random() < 0.4) letter = pickDecoy(need);
     if (letter === null) return;
     tiles.push({
       id: nextTileId++,
-      letter,
+      letter: letter.letter,
+      marked: letter.marked,
       x,
       y,
       bob: between(random, 0, 6),
@@ -231,15 +237,16 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     });
   }
 
-  function pickDecoy(need: string): string {
+  /** A random other letter, written with the needed letter's vowel. */
+  function pickDecoy(need: SpelledLetter): SpelledLetter {
     let letter: Letter;
     do letter = pick(random, decoys);
-    while (letter.letter === need);
-    return letter.letter;
+    while (letter.letter === need.letter);
+    return { letter: letter.letter, marked: pick(random, content.writtenLike(letter.letter, need.marked)) };
   }
 
   function touch(tile: MutableTile): void {
-    if (tile.letter !== needed()) {
+    if (tile.letter !== needed().letter) {
       // One gentle mistake per tile, however long the rabbit touches it.
       if (!tile.rejected) {
         mistakes++;

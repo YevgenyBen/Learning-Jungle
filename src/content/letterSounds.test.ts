@@ -121,3 +121,34 @@ describe("Letter Sounds", () => {
     }
   });
 });
+
+describe("writing a letter like another one", () => {
+  const nfc = (written: string) => written.normalize("NFC");
+  const like = (letter: string, other: string) => contentBank.writtenLike(letter, other);
+
+  it("gives the letter's Letter Sounds with the same vowel mark", () => {
+    expect(like("מ", "תַּ")).toEqual([nfc("מַ")]);
+    expect(like("ב", "עָ")).toEqual(expect.arrayContaining([nfc("בָּ"), nfc("בָ")]));
+    expect(like("ב", "עָ")).toHaveLength(2);
+    expect(like("ש", "גִ")).toEqual(expect.arrayContaining([nfc("שִׁ"), nfc("שִׂ")]));
+  });
+
+  it("copies only the vowel: dagesh and the shin and sin dots belong to their own letter", () => {
+    expect(like("ל", "בְּ")).toEqual([nfc("לְ")]);
+    expect(like("ר", "שֹׁ")).toEqual([nfc("רֹ")]);
+  });
+
+  it("counts a hataf as its full vowel and a shuruk as qubuts", () => {
+    expect(like("ל", "אֲ")).toEqual([nfc("לַ")]);
+    expect(like("ל", "אֱ")).toEqual([nfc("לֶ")]);
+    expect(like("ל", "חֳ")).toEqual([nfc("לָ")]);
+    expect(like("ל", "וּ")).toEqual([nfc("לֻ")]);
+  });
+
+  it("is the bare letter when there is no vowel to copy or the letter never takes it", () => {
+    expect(like("ל", "ה")).toEqual(["ל"]);
+    expect(like("ל", "יּ")).toEqual(["ל"]);
+    expect(like("ו", "מֹ")).toEqual(["ו"]);
+    expect(like("א", "לְ")).toEqual(["א"]);
+  });
+});

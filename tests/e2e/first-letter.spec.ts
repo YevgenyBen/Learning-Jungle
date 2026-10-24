@@ -61,7 +61,10 @@ test.describe("the first-letter Game", () => {
     await expect(pictureCard(page)).not.toContainText(word.plain);
     await expect(choices(page)).toHaveCount(state.choices.length);
     await expect(choice(page, state.challenge.letter)).toBeVisible();
-    for (const letter of letters(state)) await expect(choice(page, letter)).toHaveText(letter);
+    for (const id of state.choices) {
+      const { letter, marked } = state.perches.find((p) => p.id === id)!.sign!;
+      await expect(choice(page, letter)).toHaveText(marked);
+    }
   });
 
   test("tapping the right sign: the cat jumps onto it, the Word is celebrated and the next one comes", async ({ page }) => {

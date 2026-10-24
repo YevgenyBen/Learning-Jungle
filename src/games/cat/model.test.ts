@@ -323,4 +323,24 @@ describe("Difficulty: how many Choices", () => {
       expect(celebrated.first.startsWith(model.state().challenge.letter)).toBe(true);
     }
   });
+  it("with Niqqud on, the signs show the right letter as the Word marks it and decoys with its vowel", () => {
+    for (let seed = 1; seed <= 20; seed++) {
+      const state = create(seed, { difficulty: "four" }).state();
+      const first = contentBank.spelling(state.challenge.word, { niqqud: true }).letters[0];
+      expect(state.challenge.marked).toBe(first.marked);
+      for (let i = 0; i < state.choices.length; i++) {
+        const { letter, marked } = sign(state, i);
+        if (letter === state.challenge.letter) expect(marked).toBe(first.marked);
+        else expect(contentBank.writtenLike(letter, first.marked)).toContain(marked);
+      }
+    }
+  });
+
+  it("with Niqqud off, every sign shows the bare letter", () => {
+    for (let seed = 1; seed <= 20; seed++) {
+      const state = create(seed, { niqqud: false, difficulty: "four" }).state();
+      expect(state.challenge.marked).toBe(state.challenge.letter);
+      for (let i = 0; i < state.choices.length; i++) expect(sign(state, i).marked).toBe(sign(state, i).letter);
+    }
+  });
 });
