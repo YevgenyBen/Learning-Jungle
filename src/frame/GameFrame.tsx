@@ -14,6 +14,7 @@ import styles from "./GameFrame.module.css";
 import { createBrowserVoicePlayer, type VoicePlayerWithLog } from "@/voice/voicePlayer";
 import { createGameOutput, type GameOutput } from "./output";
 import { PauseScreen } from "./PauseScreen";
+import { RoundCelebration, useRoundOver } from "./RoundCelebration";
 import { installTestHook } from "./testHook";
 
 /** Longest time step per frame, so a stalled tab doesn't make the Game leap ahead. */
@@ -105,16 +106,24 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
   const act = (action: PlayerAction) => {
     if (!paused) running?.model.act(action);
   };
+  // Once the Round is over, the Round Celebration screen takes the keys:
+  // Enter and Space pick its focused choice instead of restarting or jumping.
+  const roundOver = useRoundOver(running?.frames);
 
   useFrameKeys(
     {
       main(down) {
+        if (roundOver) return;
         if (!paused) act({ kind: down ? "main-press" : "main-release" });
         else if (down) setPaused(false);
       },
       move: (direction) => act({ kind: "move", direction }),
-      togglePause,
-      restart,
+      togglePause: () => {
+        if (!roundOver) togglePause();
+      },
+      restart: () => {
+        if (!roundOver) restart();
+      },
       toggleMute,
     },
     game.mainActionKeys,
@@ -145,7 +154,8 @@ export function GameFrame<S extends GameState>({ game, name, backHref }: GameFra
       />
       <div className={styles.stage}>
         {running && <Play key={running.run} game={game} running={running} paused={paused} />}
-        {paused && <PauseScreen onResume={() => setPaused(false)} />}
+        {paused && !roundOver && <PauseScreen onResume={() => setPaused(false)} />}
+        {roundOver && <RoundCelebration onAnotherRound={restart} onBack={() => router.push(backHref)} />}
       </div>
     </main>
   );

@@ -1,0 +1,144 @@
+/* The Round Celebration screen covers the whole Game Frame; the Game stays
+   faintly visible behind it. */
+.screen {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding-block: max(var(--space-3), var(--safe-top)) max(var(--space-3), var(--safe-bottom));
+  padding-inline: max(var(--space-4), var(--safe-right)) max(var(--space-4), var(--safe-left));
+  background: color-mix(in srgb, var(--color-page) 70%, transparent);
+  animation: fade-in 250ms ease-out;
+}
+
+.screen:focus {
+  outline: none;
+}
+
+.card {
+  display: grid;
+  justify-items: center;
+  gap: clamp(var(--space-2), 2.5vmin, var(--space-4));
+  padding: clamp(var(--space-3), 4vmin, var(--space-6)) clamp(var(--space-5), 7vmin, var(--space-7));
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-l);
+  background: var(--color-panel);
+  box-shadow: 0 8px 0 var(--color-line);
+  animation: pop-in 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stars {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.star {
+  --star-size: clamp(36px, 10vmin, 64px);
+  width: var(--star-size);
+  height: var(--star-size);
+  background: var(--color-sun);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  animation: star-pop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.star:nth-child(2) {
+  --star-size: clamp(44px, 13vmin, 80px);
+  animation-delay: 120ms;
+}
+
+.star:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 9vmin, 64px);
+  line-height: 1;
+  color: var(--color-carrot);
+}
+
+.choices {
+  display: flex;
+  gap: clamp(var(--space-4), 6vmin, var(--space-7));
+}
+
+.choice {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-l);
+  background: none;
+  cursor: pointer;
+}
+
+.choiceIcon {
+  display: grid;
+  place-items: center;
+  width: clamp(80px, 22vmin, 150px);
+  height: clamp(80px, 22vmin, 150px);
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-l);
+  background: var(--color-panel);
+  box-shadow: 0 6px 0 var(--color-line);
+  font-size: clamp(40px, 11vmin, 76px);
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 120ms ease-out, box-shadow 120ms ease-out;
+}
+
+.anotherRound .choiceIcon {
+  background: var(--color-grass);
+  color: var(--color-panel);
+}
+
+.choiceLabel {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 5vmin, 34px);
+  line-height: 1.1;
+}
+
+.choice:active .choiceIcon {
+  transform: translateY(5px);
+  box-shadow: 0 1px 0 var(--color-line);
+}
+
+@media (hover: hover) {
+  .choice:hover .choiceIcon {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 0 var(--color-line);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes star-pop {
+  from {
+    transform: scale(0) rotate(-90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .card,
+  .star {
+    animation: none;
+  }
+}

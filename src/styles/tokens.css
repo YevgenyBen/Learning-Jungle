@@ -45,6 +45,8 @@
 
   /* Sizes: nothing a finger presses is smaller than --touch-min */
   --touch-min: 64px;
+  /* Parent-only controls are smaller: big enough for a grown-up finger */
+  --touch-parent: 48px;
   --icon-choice: clamp(120px, 26vmin, 220px);
   --focus-ring: 6px;
 

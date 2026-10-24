@@ -41,6 +41,18 @@ const COLLECTED_FADE = 1 / 3; // s
 
 export const WORDS_PER_ROUND = 3;
 
+/** After a Word is complete, this long passes with no tiles spawned or collected. */
+export const CELEBRATION_PAUSE = 1.6; // s
+
+/**
+ * How long the latest Challenge Celebration stays in the state for drawing:
+ * the sign and the dance last 1.8 s, the last confetti falls by 2.6 s.
+ */
+const CELEBRATION_SHOWN = 2.6; // s
+
+/** After this many wrong letters in one Challenge, the Hint highlights the needed letter. */
+const HINT_AFTER_MISTAKES = 2;
+
 export const SPEEDS ={ slow: 170, medium: 280, fast: 400 } as const; // px/s
 
 export type RabbitDifficulty = "automatic" | keyof typeof SPEEDS;
@@ -61,6 +73,21 @@ export interface Tile {
   readonly sinceCollected: number;
   /** Touched while it was not the needed letter: it stays where it is. */
   readonly rejected: boolean;
+  /** Seconds since it was touched as a wrong letter (0 if it wasn't), for its gentle shake. */
+  readonly sinceRejected: number;
+}
+
+/** The latest Challenge Celebration, for drawing its sign, dance and confetti. */
+export interface CelebratedWord {
+  readonly word: Word;
+  /** The spelling the Word was built in. */
+  readonly text: string;
+  /** Which Word of the Round it was (1 for the first), so each Celebration differs. */
+  readonly number: number;
+  /** Seconds since the Word was completed. */
+  readonly since: number;
+  /** Where the rabbit's feet were when it completed the Word: the star burst starts there. */
+  readonly rabbitY: number;
 }
 
 export interface RabbitState extends GameState {
@@ -89,6 +116,8 @@ export interface RabbitState extends GameState {
     /** Index of the next needed letter: slots before it are filled. */
     readonly next: number;
   };
+  /** Kept a little past the Celebration's pause, until it has been fully drawn. */
+  readonly celebrated: CelebratedWord | null;
 }
 
 export type RabbitModel = GameModel<RabbitState>;
@@ -102,6 +131,7 @@ interface MutableTile {
   collected: boolean;
   sinceCollected: number;
   rejected: boolean;
+  sinceRejected: number;
 }
 
 export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> = ({
@@ -121,6 +151,14 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
   const rabbit = { y: WORLD.ground, vy: 0, onGround: true, squash: 0 };
   let jumpBuffer = 0;
   let completed = 0;
+  /** Seconds left of the Challenge Celebration's pause; 0 when none is running. */
+  let celebrating = 0;
+  let roundOver = false;
+  /** Wrong letters touched in the current Challenge. */
+  let mistakes = 0;
+  let celebrated: CelebratedWord | null = null;
+  /** Letters come and can be collected only between Celebrations, while the Round lasts. */
+  const playing = () => celebrating === 0 && !roundOver;
   let requests: GameRequest[] = [];
 
   let word: Word;
@@ -152,6 +190,8 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
   // At most one needed tile is ever ahead of the rabbit; once it has passed,
   // the next slot very likely brings it again. Other slots get a decoy or stay empty.
   function maybeTile(x: number): void {
+    // Slots that come up during a Celebration or after the Round stay empty.
+    if (!playing()) return;
     const need = needed();
     const pending = tiles.some((t) => !t.collected && t.letter === need && t.x > WORLD.rabbitX - PENDING_BEHIND);
     const y = WORLD.ground - between(random, TILE_HEIGHT.min, TILE_HEIGHT.max);
@@ -168,6 +208,7 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
       collected: false,
       sinceCollected: 0,
       rejected: false,
+      sinceRejected: 0,
     });
   }
 
@@ -180,7 +221,11 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
 
   function touch(tile: MutableTile): void {
     if (tile.letter !== needed()) {
-      if (!tile.rejected) emit({ kind: "sound", effect: "mistake" });
+      // One gentle mistake per tile, however long the rabbit touches it.
+      if (!tile.rejected) {
+        mistakes++;
+        emit({ kind: "sound", effect: "mistake" });
+      }
       tile.rejected = true;
       return;
     }
@@ -193,13 +238,36 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
       return;
     }
     completed++;
+    // The Challenge has ended, and its Hint with it.
+    mistakes = 0;
     emit({ kind: "say", item: word, interrupt: false });
     emit({ kind: "sound", effect: "challenge-complete" });
-    startChallenge();
+    emit({ kind: "celebrate", celebration: "challenge" });
+    celebrating = CELEBRATION_PAUSE;
+    celebrated = { word, text, number: completed, since: 0, rabbitY: rabbit.y };
+  }
+
+  /** After a Word's Celebration: the next Word, or the end of the Round. */
+  function endChallenge(): void {
+    if (completed < WORDS_PER_ROUND) {
+      startChallenge();
+      return;
+    }
+    roundOver = true;
+    emit({ kind: "celebrate", celebration: "round" });
+    emit({ kind: "sound", effect: "round-complete" });
   }
 
   function step(dt: number): void {
     time += dt;
+    if (celebrated) {
+      celebrated = { ...celebrated, since: celebrated.since + dt };
+      if (celebrated.since >= CELEBRATION_SHOWN) celebrated = null;
+    }
+    if (celebrating > 0) {
+      celebrating = Math.max(0, celebrating - dt);
+      if (celebrating === 0) endChallenge();
+    }
     const dx = speed * dt;
     distance += dx;
     spawnCursor -= dx;
@@ -207,6 +275,7 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
       t.x -= dx;
       t.bob += dt;
       if (t.collected) t.sinceCollected += dt;
+      if (t.rejected) t.sinceRejected += dt;
     }
     tiles = tiles.filter((t) => t.x > CULL_BEHIND && !(t.collected && t.sinceCollected >= COLLECTED_FADE));
     spawn();
@@ -231,6 +300,8 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     rabbit.squash = Math.max(0, rabbit.squash - dt * 6);
 
     for (const t of tiles) {
+      // Nothing is collected during a Celebration or after the Round.
+      if (!playing()) break;
       if (t.collected) continue;
       const inReach =
         Math.abs(t.x - WORLD.rabbitX) < REACH.half &&
@@ -242,17 +313,17 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
 
   return {
     state: () => ({
-      // Rounds come with #6: until then Words keep coming after the third.
       progress: { completed, total: WORDS_PER_ROUND },
-      hint: false,
-      celebration: null,
-      roundOver: false,
+      hint: mistakes >= HINT_AFTER_MISTAKES,
+      celebration: roundOver ? "round" : celebrating > 0 ? "challenge" : null,
+      roundOver,
       time,
       distance,
       speed,
       rabbit: { x: WORLD.rabbitX, ...rabbit },
       tiles: tiles.map((t) => ({ ...t })),
       challenge: { word, text, letters, next },
+      celebrated,
     }),
     act: (action) => {
       if (action.kind === "main-press") {
@@ -281,10 +352,18 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
 /** Draws Words in a shuffled order, without repeats until every Word has come up. */
 function createWordBag(all: readonly Word[], random: Random) {
   let bag: Word[] = [];
+  let last: Word | undefined;
   return {
     next(): Word {
-      if (bag.length === 0) bag = shuffled(random, all);
-      return bag.pop()!;
+      if (bag.length === 0) {
+        bag = shuffled(random, all);
+        // A fresh bag must not start with the Word that ended the last one.
+        if (bag.length > 1 && bag[bag.length - 1] === last) {
+          [bag[0], bag[bag.length - 1]] = [bag[bag.length - 1], bag[0]];
+        }
+      }
+      last = bag.pop()!;
+      return last;
     },
   };
 }

@@ -14,16 +14,20 @@ const JUMP_WHEN_AHEAD = 30;
  */
 export const rabbitTestDriver: TestDriver<RabbitState> = {
   solveStep(model: GameModel<RabbitState>) {
-    const start = model.state();
-    const { word } = start.challenge;
-    const done = (s: RabbitState) => s.challenge.word !== word || s.challenge.next > start.challenge.next;
-
     let elapsed = 0;
     const tick = () => {
       if (elapsed > GIVE_UP_AFTER) throw new Error("rabbit test driver: the needed letter never came");
       model.advance(STEP);
       elapsed += STEP;
     };
+
+    // A Player waits for a Challenge Celebration to end before the next Word.
+    while (model.state().celebration === "challenge") tick();
+    if (model.state().roundOver) throw new Error("rabbit test driver: the Round is over");
+
+    const start = model.state();
+    const { word } = start.challenge;
+    const done = (s: RabbitState) => s.challenge.word !== word || s.challenge.next > start.challenge.next;
 
     while (!done(model.state())) {
       const s = model.state();

@@ -1,43 +1,83 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { WordPicture } from "@/content/WordPicture";
 import { useFrameSelector, type Frames } from "@/frame/frames";
+import { RoundProgress } from "@/frame/RoundProgress";
 import type { GameViewProps } from "../definition";
-import { drawMeadow, type Fonts } from "./draw";
-import { WORLD, type RabbitState } from "./model";
+import { drawMeadow, SIGN_SECONDS, type Fonts } from "./draw";
+import { WORLD, type CelebratedWord, type RabbitState } from "./model";
 import styles from "./RabbitView.module.css";
 
-/** The rabbit Game's drawing: the word bar above the meadow. */
+/** The rabbit Game's drawing: the word bar and Round progress above the meadow. */
 export function RabbitView({ frames }: GameViewProps<RabbitState>) {
   return (
     <div className={styles.view}>
-      <WordBar frames={frames} />
+      <div className={styles.top}>
+        <WordBar frames={frames} />
+        <RoundProgress frames={frames} className={styles.progress} />
+      </div>
       <Meadow frames={frames} />
     </div>
   );
 }
 
-type Challenge = RabbitState["challenge"];
-const selectChallenge = (state: RabbitState) => state.challenge;
-const sameChallenge = (a: Challenge, b: Challenge) =>
-  a.word.id === b.word.id && a.next === b.next && a.text === b.text;
+interface Bar {
+  readonly challenge: RabbitState["challenge"];
+  readonly hint: boolean;
+}
+const selectBar = (state: RabbitState): Bar => ({ challenge: state.challenge, hint: state.hint });
+const sameBar = (a: Bar, b: Bar) =>
+  a.hint === b.hint &&
+  a.challenge.word.id === b.challenge.word.id &&
+  a.challenge.next === b.challenge.next &&
+  a.challenge.text === b.challenge.text;
 
 function WordBar({ frames }: { frames: Frames<RabbitState> }) {
-  const challenge = useFrameSelector(frames, selectChallenge, sameChallenge);
+  const { challenge, hint } = useFrameSelector(frames, selectBar, sameBar);
+  const complete = challenge.next >= challenge.letters.length;
   return (
-    <div className={styles.wordBar} data-testid="word-bar" data-word={challenge.word.id}>
+    <div
+      className={styles.wordBar}
+      data-testid="word-bar"
+      data-word={challenge.word.id}
+      data-complete={complete}
+      data-hint={hint}
+    >
       <WordPicture word={challenge.word} className={styles.picture} />
       <ol className={styles.slots} aria-label={challenge.text}>
         {challenge.letters.map((letter, i) => {
           const slot = i < challenge.next ? "filled" : i === challenge.next ? "next" : "empty";
           return (
-            <li key={`${challenge.word.id}-${i}`} className={styles.slot} data-slot={slot}>
+            <li
+              key={`${challenge.word.id}-${i}`}
+              className={styles.slot}
+              data-slot={slot}
+              style={{ "--slot-index": i } as CSSProperties}
+            >
               {slot === "filled" ? letter.marked : letter.letter}
             </li>
           );
         })}
       </ol>
+    </div>
+  );
+}
+
+/** The Word whose sign is up, if any. */
+type Sign = Pick<CelebratedWord, "word" | "text" | "number"> | null;
+const selectSign = (state: RabbitState): Sign =>
+  state.celebrated && state.celebrated.since < SIGN_SECONDS ? state.celebrated : null;
+const sameSign = (a: Sign, b: Sign) => a?.number === b?.number;
+
+/** The springy sign with the completed Word and its Picture, during its Celebration. */
+function CelebrationSign({ frames }: { frames: Frames<RabbitState> }) {
+  const sign = useFrameSelector(frames, selectSign, sameSign);
+  if (!sign) return null;
+  return (
+    <div key={sign.number} className={styles.sign} data-testid="celebration-sign">
+      <WordPicture word={sign.word} className={styles.signPicture} />
+      <span className={styles.signWord}>{sign.text}</span>
     </div>
   );
 }
@@ -72,6 +112,8 @@ function Meadow({ frames }: { frames: Frames<RabbitState> }) {
       const cssHeight = Math.floor(WORLD.height * scale);
       surface.style.width = `${cssWidth}px`;
       surface.style.height = `${cssHeight}px`;
+      // Lets the DOM parts over the meadow (the sign) size themselves in world pixels.
+      element.style.setProperty("--meadow-scale", String(cssWidth / WORLD.width));
       surface.width = Math.max(1, Math.round(cssWidth * ratio));
       surface.height = Math.max(1, Math.round(cssHeight * ratio));
       draw(frames.current());
@@ -88,7 +130,10 @@ function Meadow({ frames }: { frames: Frames<RabbitState> }) {
 
   return (
     <div ref={box} className={styles.meadow}>
-      <canvas ref={canvas} className={styles.canvas} data-testid="meadow" aria-hidden="true" />
+      <div className={styles.stage}>
+        <canvas ref={canvas} className={styles.canvas} data-testid="meadow" aria-hidden="true" />
+        <CelebrationSign frames={frames} />
+      </div>
     </div>
   );
 }

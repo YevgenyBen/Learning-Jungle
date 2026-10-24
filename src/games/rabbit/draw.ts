@@ -3,9 +3,12 @@
  * logical coordinates (WORLD). Shapes and colours are ported from the
  * bunny-hop.html prototype. Drawing only: nothing here changes the state.
  */
-import { WORLD, type RabbitState, type Tile } from "./model";
+import { WORLD, type CelebratedWord, type RabbitState, type Tile } from "./model";
 
 const { width: W, height: H, ground: GROUND } = WORLD;
+
+/** How long the Challenge Celebration's sign and the rabbit's happy dance last. */
+export const SIGN_SECONDS = 1.8;
 
 export interface Fonts {
   /** CSS font-family list for letters (the display font). */
@@ -25,8 +28,95 @@ export function drawMeadow(ctx: CanvasRenderingContext2D, state: RabbitState, fo
   drawHills(ctx, state.distance, 0.2, 215, 16, 6, 95, 37, "#a8d78f");
   drawHills(ctx, state.distance, 0.45, 248, 12, 5, 70, 29, "#86c470");
   drawGround(ctx, state.distance);
-  for (const tile of state.tiles) drawTile(ctx, tile, fonts);
+  // The Hint highlights the needed letter's tiles.
+  const hinted = state.hint ? state.challenge.letters[state.challenge.next]?.letter : undefined;
+  for (const tile of state.tiles) drawTile(ctx, tile, fonts, tile.letter === hinted, state.time);
+  if (state.celebrated) drawParty(ctx, state.celebrated);
   drawRabbit(ctx, state);
+}
+
+const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
+
+/** A small seeded generator, so each Celebration's particles stay put from frame to frame. */
+function seeded(seed: number) {
+  let a = (seed * 0x9e3779b9) >>> 0;
+  return (min: number, max: number) => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return min + (((t ^ (t >>> 14)) >>> 0) / 4294967296) * (max - min);
+  };
+}
+
+const CONFETTI = ["#e8742b", "#f3c12b", "#5aa34a", "#f2a3b0", "#79c2e6"];
+
+/**
+ * The Challenge Celebration's star burst from the rabbit and confetti over
+ * the whole meadow (the prototype's party()). Each particle flies on its
+ * own arc, worked out from the time since the Word was completed.
+ */
+function drawParty(ctx: CanvasRenderingContext2D, celebrated: CelebratedWord) {
+  const t = celebrated.since;
+  const rand = seeded(celebrated.number);
+  const particle = (
+    x: number,
+    y: number,
+    vx: number,
+    vy: number,
+    g: number,
+    life: number,
+    r: number,
+    rot: number,
+    spin: number,
+    color: string,
+    star: boolean,
+  ) => {
+    if (t >= life) return;
+    const px = x + vx * t;
+    const py = y + vy * t + (g * t * t) / 2;
+    ctx.globalAlpha = Math.min(1, (life - t) * 1.6);
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(rot + spin * t);
+    if (star) {
+      ctx.beginPath();
+      for (let i = 0; i < 10; i++) {
+        const a = (i * Math.PI) / 5;
+        const rr = i % 2 ? r * 0.45 : r;
+        ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+      }
+      ctx.closePath();
+      ctx.fill();
+    } else {
+      ctx.fillRect(-r, -r / 2, r * 2, r);
+    }
+    ctx.restore();
+  };
+
+  for (let i = 0; i < 14; i++) {
+    const a = rand(0, Math.PI * 2);
+    const v = rand(150, 280);
+    const life = rand(0.9, 1.3);
+    const r = rand(7, 11);
+    const rot = rand(0, 6);
+    const spin = rand(-6, 6);
+    const color = i % 2 ? "#f3c12b" : "#e8742b";
+    particle(WORLD.rabbitX, celebrated.rabbitY - 40, Math.cos(a) * v, Math.sin(a) * v - 140, 320, life, r, rot, spin, color, true);
+  }
+  for (let i = 0; i < 80; i++) {
+    const x = rand(0, W);
+    const y = rand(-140, -10);
+    const vx = rand(-30, 30);
+    const vy = rand(60, 160);
+    const life = rand(1.8, 2.6);
+    const r = rand(3, 5);
+    const rot = rand(0, 6);
+    const spin = rand(-8, 8);
+    particle(x, y, vx, vy, 120, life, r, rot, spin, CONFETTI[i % CONFETTI.length], false);
+  }
+  ctx.globalAlpha = 1;
 }
 
 function ellipse(ctx: CanvasRenderingContext2D, x: number, y: number, rx: number, ry: number, rot = 0) {
@@ -150,22 +240,33 @@ function drawGround(ctx: CanvasRenderingContext2D, scroll: number) {
   }
 }
 
-function drawTile(ctx: CanvasRenderingContext2D, tile: Tile, fonts: Fonts) {
+function drawTile(ctx: CanvasRenderingContext2D, tile: Tile, fonts: Fonts, hinted: boolean, time: number) {
   const bob = Math.sin(tile.bob * 4) * 4;
   // A collected tile floats up, grows and fades away in a third of a second.
   const fade = tile.collected ? Math.min(1, tile.sinceCollected * 3) : 0;
+  // A wrong letter gives a small, soft shake and turns quiet; it stays where it is.
+  const shake = tile.rejected ? Math.sin(tile.sinceRejected * 40) * 4 * Math.max(0, 1 - tile.sinceRejected / 0.4) : 0;
+  const quiet = tile.rejected && !tile.collected;
   ctx.save();
   ctx.globalAlpha = Math.max(0, 1 - fade);
-  ctx.translate(tile.x, tile.y + bob - fade * 30);
+  ctx.translate(tile.x + shake, tile.y + bob - fade * 30);
   ctx.scale(1 + fade * 0.4, 1 + fade * 0.4);
+  if (hinted && !tile.collected) {
+    // The Hint: a warm, pulsing glow around the needed letter.
+    const pulse = 0.5 + 0.5 * Math.sin(time * 6);
+    ctx.fillStyle = `rgba(245, 197, 66, ${0.45 + 0.35 * pulse})`;
+    ctx.beginPath();
+    ctx.roundRect(-27 - pulse * 3, -27 - pulse * 3, 54 + pulse * 6, 54 + pulse * 6, 14);
+    ctx.fill();
+  }
   ctx.lineWidth = 2.5;
-  ctx.strokeStyle = INK;
-  ctx.fillStyle = tile.collected ? "#e8742b" : "#fffaf0";
+  ctx.strokeStyle = quiet ? "#8a948e" : INK;
+  ctx.fillStyle = tile.collected ? "#e8742b" : hinted ? "#fff1b8" : quiet ? "#ece8df" : "#fffaf0";
   ctx.beginPath();
   ctx.roundRect(-19, -19, 38, 38, 9);
   ctx.fill();
   ctx.stroke();
-  ctx.fillStyle = tile.collected ? "#ffffff" : INK;
+  ctx.fillStyle = tile.collected ? "#ffffff" : quiet ? "#8a948e" : INK;
   ctx.font = `400 28px ${fonts.display}`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -186,6 +287,18 @@ function drawRabbit(ctx: CanvasRenderingContext2D, state: RabbitState) {
 
   ctx.save();
   ctx.translate(r.x, r.y);
+
+  // The happy dance after a Word: a backflip, then a few bounces that settle.
+  // Drawing only: where the rabbit really is (for collecting) doesn't change.
+  const dance = state.celebrated && state.celebrated.since < SIGN_SECONDS ? state.celebrated.since : null;
+  if (dance !== null) {
+    ctx.translate(0, -Math.abs(Math.sin(dance * 9)) * 14 * Math.max(0, 1 - dance / 1.4));
+    if (dance < 0.5) {
+      ctx.translate(0, -35);
+      ctx.rotate(-easeOut(dance / 0.5) * Math.PI * 2);
+      ctx.translate(0, 35);
+    }
+  }
 
   // squash on landing, stretch while rising
   let sx = 1;
@@ -233,15 +346,24 @@ function drawRabbit(ctx: CanvasRenderingContext2D, state: RabbitState) {
   ctx.beginPath();
   ctx.ellipse(22, -66, 3, 15, 0.05 - earTilt, 0, Math.PI * 2);
   ctx.fill();
-  // eye, nose, cheek
-  ctx.fillStyle = INK;
-  ctx.beginPath();
-  ctx.arc(27, -45, 2.8, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "#ffffff";
-  ctx.beginPath();
-  ctx.arc(28, -46, 0.9, 0, Math.PI * 2);
-  ctx.fill();
+  // eye (a happy "^" and a smile while dancing), nose, cheek
+  if (dance !== null) {
+    ctx.beginPath();
+    ctx.arc(27, -43, 3.5, Math.PI * 1.15, Math.PI * 1.85);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(32, -37, 3.5, 0.3, Math.PI - 0.3);
+    ctx.stroke();
+  } else {
+    ctx.fillStyle = INK;
+    ctx.beginPath();
+    ctx.arc(27, -45, 2.8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(28, -46, 0.9, 0, Math.PI * 2);
+    ctx.fill();
+  }
   ctx.fillStyle = pink;
   ctx.beginPath();
   ctx.arc(36.5, -40, 2.6, 0, Math.PI * 2);

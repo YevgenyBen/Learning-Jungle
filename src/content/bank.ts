@@ -18,6 +18,8 @@ import type {
 export interface ContentBank extends LetterSoundQueries, NumberQueries {
   /** Every Word, or only those in one Category. */
   words(filter?: { readonly category?: Category }): readonly Word[];
+  /** The Words whose spelling (with or without Niqqud) starts with a letter. */
+  wordsStartingWith(letter: string): readonly Word[];
   /** A Word's spelling for a Niqqud setting, split into its letters. */
   spelling(word: Word, setting: NiqqudSetting): Spelling;
   /** Every letter, final forms included, in alphabet order. */
@@ -50,7 +52,7 @@ function createContentBank(): ContentBank {
     voweled: data.voweled,
     plain: data.plain,
     category: data.category,
-    picture: { emoji: data.emoji },
+    picture: { src: `/pictures/${data.id}.svg` },
   }));
 
   const letters: readonly Letter[] = LETTERS.map((data) => ({
@@ -68,6 +70,7 @@ function createContentBank(): ContentBank {
     ...createNumberQueries(),
     words: (filter) =>
       filter?.category ? words.filter((w) => w.category === filter.category) : words,
+    wordsStartingWith: (letter) => words.filter((w) => splitLetters(w.plain)[0]?.letter === letter),
     spelling: (word, { niqqud }) => {
       const text = niqqud ? word.voweled : word.plain;
       return { text, letters: splitLetters(text) };
