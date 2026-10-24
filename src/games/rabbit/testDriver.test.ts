@@ -27,7 +27,27 @@ describe("the rabbit Game's test driver", () => {
       const length = model.state().challenge.letters.length;
       for (let i = 0; i < length; i++) rabbitTestDriver.solveStep(model);
       expect(model.state().progress.completed).toBe(1);
-      expect(model.state().challenge.next).toBe(0);
+      expect(model.state().celebration).toBe("challenge");
+    });
+
+    it(`a step during the Challenge Celebration waits for the next Word and collects its first letter (seed ${seed})`, () => {
+      const model = create(seed);
+      const first = model.state().challenge.word;
+      const length = model.state().challenge.letters.length;
+      for (let i = 0; i < length; i++) rabbitTestDriver.solveStep(model);
+
+      rabbitTestDriver.solveStep(model);
+      const state = model.state();
+      expect(state.challenge.word).not.toBe(first);
+      expect(state.challenge.next).toBe(1);
     });
   }
+
+  it("completes a whole Round, and then has no step left to make", () => {
+    const model = create(1);
+    while (model.state().progress.completed < 3) rabbitTestDriver.solveStep(model);
+    model.advance(2);
+    expect(model.state().roundOver).toBe(true);
+    expect(() => rabbitTestDriver.solveStep(model)).toThrow(/Round is over/);
+  });
 });

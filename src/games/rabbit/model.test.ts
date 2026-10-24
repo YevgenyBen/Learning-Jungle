@@ -70,6 +70,28 @@ function jumpUnder(model: RabbitModel, id: number, requests: GameRequest[] = [])
 const says = (requests: GameRequest[]) =>
   requests.flatMap((r) => (r.kind === "say" ? [r.item.voweledText] : []));
 
+/**
+ * Collects the current Word's letters one by one, as a careful Player would,
+ * and returns the moment the Word is complete (mid-jump, under its last letter).
+ */
+function completeWord(model: RabbitModel, requests: GameRequest[] = []): RabbitState {
+  const { word, letters, next } = model.state().challenge;
+  for (let i = next; i < letters.length - 1; i++) {
+    const need = waitForTile(model, (t, s) => s.challenge.word === word && t.letter === neededLetter(s), requests);
+    jumpUnder(model, need.id, requests);
+  }
+  const last = waitForTile(model, (t, s) => s.challenge.word === word && t.letter === neededLetter(s), requests);
+  runUntil(model, (s) => ahead(s, tile(s, last.id)!) < 30, requests);
+  model.act({ kind: "main-press" });
+  const complete = runUntil(model, (s) => s.challenge.next === s.challenge.letters.length, requests);
+  model.act({ kind: "main-release" });
+  return complete;
+}
+
+/** Lets the Challenge Celebration play out, so the next Word has started. */
+const waitOutCelebration = (model: RabbitModel, requests: GameRequest[] = []) =>
+  runUntil(model, (s) => s.celebration !== "challenge", requests);
+
 describe("the rabbit running across the meadow", () => {
   it("passes under every letter tile without collecting it when the Player never jumps", () => {
     const model = create();
@@ -132,16 +154,14 @@ describe("collecting letters", () => {
     expect(model.state().challenge.next).toBe(1);
   });
 
-  it("completing the Word says it after its last Letter Name and starts the next Word", () => {
+  it("completing the Word says it after its last Letter Name and, after its Celebration, starts the next Word", () => {
     const model = create(7);
     const firstWord = model.state().challenge.word;
     const requests: GameRequest[] = [];
 
-    const length = model.state().challenge.letters.length;
-    for (let i = 0; i < length; i++) {
-      const need = waitForTile(model, (t, s) => s.challenge.word === firstWord && t.letter === neededLetter(s));
-      jumpUnder(model, need.id, requests);
-    }
+    completeWord(model, requests);
+    expect(model.state().progress.completed).toBe(1);
+    waitOutCelebration(model, requests);
     const state = model.state();
     const lastLetter = contentBank.spelling(firstWord, { niqqud: true }).letters.at(-1)!;
 
@@ -161,6 +181,175 @@ describe("collecting letters", () => {
     const { word, text, letters } = model.state().challenge;
     expect(text).toBe(word.voweled);
     expect(letters).toEqual(contentBank.spelling(word, { niqqud: true }).letters);
+  });
+});
+
+describe("the Hint", () => {
+  /** Jumps into one more wrong letter than before. */
+  const touchWrongLetter = (model: RabbitModel, requests: GameRequest[] = []) => {
+    const wrong = waitForTile(model, (t, s) => !t.rejected && t.letter !== neededLetter(s), requests);
+    jumpUnder(model, wrong.id, requests);
+    expect(tile(model.state(), wrong.id)?.rejected ?? true).toBe(true);
+  };
+
+  it("shows after two wrong letters in the same Challenge, not after one", () => {
+    const model = create(3);
+    expect(model.state().hint).toBe(false);
+    touchWrongLetter(model);
+    expect(model.state().hint).toBe(false);
+    touchWrongLetter(model);
+    expect(model.state().hint).toBe(true);
+  });
+
+  it("stays until the Challenge ends and does not carry into the next one", () => {
+    const model = create(3);
+    touchWrongLetter(model);
+    touchWrongLetter(model);
+    const word = model.state().challenge.word;
+    const first = waitForTile(model, (t, s) => t.letter === neededLetter(s));
+    jumpUnder(model, first.id);
+    expect(model.state().hint).toBe(true);
+
+    expect(model.state().challenge.word).toBe(word);
+    completeWord(model);
+    expect(model.state().hint).toBe(false);
+    waitOutCelebration(model);
+    expect(model.state().hint).toBe(false);
+
+    touchWrongLetter(model);
+    expect(model.state().hint).toBe(false);
+  });
+
+  it("wrong letters each get gentle feedback and never take a filled slot away (ADR-0005)", () => {
+    const model = create(3);
+    const first = waitForTile(model, (t, s) => t.letter === neededLetter(s));
+    jumpUnder(model, first.id);
+    const requests: GameRequest[] = [];
+    touchWrongLetter(model, requests);
+    touchWrongLetter(model, requests);
+    touchWrongLetter(model, requests);
+
+    expect(model.state().challenge.next).toBe(1);
+    expect(requests.filter((r) => r.kind === "sound" && r.effect === "mistake")).toHaveLength(3);
+  });
+});
+
+describe("the Challenge Celebration", () => {
+  it("starts when the Word is complete, with the whole Word still shown", () => {
+    const model = create(7);
+    const word = model.state().challenge.word;
+    const requests: GameRequest[] = [];
+    completeWord(model, requests);
+    const state = model.state();
+
+    expect(requests).toContainEqual({ kind: "celebrate", celebration: "challenge" });
+    expect(state.celebration).toBe("challenge");
+    expect(state.challenge.word).toBe(word);
+    expect(state.challenge.next).toBe(state.challenge.letters.length);
+  });
+
+  it("for about 1.6 seconds no tiles spawn and none are collected, even while the Player keeps jumping", () => {
+    for (const seed of [1, 2, 3, 4]) {
+      const model = create(seed);
+      const at = completeWord(model);
+      const newest = Math.max(0, ...at.tiles.map((t) => t.id));
+      const collectedBefore = at.tiles.filter((t) => t.collected).map((t) => t.id);
+
+      const requests: GameRequest[] = [];
+      while (model.state().time < at.time + 1.5) {
+        model.act({ kind: "main-press" });
+        run(model, STEP * 3, requests);
+        model.act({ kind: "main-release" });
+      }
+      const state = model.state();
+
+      expect(state.celebration).toBe("challenge");
+      expect(state.tiles.filter((t) => t.id > newest)).toEqual([]);
+      expect(state.tiles.filter((t) => t.collected && !collectedBefore.includes(t.id))).toEqual([]);
+      expect(requests.filter((r) => r.kind !== "sound" || r.effect !== "jump")).toEqual([]);
+    }
+  });
+
+  it("its sign shows the completed Word, also for a moment after the next Word has started", () => {
+    const model = create(7);
+    const { word, text } = model.state().challenge;
+    const complete = completeWord(model);
+    expect(complete.celebrated).toMatchObject({ word, text, since: 0 });
+
+    const next = waitOutCelebration(model);
+    expect(next.challenge.word).not.toBe(word);
+    expect(next.celebrated?.word).toBe(word);
+    expect(next.celebrated?.since).toBeCloseTo(1.6, 1);
+
+    expect(runUntil(model, (s) => s.celebrated === null).time - complete.time).toBeGreaterThan(1.8);
+  });
+
+  it("ends after about 1.6 seconds, and the next Word starts", () => {
+    const model = create(7);
+    const word = model.state().challenge.word;
+    const start = completeWord(model).time;
+
+    const state = waitOutCelebration(model);
+    expect(state.time - start).toBeGreaterThan(1.5);
+    expect(state.time - start).toBeLessThan(1.7);
+    expect(state.celebration).toBeNull();
+    expect(state.challenge.word).not.toBe(word);
+    expect(state.challenge.next).toBe(0);
+  });
+});
+
+describe("a Round", () => {
+  const roundRequests = (requests: GameRequest[]) =>
+    requests.filter(
+      (r) => (r.kind === "celebrate" && r.celebration === "round") || (r.kind === "sound" && r.effect === "round-complete"),
+    );
+
+  it("is three Words, with progress counting the completed ones", () => {
+    const model = create(11);
+    expect(model.state().progress).toEqual({ completed: 0, total: 3 });
+    const requests: GameRequest[] = [];
+    for (const completed of [1, 2]) {
+      completeWord(model, requests);
+      waitOutCelebration(model, requests);
+      expect(model.state().progress).toEqual({ completed, total: 3 });
+      expect(model.state().roundOver).toBe(false);
+    }
+    expect(roundRequests(requests)).toEqual([]);
+
+    completeWord(model, requests);
+    expect(model.state().roundOver).toBe(false);
+    const state = waitOutCelebration(model, requests);
+
+    expect(state.progress).toEqual({ completed: 3, total: 3 });
+    expect(state.roundOver).toBe(true);
+    expect(state.celebration).toBe("round");
+    expect(roundRequests(requests)).toEqual([
+      { kind: "celebrate", celebration: "round" },
+      { kind: "sound", effect: "round-complete" },
+    ]);
+  });
+
+  it("brings no new letters once it is over, and nothing more is collected", () => {
+    const model = create(11);
+    for (let i = 0; i < 3; i++) {
+      completeWord(model);
+      waitOutCelebration(model);
+    }
+    const over = model.state();
+    const newest = Math.max(0, ...over.tiles.map((t) => t.id));
+
+    const requests: GameRequest[] = [];
+    for (let i = 0; i < 40; i++) {
+      model.act({ kind: "main-press" });
+      run(model, 0.25, requests);
+      model.act({ kind: "main-release" });
+    }
+    const state = model.state();
+
+    expect(state.roundOver).toBe(true);
+    expect(state.progress.completed).toBe(3);
+    expect(state.tiles.filter((t) => t.id > newest)).toEqual([]);
+    expect(requests.filter((r) => r.kind !== "sound" || r.effect !== "jump")).toEqual([]);
   });
 });
 
