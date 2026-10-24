@@ -65,7 +65,6 @@ export const WORDS: readonly WordData[] = [
   { id: "word-bear", voweled: "דֹּב", plain: "דוב", category: "animals", emoji: "🐻" },
   { id: "word-fish", voweled: "דָּג", plain: "דג", category: "animals", emoji: "🐟" },
   { id: "word-hippo", voweled: "הִיפּוֹפּוֹטָם", plain: "היפופוטם", category: "animals", emoji: "🦛" },
-  { id: "word-hamster", voweled: "הַמְסְטֶר", plain: "המסטר", category: "animals", emoji: "🐹" },
   { id: "word-wolf", voweled: "זְאֵב", plain: "זאב", category: "animals", emoji: "🐺" },
   { id: "word-zebra", voweled: "זֶבְּרָה", plain: "זברה", category: "animals", emoji: "🦓" },
   { id: "word-cat", voweled: "חָתוּל", plain: "חתול", category: "animals", emoji: "🐈" },
@@ -87,7 +86,6 @@ export const WORDS: readonly WordData[] = [
   { id: "word-frog", voweled: "צְפַרְדֵּעַ", plain: "צפרדע", category: "animals", emoji: "🐸" },
   { id: "word-monkey", voweled: "קוֹף", plain: "קוף", category: "animals", emoji: "🐒" },
   { id: "word-hedgehog", voweled: "קִפּוֹד", plain: "קיפוד", category: "animals", emoji: "🦔" },
-  { id: "word-raccoon", voweled: "רַקּוּן", plain: "רקון", category: "animals", emoji: "🦝" },
   { id: "word-snail", voweled: "שַׁבְּלוּל", plain: "שבלול", category: "animals", emoji: "🐌" },
   { id: "word-fox", voweled: "שׁוּעָל", plain: "שועל", category: "animals", emoji: "🦊" },
   { id: "word-rooster", voweled: "תַּרְנְגוֹל", plain: "תרנגול", category: "animals", emoji: "🐓" },
@@ -96,7 +94,6 @@ export const WORDS: readonly WordData[] = [
   { id: "word-socks", voweled: "גַּרְבַּיִם", plain: "גרביים", category: "home-objects", emoji: "🧦" },
   { id: "word-door", voweled: "דֶּלֶת", plain: "דלת", category: "home-objects", emoji: "🚪" },
   { id: "word-hook", voweled: "וָו", plain: "וו", category: "home-objects", emoji: "🪝" },
-  { id: "word-vase", voweled: "וָאזָה", plain: "ואזה", category: "home-objects", emoji: "🏺" },
   { id: "word-window", voweled: "חַלּוֹן", plain: "חלון", category: "home-objects", emoji: "🪟" },
   { id: "word-television", voweled: "טֶלֶוִיזְיָה", plain: "טלוויזיה", category: "home-objects", emoji: "📺" },
   { id: "word-telephone", voweled: "טֶלֶפוֹן", plain: "טלפון", category: "home-objects", emoji: "☎️" },
@@ -113,4 +110,12 @@ export const WORDS: readonly WordData[] = [
   { id: "word-plate", voweled: "צַלַּחַת", plain: "צלחת", category: "home-objects", emoji: "🍽️" },
   { id: "word-radio", voweled: "רַדְיוֹ", plain: "רדיו", category: "home-objects", emoji: "📻" },
   { id: "word-clock", voweled: "שָׁעוֹן", plain: "שעון", category: "home-objects", emoji: "⏰" },
+
+  // Other: Words for hard letters that fit none of the four Categories
+  { id: "word-helicopter", voweled: "הֶלִיקוֹפְּטֶר", plain: "הליקופטר", category: "other", emoji: "🚁" },
+  { id: "word-hamburger", voweled: "הַמְבּוּרְגֶּר", plain: "המבורגר", category: "other", emoji: "🍔" },
+  { id: "word-waffle", voweled: "וַפֶל", plain: "ופל", category: "other", emoji: "🧇" },
+  { id: "word-rose", voweled: "וֶרֶד", plain: "ורד", category: "other", emoji: "🌹" },
+  { id: "word-train", voweled: "רַכֶּבֶת", plain: "רכבת", category: "other", emoji: "🚂" },
+  { id: "word-leg", voweled: "רֶגֶל", plain: "רגל", category: "other", emoji: "🦵" },
 ];
