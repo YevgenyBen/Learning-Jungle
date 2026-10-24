@@ -5,16 +5,16 @@
  * preferences). Adding a Game is one entry in ./registry.ts.
  */
 import type { ComponentType } from "react";
-import type { Frames } from "@/frame/frames";
+import type { Ticks } from "@/frame/ticks";
 import type { SubjectId } from "@/menus/catalog";
 import type { CreateGameModel, GameModel, GameState } from "./contract";
 
 export interface GameViewProps<S extends GameState> {
   /**
-   * The model's state, a new snapshot every frame. Draw a canvas from
-   * `frames.subscribe`; show DOM parts with `useFrameSelector`.
+   * The model's state, a new snapshot every tick. Draw a canvas from
+   * `ticks.subscribe`; show DOM parts with `useTickSelector`.
    */
-  readonly frames: Frames<S>;
+  readonly ticks: Ticks<S>;
 }
 
 /**

@@ -4,30 +4,30 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * How a Game's View sees the model's state. The Game Frame publishes a new
- * snapshot every animation frame without re-rendering React: canvases draw
- * from `subscribe`, and DOM parts re-render only when what they show
- * changes (`useFrameSelector`). Re-rendering React 60 times a second would
- * starve navigations and other transitions on slower devices.
+ * snapshot on every tick (one per animation frame) without re-rendering
+ * React: canvases draw from `subscribe`, and DOM parts re-render only when
+ * what they show changes (`useTickSelector`). Re-rendering React 60 times a
+ * second would starve navigations and other transitions on slower devices.
  */
-export interface Frames<S> {
+export interface Ticks<S> {
   /** The latest snapshot. */
   current(): S;
-  /** Calls `onFrame` after every published frame; returns the unsubscribe. */
-  subscribe(onFrame: (state: S) => void): () => void;
+  /** Calls `onTick` after every published snapshot; returns the unsubscribe. */
+  subscribe(onTick: (state: S) => void): () => void;
 }
 
-export interface FramePublisher<S> extends Frames<S> {
+export interface TickPublisher<S> extends Ticks<S> {
   publish(state: S): void;
 }
 
-export function createFrames<S>(initial: S): FramePublisher<S> {
+export function createTicks<S>(initial: S): TickPublisher<S> {
   let latest = initial;
   const listeners = new Set<(state: S) => void>();
   return {
     current: () => latest,
-    subscribe(onFrame) {
-      listeners.add(onFrame);
-      return () => listeners.delete(onFrame);
+    subscribe(onTick) {
+      listeners.add(onTick);
+      return () => listeners.delete(onTick);
     },
     publish(state) {
       latest = state;
@@ -40,12 +40,12 @@ export function createFrames<S>(initial: S): FramePublisher<S> {
  * A piece of the state for drawing in the DOM. The component re-renders only
  * when `same` says the selected piece changed.
  */
-export function useFrameSelector<S, T>(
-  frames: Frames<S>,
+export function useTickSelector<S, T>(
+  ticks: Ticks<S>,
   select: (state: S) => T,
   same: (a: T, b: T) => boolean,
 ): T {
-  const [selected, setSelected] = useState(() => select(frames.current()));
+  const [selected, setSelected] = useState(() => select(ticks.current()));
   const latest = useRef({ select, same, selected });
   latest.current = { select, same, selected };
 
@@ -57,8 +57,8 @@ export function useFrameSelector<S, T>(
       last = next;
       setSelected(next);
     };
-    check(frames.current());
-    return frames.subscribe(check);
-  }, [frames]);
+    check(ticks.current());
+    return ticks.subscribe(check);
+  }, [ticks]);
   return selected;
 }

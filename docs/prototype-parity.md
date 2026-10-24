@@ -17,7 +17,7 @@ Paths are relative to `src/`. The rabbit's model is `games/rabbit/model.ts`, its
 | Gravity 2300, jump -760, short-hop cap -330, ground 290, rabbit x 160, logical 900x360 world (L274-275) | ported | `WORLD`, `GRAVITY`, `JUMP_VELOCITY`, `SHORT_HOP_VELOCITY` in the model |
 | Variable jump height: releasing early caps the upward speed (L976-981) | ported | model `act("main-release")`; tested in `model.test.ts` "a longer press jumps higher" and `rabbit.spec.ts` |
 | 120 ms jump buffer: a press just before landing jumps on landing (L971, L586-587) | ported | model `JUMP_BUFFER` |
-| Frame time clamped to 0.033 s (L1028) | ported | `frame/GameFrame.tsx` `MAX_FRAME_STEP`; the model also substeps at 1/30 s |
+| Time step per animation frame clamped to 0.033 s (L1028) | ported | `frame/GameFrame.tsx` `MAX_TICK_STEP`; the model also substeps at 1/30 s |
 | Landing squash and rising stretch (L604, L831-834) | ported | model `rabbit.squash`; `drawRabbit` |
 | Landing dust puff: six specks behind the feet (L558-562, L605) | ported (#12) | model `landings` (kept 0.5 s); `drawLandingDust` |
 | Jump on Space, ArrowUp, W, tap or click; key repeat ignored; release on keyup or pointerup anywhere (L1000-1018) | ported | `frame/frameKeys.ts` (Space) + `mainActionKeys` in `games/rabbit/index.ts`; pointer on the play surface in `GameFrame.tsx` `Play` |

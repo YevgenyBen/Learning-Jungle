@@ -8,7 +8,7 @@ import type { GameDefinition } from "@/games/definition";
 import { createSoundEffects } from "@/sound/soundEffects";
 import { FrameControls } from "./FrameControls";
 import { useFrameKeys } from "./frameKeys";
-import { createFrames, type FramePublisher } from "./frames";
+import { createTicks, type TickPublisher } from "./ticks";
 import { useGameScreen } from "./fullScreen";
 import styles from "./GameFrame.module.css";
 import { createBrowserVoicePlayer, type VoicePlayerWithLog } from "@/voice/voicePlayer";
@@ -19,8 +19,8 @@ import { RoundCelebration } from "./RoundCelebration";
 import { SettingsControls } from "./SettingsControls";
 import { createHookLog, installTestHook, type HookLog } from "./testHook";
 
-/** Longest time step per frame, so a stalled tab doesn't make the Game leap ahead. */
-const MAX_FRAME_STEP = 0.033;
+/** Longest time step per tick, so a stalled tab doesn't make the Game leap ahead. */
+const MAX_TICK_STEP = 0.033;
 const HOOK_STEP = 1 / 60;
 
 export interface GameFrameProps<S extends GameState> {
@@ -34,7 +34,7 @@ interface RunningGame<S extends GameState> {
   /** Counts restarts, so a restarted Game's View starts fresh. */
   readonly run: number;
   readonly model: GameModel<S>;
-  readonly frames: FramePublisher<S>;
+  readonly ticks: TickPublisher<S>;
   /** Recent requests, for the test hook. */
   readonly requestLog: HookLog<GameRequest>;
   /** Hands the model's requests on and publishes its state to the View. */
@@ -54,19 +54,19 @@ function startGame<S extends GameState>(
     content: contentBank,
     random: Math.random,
   });
-  const frames = createFrames(model.state());
+  const ticks = createTicks(model.state());
   const requestLog = createHookLog<GameRequest>();
   const running: RunningGame<S> = {
     run,
     model,
-    frames,
+    ticks,
     requestLog,
     sync() {
       const requests = model.takeRequests();
       // Sound Effects, voice and the Round Celebration screen.
       output.carryOut(requests);
       requestLog.push(...requests);
-      frames.publish(model.state());
+      ticks.publish(model.state());
     },
   };
   return running;
@@ -307,7 +307,7 @@ function Play<S extends GameState>({
   running: RunningGame<S>;
   paused: boolean;
 }) {
-  const { model, frames } = running;
+  const { model, ticks } = running;
   const pausedNow = useRef(paused);
   // Before the browser can run another frame: once the pause screen shows, time has stopped.
   useLayoutEffect(() => {
@@ -316,16 +316,16 @@ function Play<S extends GameState>({
 
   // Time: one model step per animation frame, none while paused.
   useEffect(() => {
-    let frame = 0;
+    let request = 0;
     let last: number | null = null;
     const loop = (now: number) => {
-      if (last !== null && !pausedNow.current) model.advance(Math.min(MAX_FRAME_STEP, (now - last) / 1000));
+      if (last !== null && !pausedNow.current) model.advance(Math.min(MAX_TICK_STEP, (now - last) / 1000));
       last = now;
       running.sync();
-      frame = requestAnimationFrame(loop);
+      request = requestAnimationFrame(loop);
     };
-    frame = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(frame);
+    request = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(request);
   }, [running, model]);
 
   // A press that starts on the play area may end anywhere.
@@ -348,7 +348,7 @@ function Play<S extends GameState>({
   const View = game.View;
   return (
     <div className={styles.surface} onPointerDown={onPointerDown} data-testid="game-surface">
-      <View frames={frames} />
+      <View ticks={ticks} />
     </div>
   );
 }

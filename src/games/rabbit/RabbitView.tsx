@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 import { WordPicture } from "@/content/WordPicture";
-import { useFrameSelector, type Frames } from "@/frame/frames";
+import { useTickSelector, type Ticks } from "@/frame/ticks";
 import { RoundProgress } from "@/frame/RoundProgress";
 import type { GameViewProps } from "../definition";
 import { drawMeadow, SIGN_SECONDS, type Fonts } from "./draw";
@@ -10,14 +10,14 @@ import { WORLD, type CelebratedWord, type RabbitState } from "./model";
 import styles from "./RabbitView.module.css";
 
 /** The rabbit Game's drawing: the word bar and Round progress above the meadow. */
-export function RabbitView({ frames }: GameViewProps<RabbitState>) {
+export function RabbitView({ ticks }: GameViewProps<RabbitState>) {
   return (
     <div className={styles.view}>
       <div className={styles.top}>
-        <WordBar frames={frames} />
-        <RoundProgress frames={frames} className={styles.progress} />
+        <WordBar ticks={ticks} />
+        <RoundProgress ticks={ticks} className={styles.progress} />
       </div>
-      <Meadow frames={frames} />
+      <Meadow ticks={ticks} />
     </div>
   );
 }
@@ -33,8 +33,8 @@ const sameBar = (a: Bar, b: Bar) =>
   a.challenge.next === b.challenge.next &&
   a.challenge.text === b.challenge.text;
 
-function WordBar({ frames }: { frames: Frames<RabbitState> }) {
-  const { challenge, hint } = useFrameSelector(frames, selectBar, sameBar);
+function WordBar({ ticks }: { ticks: Ticks<RabbitState> }) {
+  const { challenge, hint } = useTickSelector(ticks, selectBar, sameBar);
   const complete = challenge.next >= challenge.letters.length;
   return (
     <div
@@ -71,8 +71,8 @@ const selectSign = (state: RabbitState): Sign =>
 const sameSign = (a: Sign, b: Sign) => a?.number === b?.number;
 
 /** The springy sign with the completed Word and its Picture, during its Celebration. */
-function CelebrationSign({ frames }: { frames: Frames<RabbitState> }) {
-  const sign = useFrameSelector(frames, selectSign, sameSign);
+function CelebrationSign({ ticks }: { ticks: Ticks<RabbitState> }) {
+  const sign = useTickSelector(ticks, selectSign, sameSign);
   if (!sign) return null;
   return (
     <div key={sign.number} className={styles.sign} data-testid="celebration-sign">
@@ -85,8 +85,8 @@ function CelebrationSign({ frames }: { frames: Frames<RabbitState> }) {
 
 const MAX_PIXEL_RATIO = 2;
 
-/** The meadow, drawn on a canvas every frame without re-rendering React. */
-function Meadow({ frames }: { frames: Frames<RabbitState> }) {
+/** The meadow, drawn on a canvas every tick without re-rendering React. */
+function Meadow({ ticks }: { ticks: Ticks<RabbitState> }) {
   const box = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
 
@@ -117,23 +117,23 @@ function Meadow({ frames }: { frames: Frames<RabbitState> }) {
       element.style.setProperty("--meadow-scale", String(cssWidth / WORLD.width));
       surface.width = Math.max(1, Math.round(cssWidth * ratio));
       surface.height = Math.max(1, Math.round(cssHeight * ratio));
-      draw(frames.current());
+      draw(ticks.current());
     };
     fit();
     const observer = new ResizeObserver(fit);
     observer.observe(element);
-    const unsubscribe = frames.subscribe(draw);
+    const unsubscribe = ticks.subscribe(draw);
     return () => {
       observer.disconnect();
       unsubscribe();
     };
-  }, [frames]);
+  }, [ticks]);
 
   return (
     <div ref={box} className={styles.meadow}>
       <div className={styles.stage}>
         <canvas ref={canvas} className={styles.canvas} data-testid="meadow" aria-hidden="true" />
-        <CelebrationSign frames={frames} />
+        <CelebrationSign ticks={ticks} />
       </div>
     </div>
   );
