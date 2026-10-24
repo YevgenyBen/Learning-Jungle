@@ -19,6 +19,13 @@
   background: var(--color-page);
 }
 
+/* On a phone (either way up) the header would cover most of the list: it scrolls away. */
+@media (max-width: 600px), (max-height: 500px) {
+  .header {
+    position: static;
+  }
+}
+
 .header p {
   margin: var(--space-1) 0;
 }
@@ -89,6 +96,33 @@
 .missing .status {
   font-weight: 700;
   color: var(--color-berry);
+}
+
+/* Speech to text heard something else, or nothing: worth a listen. */
+.suspect {
+  background: color-mix(in srgb, var(--color-sun) 35%, var(--color-panel));
+}
+
+.heard {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+}
+
+.suspicion {
+  color: var(--color-berry);
+}
+
+.unchecked {
+  color: var(--color-ink-soft);
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  font-weight: 700;
 }
 
 .play,

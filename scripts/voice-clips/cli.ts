@@ -37,7 +37,8 @@ async function main(args: readonly string[]) {
   console.log(
     report.generated.length === 0
       ? `Nothing to generate: all ${items.length} spoken items have a Voice Clip.`
-      : `Generated ${report.generated.length} Voice Clip(s) into public/voice/.`,
+      : `Generated ${report.generated.length} Voice Clip(s) into public/voice/.\n` +
+          "Run `npm run voice-check` to have speech to text listen to them for the review page.",
   );
   if (report.changed.length > 0) {
     console.log(

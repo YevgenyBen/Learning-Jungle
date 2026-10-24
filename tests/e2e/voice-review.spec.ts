@@ -1,6 +1,8 @@
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import { contentBank } from "../../src/content/bank";
+import { suspectClips, type ClipChecks } from "../../src/voice/review/suspects";
 import { press } from "./helpers";
 
 // The Voice Clip review page (development only). Each test serves its own
@@ -8,6 +10,7 @@ import { press } from "./helpers";
 // been generated in public/voice/.
 
 const TEST_CLIP = path.join(__dirname, "../fixtures/voice/test-clip.wav");
+const CHECKS = path.join(__dirname, "../../src/voice/review/clipChecks.json");
 const REVIEW = "/dev/voice-clips";
 
 /** Serves a manifest listing these items' clips, and the test clip for `test-clip.wav`. */
@@ -140,5 +143,40 @@ test.describe("Voice Clip review page", () => {
     expect(await command.evaluate((box: HTMLTextAreaElement) => box.value.slice(box.selectionStart, box.selectionEnd))).toBe(
       "npm run voice-clips -- sound-ba",
     );
+  });
+
+  test.describe("the Voice Clip check", () => {
+    // The page shows the committed results of `npm run voice-check`, so the
+    // expected suspects are worked out from that same file.
+    const checks = JSON.parse(readFileSync(CHECKS, "utf8")) as ClipChecks;
+    const suspects = suspectClips(contentBank, checks);
+    const fine = Object.keys(checks.checks).find((id) => !suspects.has(id) && checks.checks[id].heard !== "");
+
+    test("suspect clips are marked with why, and what was heard is shown", async ({ page }) => {
+      test.skip(suspects.size === 0 || !fine, "needs both a suspect and a fine clip in clipChecks.json");
+      await serveManifest(page, {});
+      await openReview(page);
+
+      await expect(page.getByTestId("review-summary")).toContainText(`${suspects.size} חשודים`);
+      for (const [id, suspicion] of [...suspects].slice(0, 3)) {
+        await expect(row(page, id)).toHaveAttribute("data-suspect", suspicion);
+        await expect(row(page, id)).toContainText("חשוד");
+      }
+      await expect(row(page, fine!)).not.toHaveAttribute("data-suspect");
+      await expect(row(page, fine!)).toContainText(checks.checks[fine!].heard);
+    });
+
+    test("the suspects-only filter lists just the suspect clips", async ({ page }) => {
+      test.skip(suspects.size === 0, "needs a suspect in clipChecks.json");
+      await serveManifest(page, {});
+      await openReview(page);
+      const rows = page.getByRole("row").filter({ has: page.getByRole("checkbox") });
+
+      await press(page.getByRole("checkbox", { name: "רק חשודים" }));
+      await expect(rows).toHaveCount(suspects.size);
+
+      await press(page.getByRole("checkbox", { name: "רק חשודים" }));
+      await expect(rows).toHaveCount(contentBank.spokenItems().length);
+    });
   });
 });

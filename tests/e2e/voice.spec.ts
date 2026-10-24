@@ -5,9 +5,10 @@ import type { Said } from "../../src/voice/voicePlayer";
 import { completeChallenge, gameRequests, gameState, waitForGame, type RabbitState } from "./game";
 import { press } from "./helpers";
 
-// The voice player in the running rabbit Game. The app ships an empty
-// Voice Clip manifest, so these tests serve their own: one that lists a
-// tiny test clip (tests/fixtures/voice) for every letter and Word.
+// The voice player in the running rabbit Game. These tests serve their own
+// Voice Clip manifest, so the result never depends on the clips in
+// public/voice/: one that lists a tiny test clip (tests/fixtures/voice) for
+// every letter and Word, or an empty one for Speech Fallback.
 
 const TEST_CLIP = path.join(__dirname, "../fixtures/voice/test-clip.wav");
 
@@ -23,6 +24,11 @@ async function serveTestClips(page: Page) {
   await page.route("**/voice/test-clip.wav", (route) =>
     route.fulfill({ path: TEST_CLIP, contentType: "audio/wav" }),
   );
+}
+
+/** Serves a manifest with no clips, so every item falls back to speech. */
+async function serveNoClips(page: Page) {
+  await page.route("**/voice/manifest.json", (route) => route.fulfill({ json: { clips: {} } }));
 }
 
 /** Gives the page a speech synthesis with only these voices, recording what it is asked to say. */
@@ -105,6 +111,8 @@ test.describe("Voice Clips", () => {
 });
 
 test.describe("Speech Fallback", () => {
+  test.beforeEach(({ page }) => serveNoClips(page));
+
   test("with no clip, the device's Hebrew voice reads the Letter Names and the Word", async ({ page }) => {
     await fakeSpeech(page, [
       { lang: "en-US", name: "English" },

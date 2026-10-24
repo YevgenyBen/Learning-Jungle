@@ -32,6 +32,18 @@ With `npm run dev` running, open `http://localhost:3000/dev/voice-clips`. It lis
 
 The page exists only under `next dev`: development-only pages are named `page.dev.tsx`, which only the dev server routes (`next.config.ts`), and `npm run test:build` checks that a production build has neither the route nor its code.
 
+### Find suspect clips: the Voice Clip check
+
+```
+npm run voice-check
+```
+
+Azure speech to text (he-IL, same key and free tier) listens to every clip not checked yet and keeps what it heard in `src/voice/review/clipChecks.json`; commit it with the clips. A clip is checked again only once its audio changes, so run it after every regeneration (about 1 second per clip). `npm run voice-check -- <identities>` checks exactly those again.
+
+A clip is **suspect** when nothing was heard, or something other than the item: a Word must be heard as itself, a number in digits or in words spelled any way that sounds the same, and a Letter Name likewise, or as the letter. A sound alone is too short to spell, so only the consonant it is heard to start with is compared. The script lists the suspects with the command to regenerate them all, and the review page shows what was heard on every row, marks the suspects, and has a "רק חשודים" filter.
+
+It is a hint, not a verdict: speech to text does not hear wrong stress (the voice's most common mistake), and mishears some good clips. Listen to the suspects before regenerating them, and listen to the rest too.
+
 ### Regenerate flagged clips
 
 Pass the identities to redo, separated by spaces, exactly as the Voice Clip review page copies them:

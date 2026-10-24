@@ -3,18 +3,33 @@
 import { useEffect, useRef, useState } from "react";
 import { contentBank, type ItemId } from "@/content";
 import { fetchManifest, readManifest, VOICE_URL_BASE, type Clip } from "@/voice/voicePlayer";
+import clipChecks from "./clipChecks.json";
 import { regenerationCommand } from "./command";
+import { suspectClips, type ClipChecks, type Suspicion } from "./suspects";
 import styles from "./VoiceClipReview.module.css";
+
+/** What `npm run voice-check` last heard in each clip, and the suspects among them. */
+const CHECKS = clipChecks as ClipChecks;
+const SUSPECTS = suspectClips(contentBank, CHECKS);
+
+const SUSPICION_LABELS: Record<Suspicion, string> = {
+  silent: "לא נשמע דיבור",
+  misheard: "נשמע אחרת",
+};
 
 /**
  * The Voice Clip review page (development only, /dev/voice-clips): every
  * spoken Content Bank item with its text and a play button, the missing
- * clips marked, and flags for bad clips that copy out as a ready
+ * clips marked, what speech to text heard in each clip with the suspect
+ * ones marked, and flags for bad clips that copy out as a ready
  * `npm run voice-clips -- <ids>` command. Nothing is kept beyond the page.
  */
 export function VoiceClipReview() {
   const items = contentBank.spokenItems();
   const writtenForms = writtenFormsBySound();
+  /** Whether only the suspect clips are listed. */
+  const [onlySuspects, setOnlySuspects] = useState(false);
+  const shown = onlySuspects ? items.filter((item) => SUSPECTS.has(item.id)) : items;
   /** The manifest's clips; null until it has been read. */
   const [clips, setClips] = useState<ReadonlyMap<ItemId, Clip> | null>(null);
   const player = useClipPlayer();
@@ -64,12 +79,25 @@ export function VoiceClipReview() {
         <h1 className={styles.title}>בדיקת קטעי קול</h1>
         <p data-testid="review-summary">
           {items.length} פריטים
-          {missing !== null && <>, {missing} חסרים</>}, {flaggedIds.length} מסומנים
+          {missing !== null && <>, {missing} חסרים</>}, {SUSPECTS.size} חשודים, {flaggedIds.length} מסומנים
         </p>
         <p className={styles.help}>
           סמנו קטעים פגומים והעתיקו את הפקודה שמייצרת אותם מחדש. קטעים חסרים נוצרים בהרצת{" "}
           <code dir="ltr">npm run voice-clips</code> בלי מזהים.
         </p>
+        <p className={styles.help}>
+          &quot;נשמע&quot; הוא מה שזיהוי הדיבור של Azure שמע בקטע (<code dir="ltr">npm run voice-check</code>). קטע חשוד
+          כדאי לשמוע, אבל זה רק רמז: הזיהוי לא שומע הטעמה שגויה, ולפעמים טועה בקטע תקין.
+        </p>
+        <label className={styles.filter}>
+          <input
+            type="checkbox"
+            className={styles.flag}
+            checked={onlySuspects}
+            onChange={(event) => setOnlySuspects(event.currentTarget.checked)}
+          />
+          רק חשודים
+        </label>
         <div className={styles.copy}>
           <label className={styles.commandLabel}>
             פקודה
@@ -98,19 +126,33 @@ export function VoiceClipReview() {
             <th scope="col">מזהה</th>
             <th scope="col">טקסט</th>
             <th scope="col">קטע קול</th>
+            <th scope="col">נשמע</th>
             <th scope="col">השמעה</th>
             <th scope="col">פגום</th>
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => {
+          {shown.map((item) => {
             const clip = clips?.get(item.id);
             const status = !clips ? "…" : !clip ? "חסר" : player.status(item.id);
+            const check = CHECKS.checks[item.id];
+            const suspicion = SUSPECTS.get(item.id);
+            const rowClass = clips && !clip ? styles.missing : suspicion ? styles.suspect : undefined;
             return (
-              <tr key={item.id} className={clips && !clip ? styles.missing : undefined}>
+              <tr key={item.id} className={rowClass} data-suspect={suspicion}>
                 <td dir="ltr">{item.id}</td>
                 <td className={styles.text}>{writtenForms.get(item.id)?.join(" ") ?? item.voweledText}</td>
                 <td className={styles.status}>{status}</td>
+                <td>
+                  {!check ? (
+                    <span className={styles.unchecked}>לא נבדק</span>
+                  ) : (
+                    <div className={styles.heard}>
+                      <span className={styles.text}>{check.heard || "—"}</span>
+                      {suspicion && <strong className={styles.suspicion}>חשוד: {SUSPICION_LABELS[suspicion]}</strong>}
+                    </div>
+                  )}
+                </td>
                 <td>
                   <button
                     type="button"
