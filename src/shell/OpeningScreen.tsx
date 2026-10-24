@@ -20,6 +20,7 @@ export const OPENING_DURATION_MS = 2000;
 export function OpeningScreen() {
   const router = useRouter();
   const done = useRef(false);
+  const screen = useRef<HTMLElement>(null);
 
   const moveOn = useCallback(() => {
     if (done.current) return;
@@ -31,6 +32,8 @@ export function OpeningScreen() {
     router.prefetch("/home");
     const timer = window.setTimeout(moveOn, OPENING_DURATION_MS);
     window.addEventListener("keyup", moveOn);
+    // Tells tests the screen now listens: a key pressed before this is lost.
+    if (screen.current) screen.current.dataset.ready = "true";
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener("keyup", moveOn);
@@ -40,7 +43,7 @@ export function OpeningScreen() {
   // The click handler sits on the screen itself, not on window: iOS Safari
   // only fires click for a tap on an element that handles clicks.
   return (
-    <main className={styles.opening} data-testid="opening" onClick={moveOn}>
+    <main ref={screen} className={styles.opening} data-testid="opening" onClick={moveOn}>
       <Logo />
     </main>
   );

@@ -3,6 +3,12 @@ import { press } from "./helpers";
 
 const homeMenu = (page: Page) => page.getByRole("button", { name: "עברית", exact: true });
 
+/** Waits until the opening screen listens for taps and keys (it has hydrated). */
+async function openingReady(page: Page) {
+  await expect(page.getByTestId("logo")).toBeVisible();
+  await expect(page.getByTestId("opening")).toHaveAttribute("data-ready", "true");
+}
+
 test.describe("opening screen", () => {
   test("shows the logo in a right-to-left Hebrew page", async ({ page }) => {
     await page.goto("/");
@@ -22,21 +28,21 @@ test.describe("opening screen", () => {
 
   test("moves on earlier on a tap or click", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByTestId("logo")).toBeVisible();
+    await openingReady(page);
     await press(page.getByTestId("opening"));
     await expect(homeMenu(page)).toBeVisible({ timeout: 1_500 });
   });
 
   test("moves on earlier on any key", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByTestId("logo")).toBeVisible();
+    await openingReady(page);
     await page.keyboard.press("x");
     await expect(homeMenu(page)).toBeVisible({ timeout: 1_500 });
   });
 
   test("the key that skips it does not also choose a Subject", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByTestId("logo")).toBeVisible();
+    await openingReady(page);
     await page.keyboard.press("Space");
     await expect(homeMenu(page)).toBeVisible({ timeout: 1_500 });
     await page.waitForTimeout(300);
@@ -51,7 +57,7 @@ test.describe("opening screen", () => {
 
     // ...and skip the opening screen with a tap on exactly that spot.
     await page.goto("/");
-    await expect(page.getByTestId("logo")).toBeVisible();
+    await openingReady(page);
     await press(page.getByTestId("opening"), { position: spot });
     await expect(homeMenu(page)).toBeVisible({ timeout: 1_500 });
     await page.waitForTimeout(300);
