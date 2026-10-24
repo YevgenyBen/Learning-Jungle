@@ -103,6 +103,19 @@ describe("integrity of the whole bank", () => {
     }
   });
 
+  it("every Plain Spelling is its Voweled Spelling's letters with only ו and י added (full spelling)", () => {
+    for (const w of contentBank.words()) {
+      const voweledLetters = contentBank.spelling(w, { niqqud: true }).letters.map((l) => l.letter);
+      const plainLetters = contentBank.spelling(w, { niqqud: false }).letters.map((l) => l.letter);
+      let i = 0;
+      for (const letter of plainLetters) {
+        if (letter === voweledLetters[i]) i++;
+        else expect(["ו", "י"], `${w.id}: unexpected ${letter} in ${w.plain}`).toContain(letter);
+      }
+      expect(i, `${w.id}: ${w.plain} is missing letters of ${w.voweled}`).toBe(voweledLetters.length);
+    }
+  });
+
   it("every Word has a Category and a Picture file that exists", () => {
     const categories = ["fruits", "vegetables", "animals", "home-objects"];
     for (const w of contentBank.words()) {
@@ -110,6 +123,21 @@ describe("integrity of the whole bank", () => {
       const file = join(PUBLIC, ...w.picture.src.split("/"));
       expect(existsSync(file), `${w.id}: ${w.picture.src}`).toBe(true);
       expect(readFileSync(file, "utf8"), w.id).toMatch(/<svg[\s>]/);
+    }
+  });
+
+  it("every one of the 22 letters starts at least two Words", () => {
+    const base = contentBank.letters().filter((l) => !l.final);
+    expect(base).toHaveLength(22);
+    for (const letter of base) {
+      expect(contentBank.wordsStartingWith(letter.letter).length, letter.letter).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it("holds about 80 Words in each of the four Categories", () => {
+    expect(contentBank.words().length).toBeGreaterThanOrEqual(75);
+    for (const category of ["fruits", "vegetables", "animals", "home-objects"] as const) {
+      expect(contentBank.words({ category }).length, category).toBeGreaterThanOrEqual(10);
     }
   });
 
