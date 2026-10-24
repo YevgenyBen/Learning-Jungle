@@ -48,7 +48,7 @@ Paths are relative to `src/`. The rabbit's model is `games/rabbit/model.ts`, its
 | Tile height `ground - rand(104, 112)`: out of reach running, in reach of any jump (L474) | ported | model `TILE_HEIGHT`; tested |
 | Needed letter 85% when none is still coming, else a decoy 40%; at most one needed tile ahead; a missed one comes again (L470-482) | ported | model `maybeTile`; tested "a missed needed letter comes again" |
 | Decoys never the needed letter, drawn from the 22 base letters (L404, L479) | ported | model `pickDecoy`, decoys from the Content Bank's `letters()` without final forms |
-| Letters from the 25 inline Words, spelled without Niqqud | deliberate change | spec #1 stories 51-52: the letters of the Voweled or Plain Spelling, per the Niqqud setting; tiles show the bare letter |
+| Letters from the 25 inline Words, spelled without Niqqud | deliberate change | spec #1 stories 51-52: the letters of the Voweled or Plain Spelling, per the Niqqud setting; with Niqqud on, tiles show the needed letter with its marks and decoys with its vowel |
 | Tile bob `sin(4t) * 4` with a random phase; culled at x < -50 (L743, L578) | ported | model `bob`, `CULL_BEHIND`; `drawTile` |
 | No tiles spawn during the Word's Celebration (L471) | ported | model `maybeTile` / `playing()`; tested |
 | Tiles still on screen when a Word ends are live for the next Word (L613-618) | ported | kept on purpose (noted in the model) |
@@ -69,7 +69,7 @@ Paths are relative to `src/`. The rabbit's model is `games/rabbit/model.ts`, its
 | Prototype behaviour | Status | Where / why |
 |---|---|---|
 | Picture plus one slot per letter: faint outline, next slot dashed orange, filled slot orange (L425-442, CSS L63-92) | ported | `RabbitView.tsx` `WordBar` |
-| Filled slots show the bare letter | deliberate change | spec #1: with Niqqud on, a filled slot shows the letter with its marks |
+| Filled slots show the bare letter | deliberate change | with Niqqud on, every slot shows the letter with its marks |
 | "האות הבאה:" with the next letter, and "כל הכבוד!" when the Word is complete (L236, L438-439) | dropped | it repeats what the dashed next slot already shows; spec #1 story 44 asks only for the next letter to be clearly marked, and the Celebration sign marks the win. Keeps the word bar short on phones |
 | Win: carrot ring, slots hop with a 70 ms stagger, the Picture dances; off under reduced motion (L127-139, L434, L440-441) | ported | `RabbitView.module.css` (`data-complete`, `hop`, `party`, `prefers-reduced-motion`) |
 | 25 inline fruit and vegetable Words with emoji | deliberate change | spec #1: Words come from the Content Bank (about 80, four Categories) with Twemoji Picture files |

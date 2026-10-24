@@ -55,7 +55,7 @@ function WordBar({ ticks }: { ticks: Ticks<RabbitState> }) {
               data-slot={slot}
               style={{ "--slot-index": i } as CSSProperties}
             >
-              {slot === "filled" ? letter.marked : letter.letter}
+              {letter.marked}
             </li>
           );
         })}

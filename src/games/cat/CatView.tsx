@@ -40,6 +40,7 @@ function PictureCard({ ticks }: { ticks: Ticks<CatState> }) {
 interface SignView {
   readonly perch: number;
   readonly letter: string;
+  readonly marked: string;
   /** Its index for `pick`, or -1 for a sign on its way out. */
   readonly choice: number;
   readonly look: "plain" | "rejected" | "hinted" | "right";
@@ -56,7 +57,7 @@ function selectSigns(state: CatState): SignView[] {
       : right && (state.phase === "jumping" || state.phase === "celebrating") ? "right"
       : right && state.hint ? "hinted"
       : "plain";
-    return [{ perch: perch.id, letter: perch.sign.letter, choice, look, focused: choice >= 0 && choice === state.focused }];
+    return [{ perch: perch.id, letter: perch.sign.letter, marked: perch.sign.marked, choice, look, focused: choice >= 0 && choice === state.focused }];
   });
 }
 const signKey = (signs: SignView[]) => signs.map((s) => `${s.perch}:${s.choice}:${s.look}:${s.focused}`).join(" ");
@@ -164,13 +165,13 @@ function LetterSign({ sign, act }: { sign: SignView; act: (action: PlayerAction)
       data-letter={sign.letter}
       data-look={sign.look}
       data-focused={sign.focused}
-      aria-label={sign.letter}
+      aria-label={sign.marked}
       aria-disabled={sign.choice < 0 || sign.look === "rejected"}
       tabIndex={-1}
       onPointerDown={onPointerDown}
       onClick={onClick}
     >
-      {sign.letter}
+      {sign.marked}
     </button>
   );
 }

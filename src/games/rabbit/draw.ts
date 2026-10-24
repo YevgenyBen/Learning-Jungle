@@ -294,7 +294,7 @@ function drawTile(ctx: CanvasRenderingContext2D, tile: Tile, fonts: Fonts, hinte
   ctx.font = `400 28px ${fonts.display}`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(tile.letter, 0, 2);
+  ctx.fillText(tile.marked, 0, 2);
   ctx.restore();
 }
 

@@ -10,7 +10,7 @@
  * The scene is in logical pixels (SCENE) and y grows downward. The scene
  * itself never scrolls: perches slide, sink into the ground and rise.
  */
-import type { Letter, Word } from "@/content";
+import type { Letter, SpelledLetter, Word } from "@/content";
 import type { CreateGameModel, GameModel, GameRequest, GameSettings, GameState } from "../contract";
 import { between, pick, shuffled, type Random } from "../random";
 import { createWordBag } from "../wordBag";
@@ -82,8 +82,13 @@ const KINDS: readonly PerchKind[] = ["tree", "pole", "building"];
 
 /** A letter sign on a perch: one Choice. */
 export interface Sign {
-  /** The bare letter. */
+  /** The bare letter, what the Player matches. */
   readonly letter: string;
+  /**
+   * The letter as the sign shows it: with Niqqud on, the right letter with
+   * its marks in the Word, and a decoy with the same vowel.
+   */
+  readonly marked: string;
   /** Picked while it was not the right letter: it stays, greyed. */
   readonly rejected: boolean;
   /** Seconds since it was picked as a wrong letter (0 if it wasn't), for its gentle shake. */
@@ -151,6 +156,8 @@ export interface CatState extends GameState {
     readonly word: Word;
     /** The bare first letter: the right Choice's letter. */
     readonly letter: string;
+    /** That letter with its marks in the Word's spelling, as its sign shows it. */
+    readonly marked: string;
   };
   /** Kept a little past the Celebration's pause, until it has been fully drawn. */
   readonly celebrated: CelebratedWord | null;
@@ -206,30 +213,32 @@ export const createCatModel: CreateGameModel<CatState, CatDifficulty> = ({ setti
 
   function newChallenge(): CatState["challenge"] {
     const word = words.next();
-    // Both spellings start with the same letter; the plain one has no marks to strip.
-    return { word, letter: content.spelling(word, { niqqud: false }).letters[0].letter };
+    // Both spellings start with the same bare letter.
+    const { letter, marked } = content.spelling(word, current).letters[0];
+    return { word, letter, marked };
   }
 
   /** The Challenge's Choices, in reading order: the right letter once, at a random place. */
   function newChoices(rise: number): MutablePerch[] {
     const count = choiceCount();
-    const letters = shuffled(random, [challenge.letter, ...pickDecoys(challenge.letter, count - 1)]);
+    const letters = shuffled(random, [challenge, ...pickDecoys(challenge, count - 1)]);
     const step = Math.min(CHOICE_SPACING, CHOICES_SPAN / Math.max(1, count - 1));
     const first = CHOICES_CENTRE_X + (step * (count - 1)) / 2;
     return letters.map((letter, i) => {
       const x = first - i * step + between(random, -CHOICE_JITTER, CHOICE_JITTER);
       const perch = newPerch(pick(random, KINDS), x, between(random, PERCH_TOP.min, PERCH_TOP.max), rise);
-      perch.sign = { letter, rejected: false, sinceRejected: 0 };
+      perch.sign = { letter: letter.letter, marked: letter.marked, rejected: false, sinceRejected: 0 };
       return perch;
     });
   }
 
-  function pickDecoys(right: string, count: number): string[] {
+  /** Other letters, none sounding like the right one, each written with the right letter's vowel. */
+  function pickDecoys(right: SpelledLetter, count: number): SpelledLetter[] {
     const chosen: string[] = [];
-    const usable = (l: Letter) => !soundsAlike(l.letter, right) && !chosen.includes(l.letter);
+    const usable = (l: Letter) => !soundsAlike(l.letter, right.letter) && !chosen.includes(l.letter);
     const pool = () => decoys.filter(usable);
     while (chosen.length < count && pool().length > 0) chosen.push(pick(random, pool()).letter);
-    return chosen;
+    return chosen.map((letter) => ({ letter, marked: pick(random, content.writtenLike(letter, right.marked)) }));
   }
 
   const live = (index: number) => {
