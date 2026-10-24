@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { contentBank, type ItemId } from "@/content";
-import { readManifest, VOICE_DIR, VOICE_MANIFEST, type Clip } from "@/voice/voicePlayer";
+import { fetchManifest, readManifest, VOICE_URL_BASE, type Clip } from "@/voice/voicePlayer";
 import { regenerationCommand } from "./command";
 import styles from "./VoiceClipReview.module.css";
 
@@ -26,10 +26,7 @@ export function VoiceClipReview() {
 
   useEffect(() => {
     let live = true;
-    fetch(VOICE_MANIFEST, { cache: "no-cache" })
-      .then((response) => (response.ok ? response.json() : {}))
-      .catch(() => ({}))
-      .then((manifest) => live && setClips(readManifest(manifest)));
+    fetchManifest().then((manifest) => live && setClips(readManifest(manifest)));
     return () => {
       live = false;
     };
@@ -178,7 +175,7 @@ function useClipPlayer() {
     element.dataset.item = id;
     element.onended = () => current() && setPlaying(null);
     element.onerror = fail;
-    element.src = VOICE_DIR + clip.file;
+    element.src = VOICE_URL_BASE + clip.file;
     setPlaying(id);
     setFailed((before) => {
       const after = new Set(before);

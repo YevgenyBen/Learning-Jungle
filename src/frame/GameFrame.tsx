@@ -17,13 +17,11 @@ import { PauseScreen } from "./PauseScreen";
 import { usePreferences, type Preferences } from "./preferences";
 import { RoundCelebration } from "./RoundCelebration";
 import { SettingsControls } from "./SettingsControls";
-import { installTestHook } from "./testHook";
+import { createHookLog, installTestHook, type HookLog } from "./testHook";
 
 /** Longest time step per frame, so a stalled tab doesn't make the Game leap ahead. */
 const MAX_FRAME_STEP = 0.033;
 const HOOK_STEP = 1 / 60;
-/** How many recent requests the test hook can see. */
-const REQUEST_LOG_SIZE = 200;
 
 export interface GameFrameProps<S extends GameState> {
   readonly game: GameDefinition<S, string>;
@@ -38,7 +36,7 @@ interface RunningGame<S extends GameState> {
   readonly model: GameModel<S>;
   readonly frames: FramePublisher<S>;
   /** Recent requests, for the test hook. */
-  readonly requestLog: GameRequest[];
+  readonly requestLog: HookLog<GameRequest>;
   /** Hands the model's requests on and publishes its state to the View. */
   sync(): void;
 }
@@ -57,7 +55,7 @@ function startGame<S extends GameState>(
     random: Math.random,
   });
   const frames = createFrames(model.state());
-  const requestLog: GameRequest[] = [];
+  const requestLog = createHookLog<GameRequest>();
   const running: RunningGame<S> = {
     run,
     model,
@@ -68,7 +66,6 @@ function startGame<S extends GameState>(
       // Sound Effects, voice and the Round Celebration screen.
       output.carryOut(requests);
       requestLog.push(...requests);
-      if (requestLog.length > REQUEST_LOG_SIZE) requestLog.splice(0, requestLog.length - REQUEST_LOG_SIZE);
       frames.publish(model.state());
     },
   };
@@ -275,7 +272,7 @@ function useTestHook<S extends GameState>(
       state: () => model.state(),
       requests: () => {
         running.sync();
-        return [...running.requestLog];
+        return running.requestLog.entries();
       },
       paused: () => latest.current.paused,
       muted: () => latest.current.muted,

@@ -14,12 +14,24 @@
  * `file`; other fields on a clip are free for the script's own use.
  */
 import type { ItemId, SpokenItem } from "@/content";
+import { createHookLog } from "@/frame/testHook";
 
-/** Where Voice Clips and their manifest are served from (`public/voice/`). */
-export const VOICE_DIR = "/voice/";
+/** The URL path Voice Clips and their manifest are served from (the files are in `public/voice/`). */
+export const VOICE_URL_BASE = "/voice/";
 
 /** Where the Voice Clip manifest is served from. */
-export const VOICE_MANIFEST = `${VOICE_DIR}manifest.json`;
+export const VOICE_MANIFEST = `${VOICE_URL_BASE}manifest.json`;
+
+/**
+ * Fetches the shipped Voice Clip manifest, revalidated on every visit so
+ * newly generated clips are picked up. Never fails: a manifest that can't
+ * be fetched or parsed comes back as {} (no clips; see `readManifest`).
+ */
+export function fetchManifest(): Promise<unknown> {
+  return fetch(VOICE_MANIFEST, { cache: "no-cache" })
+    .then((response) => (response.ok ? response.json() : {}))
+    .catch(() => ({}));
+}
 
 /** An event handler; the voice player ignores the event, so any event fits. */
 type Handler = ((...event: never[]) => void) | null;
@@ -60,12 +72,21 @@ export interface Said {
   readonly via: "clip" | "speech";
 }
 
-/** The Game Frame's `VoicePlayer` (src/frame/output.ts), plus a log for the test hook. */
-export interface VoicePlayerWithLog {
+/**
+ * Says items aloud: their Voice Clip, else Speech Fallback, else nothing
+ * (ADR-0002). What the Game Frame's output (src/frame/output.ts) needs.
+ */
+export interface VoicePlayer {
   /** `interrupt` cuts off whatever is being said and drops what waits; otherwise it waits its turn. */
   say(item: SpokenItem, interrupt: boolean): void;
   /** Cuts off what is being said and drops what waits. */
   stop(): void;
+  /** Call from inside a Player's gesture, for browsers that keep audio locked until one. */
+  unlock?(): void;
+}
+
+/** The voice player this module makes: a `VoicePlayer` plus a log for the test hook. */
+export interface VoicePlayerWithLog extends VoicePlayer {
   unlock(): void;
   /** What was said out loud, oldest first (the last 200). */
   said(): Said[];
@@ -80,7 +101,7 @@ export interface VoicePlayerDeps {
   readonly speech: SpeechFallback | null;
 }
 
-/** A Voice Clip: its audio file, served at `VOICE_DIR + file`. */
+/** A Voice Clip: its audio file, served at `VOICE_URL_BASE + file`. */
 export interface Clip {
   readonly file: string;
 }
@@ -109,7 +130,7 @@ export function createVoicePlayer({ loadManifest, audio: createAudio, speech }: 
     // No manifest: Speech Fallback for everything.
   }
   const audio = safely(createAudio, null);
-  const said: Said[] = [];
+  const said = createHookLog<Said>();
   /** What is being said now; anything reported about an older one is ignored. */
   let current: object | null = null;
   /** Items waiting for the current one to end. */
@@ -117,10 +138,6 @@ export function createVoicePlayer({ loadManifest, audio: createAudio, speech }: 
   let audioUnlocked = false;
   let speechUnlocked = false;
 
-  const record = (entry: Said) => {
-    said.push(entry);
-    if (said.length > SAID_LOG_SIZE) said.shift();
-  };
 
   /** Says the next waiting item, once the one behind `playing` has ended. */
   const ended = (playing: object) => {
@@ -150,10 +167,10 @@ export function createVoicePlayer({ loadManifest, audio: createAudio, speech }: 
     audio.onended = () => ended(playing);
     audio.onerror = fallBack;
     try {
-      audio.src = VOICE_DIR + clip.file;
+      audio.src = VOICE_URL_BASE + clip.file;
       Promise.resolve(audio.play()).then(
         () => {
-          if (playing === current && !fellBack) record({ id: item.id, via: "clip" });
+          if (playing === current && !fellBack) said.push({ id: item.id, via: "clip" });
         },
         (error: unknown) => {
           // Audio still locked (iPhone, iPad, before the first touch): skip it.
@@ -176,7 +193,7 @@ export function createVoicePlayer({ loadManifest, audio: createAudio, speech }: 
       utterance.onend = () => ended(playing);
       utterance.onerror = () => ended(playing);
       speech.synthesis.speak(utterance);
-      record({ id: item.id, via: "speech" });
+      said.push({ id: item.id, via: "speech" });
     } catch {
       ended(playing);
     }
@@ -231,7 +248,7 @@ export function createVoicePlayer({ loadManifest, audio: createAudio, speech }: 
         safely(() => speech.synthesis.speak(speech.utterance("")), undefined);
       }
     },
-    said: () => [...said],
+    said: () => said.entries(),
   };
 }
 
@@ -247,9 +264,7 @@ export function createBrowserVoicePlayer(): VoicePlayerWithLog {
   const synthesis = window.speechSynthesis;
   const Utterance = window.SpeechSynthesisUtterance;
   return createVoicePlayer({
-    // Revalidated on every visit, so newly generated clips are picked up.
-    loadManifest: () =>
-      fetch(VOICE_MANIFEST, { cache: "no-cache" }).then((response) => (response.ok ? response.json() : {})),
+    loadManifest: fetchManifest,
     audio: () => (typeof Audio === "function" ? new Audio() : null),
     speech: synthesis && typeof Utterance === "function" ? { synthesis, utterance: (text) => new Utterance(text) } : null,
   });
@@ -257,9 +272,6 @@ export function createBrowserVoicePlayer(): VoicePlayerWithLog {
 
 /** A WAV file with no samples, played to unlock the audio element. */
 const SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
-
-/** How many recent items the test hook can see. */
-const SAID_LOG_SIZE = 200;
 
 /** A Hebrew voice: `he-IL`, `he_IL` (Android) or the old code `iw`. */
 const isHebrew = (voice: SpeechSynthesisVoice) => /^(he|iw)([-_]|$)/i.test(voice.lang);

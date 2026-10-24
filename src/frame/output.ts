@@ -4,26 +4,10 @@
  * screens. Mute silences sound only; a Celebration is always seen
  * (ADR-0004). Nothing here ever waits for sound.
  */
-import type { SpokenItem } from "@/content";
 import type { CelebrationKind, GameRequest, SoundEffect } from "@/games/contract";
 import type { SoundEffects } from "@/sound/soundEffects";
-
-/**
- * Says items aloud: their Voice Clip, else Speech Fallback, else nothing
- * (ADR-0002). The Game Frame uses `createBrowserVoicePlayer()` from
- * src/voice/voicePlayer.ts.
- */
-export interface VoicePlayer {
-  /** `interrupt` stops whatever is being said; otherwise it queues behind it. */
-  say(item: SpokenItem, interrupt: boolean): void;
-  /** Stops speaking and drops anything queued. */
-  stop(): void;
-  /** Call from inside a Player's gesture, for browsers that keep audio locked until one. */
-  unlock?(): void;
-}
-
-/** How many recent Sound Effects the test hook can see. */
-const PLAYED_LOG_SIZE = 200;
+import type { VoicePlayer } from "@/voice/voicePlayer";
+import { createHookLog } from "./testHook";
 
 export interface GameOutput {
   /** Carries out the model's requests, oldest first. */
@@ -50,7 +34,7 @@ export interface GameOutputDeps {
 
 export function createGameOutput({ effects, voice, celebrate }: GameOutputDeps): GameOutput {
   let muted = false;
-  const played: SoundEffect[] = [];
+  const played = createHookLog<SoundEffect>();
   const silence = () => {
     effects.stop();
     voice.stop();
@@ -65,7 +49,6 @@ export function createGameOutput({ effects, voice, celebrate }: GameOutputDeps):
         } else if (request.kind === "sound") {
           effects.play(request.effect);
           played.push(request.effect);
-          if (played.length > PLAYED_LOG_SIZE) played.shift();
         } else if (request.kind === "say") {
           voice.say(request.item, request.interrupt);
         }
@@ -80,6 +63,6 @@ export function createGameOutput({ effects, voice, celebrate }: GameOutputDeps):
       effects.unlock();
       voice.unlock?.();
     },
-    played: () => [...played],
+    played: () => played.entries(),
   };
 }

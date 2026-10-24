@@ -3,6 +3,7 @@
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { contentBank } from "../../src/content";
+import { regenerationCommand } from "../../src/voice/review/command";
 import { createAzureSynthesizer } from "./azure";
 import { parseItemIds, readAzureConfig } from "./config";
 import { generateVoiceClips } from "./generate";
@@ -41,7 +42,7 @@ async function main(args: readonly string[]) {
   if (report.changed.length > 0) {
     console.log(
       `\n${report.changed.length} clip(s) were made from text that has changed since (a new pronunciation override?).\n` +
-        `To regenerate them:\n  npm run voice-clips -- ${report.changed.join(" ")}`,
+        `To regenerate them:\n  ${regenerationCommand(report.changed)}`,
     );
   }
   return 0;

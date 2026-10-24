@@ -42,6 +42,26 @@ declare global {
   }
 }
 
+/** How many recent entries each of the hook's logs keeps. */
+const HOOK_LOG_SIZE = 200;
+
+/** A log for the test hook: only the most recent entries, oldest first. */
+export interface HookLog<T> {
+  push(...entries: readonly T[]): void;
+  entries(): T[];
+}
+
+export function createHookLog<T>(): HookLog<T> {
+  const log: T[] = [];
+  return {
+    push(...entries) {
+      log.push(...entries);
+      if (log.length > HOOK_LOG_SIZE) log.splice(0, log.length - HOOK_LOG_SIZE);
+    },
+    entries: () => [...log],
+  };
+}
+
 /** Installs the hook (dev and test builds only) and returns its removal. */
 export function installTestHook(hook: GameTestHook): () => void {
   if (process.env.NODE_ENV === "production") return () => {};
