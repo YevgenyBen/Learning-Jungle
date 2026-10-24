@@ -133,3 +133,8 @@
   font-weight: 700;
   font-size: clamp(14px, 3vmin, 20px);
 }
+
+/* Holds a small control below the choices (the Parent control); it places itself. */
+.footer {
+  display: contents;
+}

@@ -92,6 +92,25 @@ test.describe("Menus by keyboard", () => {
     await expect(choice(page, "ארנב קופץ")).toBeFocused();
   });
 
+  test("ArrowDown on Home reaches the Parent control, ArrowUp leaves it, and Enter opens the credits", async ({
+    page,
+  }) => {
+    const parentControl = page.getByRole("link", { name: "להורים" });
+    await page.goto("/home");
+    await expect(choice(page, "עברית")).toBeFocused();
+    await page.keyboard.press("ArrowLeft");
+
+    await page.keyboard.press("ArrowDown");
+    await expect(parentControl).toBeFocused();
+    await page.keyboard.press("ArrowUp");
+    await expect(choice(page, "עברית")).toBeFocused();
+
+    await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/credits$/);
+    await expect(page.getByRole("heading", { name: "קרדיטים" })).toBeVisible();
+  });
+
   test("an arrow key brings focus back to the Menu after a click elsewhere", async ({ page }) => {
     await page.goto("/home");
     await expect(choice(page, "עברית")).toBeFocused();

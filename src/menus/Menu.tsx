@@ -6,6 +6,7 @@ import { moveFocus, type MenuLayout } from "./focus";
 import styles from "./Menu.module.css";
 
 const BACK_ID = "back";
+const FOOTER_ID = "footer";
 
 export interface MenuChoice {
   readonly id: string;
@@ -24,6 +25,11 @@ export interface MenuProps {
   readonly choices: readonly MenuChoice[];
   /** The big back control; omitted on the Home Menu. */
   readonly back?: { readonly label: string; readonly href: string };
+  /**
+   * A small control below the choices, such as the Parent control on Home.
+   * Its first link or button is the Menu's last row for the arrow keys.
+   */
+  readonly footer?: ReactNode;
 }
 
 /**
@@ -31,20 +37,23 @@ export interface MenuProps {
  * Every choice works by touch, mouse, and arrow keys plus Enter.
  * Unavailable choices stay visible but do nothing when chosen.
  */
-export function Menu({ title, choices, back }: MenuProps) {
+export function Menu({ title, choices, back, footer }: MenuProps) {
   const router = useRouter();
-  const buttons = useRef(new Map<string, HTMLButtonElement>());
-  const register = (id: string) => (element: HTMLButtonElement | null) => {
+  const buttons = useRef(new Map<string, HTMLElement>());
+  const register = (id: string) => (element: HTMLElement | null) => {
     if (element) buttons.current.set(id, element);
     else buttons.current.delete(id);
   };
+  const footerBox = useRef<HTMLDivElement>(null);
 
   const choiceIds = choices.map((choice) => choice.id).join(" ");
   const hasBack = back !== undefined;
 
   useEffect(() => {
     const ids = choiceIds.split(" ");
-    const layout: MenuLayout = hasBack ? [[BACK_ID], ids] : [ids];
+    const footerControl = footerBox.current?.querySelector<HTMLElement>("a[href], button") ?? null;
+    if (footerControl) buttons.current.set(FOOTER_ID, footerControl);
+    const layout: MenuLayout = [...(hasBack ? [[BACK_ID]] : []), ids, ...(footerControl ? [[FOOTER_ID]] : [])];
 
     // A keyboard Player can press Enter straight away.
     buttons.current.get(ids[0])?.focus({ preventScroll: true });
@@ -58,7 +67,10 @@ export function Menu({ title, choices, back }: MenuProps) {
       buttons.current.get(next)?.focus({ preventScroll: true });
     };
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      buttons.current.delete(FOOTER_ID);
+    };
   }, [choiceIds, hasBack]);
 
   return (
@@ -104,6 +116,11 @@ export function Menu({ title, choices, back }: MenuProps) {
           );
         })}
       </ul>
+      {footer && (
+        <div ref={footerBox} className={styles.footer}>
+          {footer}
+        </div>
+      )}
     </main>
   );
 }
