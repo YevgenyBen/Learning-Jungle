@@ -40,6 +40,27 @@ test.describe("Voice Clip review page", () => {
     }
   });
 
+  test("a shared sound's row shows every Letter Sound that says it, so every Letter Sound appears with its text", async ({
+    page,
+  }) => {
+    await serveManifest(page, {});
+    await openReview(page);
+
+    // כָּ and קָ are read the same: one Voice Clip, both written forms on its row.
+    await expect(row(page, "sound-ka")).toContainText("כָּ");
+    await expect(row(page, "sound-ka")).toContainText("קָ");
+
+    const texts = new Map(
+      await page
+        .locator("tbody tr")
+        .evaluateAll((rows) =>
+          rows.map((r) => [(r as HTMLTableRowElement).cells[0].textContent, (r as HTMLTableRowElement).cells[1].textContent]),
+        ),
+    );
+    const letterSounds = contentBank.letterSounds();
+    expect(letterSounds.filter((s) => !texts.get(s.sound.id)?.includes(s.written)).map((s) => s.id)).toEqual([]);
+  });
+
   test("items without a clip are marked missing, with no clip to play", async ({ page }) => {
     await serveManifest(page, { "word-apple": "test-clip.wav" });
     await openReview(page);

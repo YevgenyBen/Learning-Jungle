@@ -14,6 +14,7 @@ import styles from "./VoiceClipReview.module.css";
  */
 export function VoiceClipReview() {
   const items = contentBank.spokenItems();
+  const writtenForms = writtenFormsBySound();
   /** The manifest's clips; null until it has been read. */
   const [clips, setClips] = useState<ReadonlyMap<ItemId, Clip> | null>(null);
   const player = useClipPlayer();
@@ -111,7 +112,7 @@ export function VoiceClipReview() {
             return (
               <tr key={item.id} className={clips && !clip ? styles.missing : undefined}>
                 <td dir="ltr">{item.id}</td>
-                <td className={styles.text}>{item.voweledText}</td>
+                <td className={styles.text}>{writtenForms.get(item.id)?.join(" ") ?? item.voweledText}</td>
                 <td className={styles.status}>{status}</td>
                 <td>
                   <button
@@ -139,6 +140,20 @@ export function VoiceClipReview() {
       </table>
     </main>
   );
+}
+
+/**
+ * Every written form of each shared sound (`sound-ka`: כָּ כַּ קָ קַ), so a
+ * sound's row shows all the Letter Sounds its one Voice Clip says.
+ */
+function writtenFormsBySound(): ReadonlyMap<ItemId, readonly string[]> {
+  const forms = new Map<ItemId, string[]>();
+  for (const { sound, written } of contentBank.letterSounds()) {
+    const list = forms.get(sound.id);
+    if (list) list.push(written);
+    else forms.set(sound.id, [written]);
+  }
+  return forms;
 }
 
 /** Plays one clip at a time on one audio element, and tells how each clip did. */
