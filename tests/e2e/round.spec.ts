@@ -24,7 +24,73 @@ async function playRound(page: Page) {
   await expect(roundCelebration(page)).toBeVisible();
 }
 
+/**
+ * Lets game time pass, through the hook, until the rabbit stands just before
+ * the needed letter's tile (true), or the Round is over (false).
+ */
+async function runUpToNeededTile(page: Page): Promise<boolean> {
+  return page.evaluate(() => {
+    const hook = window.__learningJungleGame!;
+    const state = () => hook.state() as unknown as RabbitState;
+    for (let t = 0; t < 60; t += 1 / 60) {
+      const s = state();
+      if (s.roundOver) return false;
+      if (s.celebration === null && s.rabbit.onGround) {
+        const need = s.challenge.letters[s.challenge.next].letter;
+        const ahead = s.tiles.find((tile) => !tile.collected && tile.letter === need && tile.x - s.rabbit.x > -20);
+        if (ahead && ahead.x - s.rabbit.x < 30) return true;
+      }
+      hook.advance(1 / 60);
+    }
+    throw new Error("the needed letter never came");
+  });
+}
+
+/** Lets game time pass until the rabbit has left the ground (true) and landed again (false). */
+async function runUntilRabbit(page: Page, airborne: boolean): Promise<void> {
+  await page.evaluate((airborne) => {
+    const hook = window.__learningJungleGame!;
+    for (let t = 0; t < 2; t += 1 / 60) {
+      if ((hook.state() as unknown as RabbitState).rabbit.onGround !== airborne) return;
+      hook.advance(1 / 60);
+    }
+    throw new Error(airborne ? "the rabbit didn't jump" : "the rabbit didn't land");
+  }, airborne);
+}
+
 test.describe("a Round of the rabbit Game", () => {
+  test("can be played to its end with real jumps: Space on desktop, taps on touch screens", async ({ page }) => {
+    // Real time stops once the Game is open, so the Game moves only when the
+    // test lets time pass: each jump comes exactly when the Player would make it.
+    await page.clock.install();
+    await openGame(page);
+    await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000));
+    const surface = (await page.getByTestId("game-surface").boundingBox())!;
+
+    let jumps = 0;
+    while (await runUpToNeededTile(page)) {
+      if (isTouch()) {
+        await page.touchscreen.tap(surface.x + surface.width / 2, surface.y + surface.height / 2);
+        await runUntilRabbit(page, true);
+        await runUntilRabbit(page, false);
+      } else {
+        await page.keyboard.down("Space");
+        await runUntilRabbit(page, true);
+        await runUntilRabbit(page, false);
+        await page.keyboard.up("Space");
+      }
+      jumps++;
+    }
+
+    const state = await gameState<RabbitState>(page);
+    expect(state.roundOver).toBe(true);
+    expect(state.progress).toEqual({ completed: 3, total: 3 });
+    // One jump per letter, at least three letters in each of the three Words.
+    expect(jumps).toBeGreaterThanOrEqual(9);
+    await expect(roundProgress(page)).toHaveAttribute("aria-valuenow", "3");
+    await expect(roundCelebration(page)).toBeVisible();
+  });
+
   test("shows its progress, celebrates each Word, and another Round starts a new Round", async ({ page }) => {
     await openGame(page);
     await expect(roundProgress(page)).toHaveAttribute("aria-valuenow", "0");

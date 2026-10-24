@@ -5,7 +5,7 @@
  *
  * The world is in logical pixels (WORLD), y grows downward, and the rabbit
  * stays at a fixed x while the world scrolls past it. Numbers are ported
- * from the bunny-hop.html prototype.
+ * from the single-page prototype (deleted; see docs/prototype-parity.md).
  */
 import type { Letter, SpelledLetter, Word } from "@/content";
 import type { CreateGameModel, GameModel, GameRequest, GameSettings, GameState } from "../contract";
@@ -38,6 +38,8 @@ const SPAWN_AHEAD = WORLD.width + 120;
 const CULL_BEHIND = -50;
 /** How long a collected tile stays in the state, so it can be drawn fading away. */
 const COLLECTED_FADE = 1 / 3; // s
+/** How long a landing stays in the state, so its puff of dust can be drawn settling. */
+const LANDING_DUST = 0.5; // s
 
 export const WORDS_PER_ROUND = 3;
 
@@ -83,6 +85,14 @@ export interface Tile {
   readonly sinceRejected: number;
 }
 
+/** A recent landing of the rabbit, for drawing its puff of dust. */
+export interface Landing {
+  /** Unique within one model, so each puff gets its own shape. */
+  readonly id: number;
+  /** Seconds since the rabbit landed. */
+  readonly since: number;
+}
+
 /** The latest Challenge Celebration, for drawing its sign, dance and confetti. */
 export interface CelebratedWord {
   readonly word: Word;
@@ -115,6 +125,8 @@ export interface RabbitState extends GameState {
     readonly squash: number;
   };
   readonly tiles: readonly Tile[];
+  /** Landings in the last half second, oldest first. */
+  readonly landings: readonly Landing[];
   /** The current Challenge: build this Word. */
   readonly challenge: {
     readonly word: Word;
@@ -164,6 +176,8 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
   let tiles: MutableTile[] = [];
   const rabbit = { y: WORLD.ground, vy: 0, onGround: true, squash: 0 };
   let jumpBuffer = 0;
+  let landings: { id: number; since: number }[] = [];
+  let nextLandingId = 1;
   let completed = 0;
   /** Seconds left of the Challenge Celebration's pause; 0 when none is running. */
   let celebrating = 0;
@@ -301,6 +315,9 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
     tiles = tiles.filter((t) => t.x > CULL_BEHIND && !(t.collected && t.sinceCollected >= COLLECTED_FADE));
     spawn();
 
+    for (const l of landings) l.since += dt;
+    landings = landings.filter((l) => l.since < LANDING_DUST);
+
     jumpBuffer = Math.max(0, jumpBuffer - dt);
     if (jumpBuffer > 0 && rabbit.onGround) {
       rabbit.vy = JUMP_VELOCITY;
@@ -316,6 +333,7 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
         rabbit.vy = 0;
         rabbit.onGround = true;
         rabbit.squash = 1;
+        landings.push({ id: nextLandingId++, since: 0 });
       }
     }
     rabbit.squash = Math.max(0, rabbit.squash - dt * 6);
@@ -343,6 +361,7 @@ export const createRabbitModel: CreateGameModel<RabbitState, RabbitDifficulty> =
       speed,
       rabbit: { x: WORLD.rabbitX, ...rabbit },
       tiles: tiles.map((t) => ({ ...t })),
+      landings: landings.map((l) => ({ ...l })),
       challenge: { word, text, letters, next },
       celebrated,
     }),
