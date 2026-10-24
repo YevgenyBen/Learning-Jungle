@@ -18,6 +18,9 @@ import type { ItemId, SpokenItem } from "@/content";
 /** Where Voice Clips and their manifest are served from (`public/voice/`). */
 export const VOICE_DIR = "/voice/";
 
+/** Where the Voice Clip manifest is served from. */
+export const VOICE_MANIFEST = `${VOICE_DIR}manifest.json`;
+
 /** An event handler; the voice player ignores the event, so any event fits. */
 type Handler = ((...event: never[]) => void) | null;
 
@@ -77,12 +80,13 @@ export interface VoicePlayerDeps {
   readonly speech: SpeechFallback | null;
 }
 
-interface Clip {
+/** A Voice Clip: its audio file, served at `VOICE_DIR + file`. */
+export interface Clip {
   readonly file: string;
 }
 
 /** The clips a manifest lists, skipping anything that isn't a clip; a bad manifest lists none. */
-function readManifest(manifest: unknown): Map<ItemId, Clip> {
+export function readManifest(manifest: unknown): Map<ItemId, Clip> {
   const clips = new Map<ItemId, Clip>();
   const listed = (manifest as { clips?: unknown } | null)?.clips;
   if (typeof listed !== "object" || listed === null || Array.isArray(listed)) return clips;
@@ -245,7 +249,7 @@ export function createBrowserVoicePlayer(): VoicePlayerWithLog {
   return createVoicePlayer({
     // Revalidated on every visit, so newly generated clips are picked up.
     loadManifest: () =>
-      fetch(`${VOICE_DIR}manifest.json`, { cache: "no-cache" }).then((response) => (response.ok ? response.json() : {})),
+      fetch(VOICE_MANIFEST, { cache: "no-cache" }).then((response) => (response.ok ? response.json() : {})),
     audio: () => (typeof Audio === "function" ? new Audio() : null),
     speech: synthesis && typeof Utterance === "function" ? { synthesis, utterance: (text) => new Utterance(text) } : null,
   });
