@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: read
     steps:
+      - uses: actions/checkout@v4
       - name: Delete every channel but live
         env:
           SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
@@ -18,7 +19,8 @@ jobs:
           printf '%s' "$SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
           firebase() { npx -y firebase-tools@latest "$@" --project learning-jungle-8315f; }
-          firebase hosting:channel:list --json > channels.json
+          firebase hosting:channel:list --json > channels.json || { cat channels.json; exit 1; }
+          cat channels.json
           channels=$(jq -r '.result.channels[].name | split("/") | last | select(. != "live")' channels.json)
           echo "Preview channels: ${channels:-none}"
           for channel in $channels; do
