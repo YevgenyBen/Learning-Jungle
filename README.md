@@ -9,26 +9,29 @@ A Hebrew-only, landscape-only learning app for a first-grade child (Kiska & Kot 
 
 The app is a static export (`docs/adr/0001`), so it is served by plain Firebase Hosting from `out/`; `firebase.json` holds the setup. Clean URLs map `/home` to `home.html`, `out/404.html` is the not-found page, hashed files under `/_next/static/` are cached for a year, and Voice Clips are revalidated on every visit so regenerated clips (same file name) are picked up.
 
-### Once: the Firebase project
+The live site is https://learning-jungle-8315f.web.app (project `learning-jungle-8315f`, in `.firebaserc`). GitHub Actions does all deploying, so nothing needs the Firebase CLI:
 
-1. In the Firebase console, create a project (the free Spark plan is enough) and open Hosting once to enable it.
-2. Sign in and link this repository to the project; this writes `.firebaserc`, which is committed:
+- **Push to `main`**: `.github/workflows/deploy-live.yml` builds and deploys to the live site.
+- **Pull request**: `.github/workflows/deploy-preview.yml` builds and deploys to a preview channel and comments its link on the pull request. Previews expire after 30 days.
 
-```
-npx firebase-tools login
-```
+### Once: the deploy credentials
 
-```
-npx firebase-tools use --add
-```
+Both workflows sign in with a service account key kept in the repository secret `FIREBASE_SERVICE_ACCOUNT`:
 
-### Deploy
+1. In the Firebase console, open the project's **Build > Hosting** and press **Get started** once. Click through the wizard; its CLI steps need not be run.
+2. In the Google Cloud console, **IAM & Admin > Service accounts** (project `learning-jungle-8315f`), create a service account (for example `github-action-learning-jungle`) with the roles Firebase Hosting Admin, API Keys Viewer, Firebase Authentication Admin and Cloud Run Viewer.
+3. On that service account, **Keys > Add key > JSON**.
+4. In GitHub, **Settings > Secrets and variables > Actions**, add a repository secret `FIREBASE_SERVICE_ACCOUNT` holding the whole JSON file. Then delete the downloaded file. Never commit it.
+
+### Deploying by hand (optional)
+
+From a machine with a browser, after `npx firebase-tools login`:
 
 ```
 npm run build && npx firebase-tools deploy --only hosting
 ```
 
-To try it locally first, `npx firebase-tools emulators:start --only hosting` serves `out/` the way Hosting will, on port 5000.
+`npx firebase-tools emulators:start --only hosting` serves `out/` locally the way Hosting will, on port 5000.
 
 ## Generating Voice Clips
 
