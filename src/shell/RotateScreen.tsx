@@ -1,12 +1,20 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import styles from "./RotateScreen.module.css";
 
 /**
  * The app is landscape only. On a phone or tablet held upright this covers
- * everything with a big "turn the device" picture. It is pure CSS (see the
- * module), so it shows before any script runs and follows the device as it
- * turns. Computers (fine pointer) never see it, whatever the window shape.
+ * everything with a big "turn the device" picture. Whether it shows is pure
+ * CSS (see the module), so it shows before any script runs and follows the
+ * device as it turns. Computers (fine pointer) never see it, whatever the
+ * window shape.
+ *
+ * The Opening Screen (`/`) is left uncovered: the logo is shown first, held
+ * any way, and the request to turn the device comes once it moves on.
  */
 export function RotateScreen() {
+  if (usePathname() === "/") return null;
   return (
     <div className={styles.rotate} data-testid="rotate-screen" role="alert">
       <svg className={styles.picture} viewBox="0 0 200 200" aria-hidden="true">

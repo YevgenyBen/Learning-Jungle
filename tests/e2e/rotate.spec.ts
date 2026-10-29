@@ -41,9 +41,14 @@ test.describe("rotate screen on phones and tablets", () => {
     await expect(homeMenu(page)).toBeVisible();
   });
 
-  test("also covers the opening screen when held upright", async ({ page }) => {
+  test("held upright, the opening screen shows the logo first, then asks to turn", async ({ page }) => {
     await hold(page, "portrait");
     await page.goto("/");
+    await expect(page.getByTestId("logo")).toBeVisible();
+    await expect(rotateScreen(page)).toBeHidden();
+    expect(await topmostAtCentre(page)).toBe("logo");
+    // Once the opening screen moves on by itself, the request to turn shows.
+    await expect(page).toHaveURL(/\/home\/?$/, { timeout: 6_000 });
     await expect(rotateScreen(page)).toBeVisible();
   });
 });
