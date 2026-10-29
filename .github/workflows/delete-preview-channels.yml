@@ -1,0 +1,28 @@
+# One-off: deletes every Firebase Hosting preview channel (all but live).
+# Run by hand from the Actions tab; removed again once it has run.
+name: Delete preview channels
+
+on:
+  workflow_dispatch:
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Delete every channel but live
+        env:
+          SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          printf '%s' "$SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          firebase() { npx -y firebase-tools@latest "$@" --project learning-jungle-8315f; }
+          firebase hosting:channel:list --json > channels.json
+          channels=$(jq -r '.result.channels[].name | split("/") | last | select(. != "live")' channels.json)
+          echo "Preview channels: ${channels:-none}"
+          for channel in $channels; do
+            firebase hosting:channel:delete "$channel" --force
+          done
+          echo "Left:"
+          firebase hosting:channel:list
