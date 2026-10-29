@@ -23,7 +23,8 @@ export function RotateScreen() {
       <svg className={styles.picture} viewBox="10 7 180 160" aria-hidden="true">
         <g className={styles.device}>
           <rect x="70" y="45" width="60" height="110" rx="10" />
-          <circle cx="100" cy="142" r="5" />
+          {/* The camera, at the top while the device is upright. */}
+          <circle cx="100" cy="58" r="5" />
         </g>
         <path className={styles.arrow} d="M169.3 60 A80 80 0 0 0 30.7 60" />
         <path className={styles.arrowHead} d="M45.2 53.3 L30.7 60 L29.3 44.1" />
