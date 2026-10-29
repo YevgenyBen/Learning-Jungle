@@ -9,14 +9,11 @@ A Hebrew-only, landscape-only learning app for a first-grade child (Kiska & Kot 
 
 The app is a static export (`docs/adr/0001`), so it is served by plain Firebase Hosting from `out/`; `firebase.json` holds the setup. Clean URLs map `/home` to `home.html`, `out/404.html` is the not-found page, hashed files under `/_next/static/` are cached for a year, and everything else (pages, Voice Clips, pictures) is revalidated on every visit, so a deploy shows at once and regenerated clips (same file name) are picked up.
 
-The live site is https://learning-jungle-8315f.web.app (project `learning-jungle-8315f`, in `.firebaserc`). GitHub Actions does all deploying, so nothing needs the Firebase CLI:
-
-- **Push to `main`**: `.github/workflows/deploy-live.yml` builds and deploys to the live site.
-- **Pull request**: `.github/workflows/deploy-preview.yml` builds and deploys to a preview channel and comments its link on the pull request. Previews expire after 30 days.
+The live site is https://learning-jungle-8315f.web.app (project `learning-jungle-8315f`, in `.firebaserc`). Every push to `main` deploys it: `.github/workflows/deploy-live.yml` builds and deploys to the live site, so nothing needs the Firebase CLI.
 
 ### Once: the deploy credentials
 
-Both workflows sign in with a service account key kept in the repository secret `FIREBASE_SERVICE_ACCOUNT`:
+The workflow signs in with a service account key kept in the repository secret `FIREBASE_SERVICE_ACCOUNT`:
 
 1. In the Firebase console, open the project's **Build > Hosting** and press **Get started** once. Click through the wizard; its CLI steps need not be run.
 2. In the Google Cloud console, **IAM & Admin > Service accounts** (project `learning-jungle-8315f`), create a service account (for example `github-action-learning-jungle`) with the roles Firebase Hosting Admin, API Keys Viewer, Service Usage Consumer, Firebase Authentication Admin and Cloud Run Viewer. Without Service Usage Consumer the deploy fails with "Permission denied to get service [firebasehosting.googleapis.com]".
