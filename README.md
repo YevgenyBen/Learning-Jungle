@@ -7,7 +7,7 @@ A Hebrew-only, landscape-only learning app for a first-grade child (Kiska & Kot 
 
 ## Hosting on Firebase
 
-The app is a static export (`docs/adr/0001`), so it is served by plain Firebase Hosting from `out/`; `firebase.json` holds the setup. Clean URLs map `/home` to `home.html`, `out/404.html` is the not-found page, hashed files under `/_next/static/` are cached for a year, and Voice Clips are revalidated on every visit so regenerated clips (same file name) are picked up.
+The app is a static export (`docs/adr/0001`), so it is served by plain Firebase Hosting from `out/`; `firebase.json` holds the setup. Clean URLs map `/home` to `home.html`, `out/404.html` is the not-found page, hashed files under `/_next/static/` are cached for a year, and everything else (pages, Voice Clips, pictures) is revalidated on every visit, so a deploy shows at once and regenerated clips (same file name) are picked up.
 
 The live site is https://learning-jungle-8315f.web.app (project `learning-jungle-8315f`, in `.firebaserc`). GitHub Actions does all deploying, so nothing needs the Firebase CLI:
 

@@ -17,13 +17,16 @@ export function RotateScreen() {
   if (usePathname() === "/") return null;
   return (
     <div className={styles.rotate} data-testid="rotate-screen" role="alert">
-      <svg className={styles.picture} viewBox="0 0 200 200" aria-hidden="true">
+      {/* The device turns a quarter counter-clockwise about its centre
+          (100, 100); the arrow arcs the same way over its top, wider than
+          the turning device so the two never touch. */}
+      <svg className={styles.picture} viewBox="10 7 180 160" aria-hidden="true">
         <g className={styles.device}>
-          <rect x="70" y="35" width="60" height="110" rx="10" />
-          <circle cx="100" cy="132" r="5" />
+          <rect x="70" y="45" width="60" height="110" rx="10" />
+          <circle cx="100" cy="142" r="5" />
         </g>
-        <path className={styles.arrow} d="M150 80 A60 60 0 0 1 120 160" />
-        <path className={styles.arrowHead} d="M108 150 L120 162 L130 147" />
+        <path className={styles.arrow} d="M169.3 60 A80 80 0 0 0 30.7 60" />
+        <path className={styles.arrowHead} d="M45.2 53.3 L30.7 60 L29.3 44.1" />
       </svg>
       <p className={styles.message}>סובבו את המכשיר</p>
     </div>

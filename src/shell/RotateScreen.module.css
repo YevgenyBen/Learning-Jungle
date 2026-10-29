@@ -28,7 +28,8 @@
   fill: var(--color-sky);
   stroke: var(--color-line);
   stroke-width: 6;
-  transform-origin: 100px 90px;
+  transform-box: view-box;
+  transform-origin: 100px 100px;
   animation: turn 2.4s ease-in-out infinite;
 }
 
