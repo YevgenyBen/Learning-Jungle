@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { ItemId, SpokenItem } from "../../src/content";
+import { soundsLikePhonemes } from "./soundsLike";
 
 /** Turns text into audio. The real one is Azure (azure.ts); tests pass a stand-in. */
 export interface Synthesizer {
@@ -8,7 +9,8 @@ export interface Synthesizer {
   readonly voice: string;
   /** The audio file extension of what `synthesize` returns, e.g. "mp3". */
   readonly extension: string;
-  synthesize(text: string): Promise<Uint8Array>;
+  /** Says `text`; with a Sounds-like Spelling, says it the way that spells. */
+  synthesize(text: string, soundsLike?: string): Promise<Uint8Array>;
 }
 
 /** A clip in `public/voice/manifest.json`. The voice player reads only `file`. */
@@ -16,6 +18,8 @@ interface ManifestClip {
   readonly file: string;
   /** The text the clip was generated from (absent for a dropped-in file). */
   readonly text?: string;
+  /** The Sounds-like Spelling it was generated with, if any. */
+  readonly soundsLike?: string;
   readonly voice?: string;
 }
 
@@ -46,7 +50,10 @@ export interface GenerateReport {
   readonly adopted: readonly ItemId[];
   /** Manifest entries dropped because the Content Bank no longer says them (files are kept). */
   readonly unlisted: readonly ItemId[];
-  /** Clips generated from a text that differs from the item's text now (candidates to regenerate). */
+  /**
+   * Clips generated from a text or Sounds-like Spelling that differs from
+   * the item's now (candidates to regenerate).
+   */
   readonly changed: readonly ItemId[];
 }
 
@@ -115,20 +122,35 @@ export async function generateVoiceClips(options: GenerateOptions): Promise<Gene
 
   const generating = new Set(toGenerate);
   for (const item of items) {
-    const text = manifest.clips[item.id]?.text;
-    if (!generating.has(item) && text !== undefined && text !== generationText(item)) report.changed.push(item.id);
+    const clip = manifest.clips[item.id];
+    if (generating.has(item) || clip?.text === undefined) continue;
+    if (clip.text !== generationText(item) || clip.soundsLike !== item.soundsLike) report.changed.push(item.id);
   }
 
   if (toGenerate.length === 0) return report;
+  // A Sounds-like Spelling that can't be read stops the run before any clip is made.
+  const unreadable: string[] = [];
+  for (const item of toGenerate) {
+    if (item.soundsLike === undefined) continue;
+    try {
+      soundsLikePhonemes(generationText(item), item.soundsLike);
+    } catch (error) {
+      unreadable.push(`${item.id}: ${error instanceof Error ? error.message : error}`);
+    }
+  }
+  if (unreadable.length > 0) {
+    throw new Error(`Sounds-like Spellings that can't be read:\n  ${unreadable.join("\n  ")}`);
+  }
   const synthesizer = options.synthesizer();
 
   for (const item of toGenerate) {
     const text = generationText(item);
+    const { soundsLike } = item;
     const file = `${item.id}.${synthesizer.extension}`;
-    const audio = await synthesizer.synthesize(text);
+    const audio = await synthesizer.synthesize(text, soundsLike);
     for (const old of clipFiles(item.id)) if (old !== file) rmSync(join(voiceDir, old));
     writeFileSync(join(voiceDir, file), audio);
-    manifest.clips[item.id] = { file, text, voice: synthesizer.voice };
+    manifest.clips[item.id] = { file, text, ...(soundsLike ? { soundsLike } : {}), voice: synthesizer.voice };
     // Saved after every clip, so an interrupted run picks up where it stopped.
     saveManifest();
     report.generated.push(item.id);

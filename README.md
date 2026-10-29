@@ -83,6 +83,15 @@ Only those are generated, whether or not they already have a clip.
 
 Give the item a `pronunciation` in the Content Bank's data (`src/content/data/`); it is used only for generation, never shown. Then regenerate that item as above. A plain `npm run voice-clips` lists the clips whose text has changed since they were generated, with the command to regenerate them.
 
+When respelling it in Hebrew doesn't help (wrong stress, a sound swallowed), say exactly how it should sound with a `soundsLike` spelling in English letters instead: `soundsLike: "ta-PU-akh"` on a Word or a Letter, or an entry in `SOUND_SOUNDS_LIKE` (`"sound-va": "va"`) or `NUMBER_SOUNDS_LIKE` (`21: "es-RIM ve-a-KHAT"`). The script turns it into phones for the voice, so the clip says those sounds and nothing else. Write:
+
+- vowels `a e i o u`
+- consonants `b d f g h k l m n p s t v z`, `r` (the Hebrew r), `y`, `sh`, `kh` (or `ch`, as in Chanukah), `ts` (or `tz`), `zh`, `j` (as in jungle), `tch`, and `'` for the catch of א or ע between vowels
+- `-` between syllables, with the stressed syllable in CAPITALS
+- one word for each word of the item's text, separated by spaces
+
+`c`, `q`, `w` and `x` are refused, with what to write instead. The manifest keeps the spelling each clip was made with, so a plain `npm run voice-clips` also lists clips whose spelling has changed since.
+
 ### Replace a clip with your own file
 
 Delete the item's old file from `public/voice/`, put yours there under the same identity (`word-apple.wav`, `.mp3`, `.m4a`, `.ogg`, ...) and run `npm run voice-clips`: it takes the file into the manifest and generates nothing. Two files for one identity are refused. Regenerating that identity later replaces your file with a generated one.

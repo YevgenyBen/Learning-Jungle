@@ -22,6 +22,7 @@ export interface WordData {
   readonly category: Category;
   readonly emoji: string;
   readonly pronunciation?: string;
+  readonly soundsLike?: string;
 }
 
 export const WORDS: readonly WordData[] = [

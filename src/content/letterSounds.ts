@@ -1,4 +1,4 @@
-import { CONSONANTS, MARK, SOUND_PRONUNCIATIONS, VOWELS } from "./data/letterSounds";
+import { CONSONANTS, MARK, SOUND_PRONUNCIATIONS, SOUND_SOUNDS_LIKE, VOWELS } from "./data/letterSounds";
 import type { LetterSound, SpokenItem, VowelMark } from "./types";
 
 /** The Content Bank's Letter Sound queries (part of `ContentBank`). */
@@ -53,7 +53,13 @@ function buildLetterSounds(): LetterSound[] {
       let sound = sounds.get(soundId);
       if (!sound) {
         const pronunciation = SOUND_PRONUNCIATIONS[soundId];
-        sound = { id: soundId, voweledText: written, ...(pronunciation ? { pronunciation } : {}) };
+        const soundsLike = SOUND_SOUNDS_LIKE[soundId];
+        sound = {
+          id: soundId,
+          voweledText: written,
+          ...(pronunciation ? { pronunciation } : {}),
+          ...(soundsLike ? { soundsLike } : {}),
+        };
         sounds.set(soundId, sound);
       }
       letterSounds.push({

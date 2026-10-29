@@ -12,6 +12,7 @@ export interface LetterData {
   readonly name: string;
   readonly final?: true;
   readonly pronunciation?: string;
+  readonly soundsLike?: string;
 }
 
 export const LETTERS: readonly LetterData[] = [

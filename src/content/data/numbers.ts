@@ -66,3 +66,8 @@ export const HUNDRED = "מֵאָה";
  * Pronunciation overrides by number, used only when generating Voice Clips.
  */
 export const NUMBER_PRONUNCIATIONS: Readonly<Record<number, string>> = {};
+
+/**
+ * Sounds-like Spellings by number, used only when generating Voice Clips.
+ */
+export const NUMBER_SOUNDS_LIKE: Readonly<Record<number, string>> = {};

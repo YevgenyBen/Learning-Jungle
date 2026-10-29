@@ -1,5 +1,6 @@
 import type { Synthesizer } from "./generate";
 import type { Transcriber, Transcription } from "./check";
+import { soundsLikePhonemes } from "./soundsLike";
 
 /** The one Voice Clip voice (ADR-0002): a female Azure neural he-IL voice. */
 export const VOICE = "he-IL-HilaNeural";
@@ -33,9 +34,17 @@ const escapeXml = (text: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
 
-const ssml = (text: string) =>
+/** The text as it should be said: as written, or word by word as its Sounds-like Spelling's phones. */
+const spoken = (text: string, soundsLike?: string) =>
+  soundsLike === undefined
+    ? escapeXml(text)
+    : soundsLikePhonemes(text, soundsLike)
+        .map((word) => `<phoneme alphabet='ipa' ph='${escapeXml(word.ipa)}'>${escapeXml(word.text)}</phoneme>`)
+        .join(" ");
+
+const ssml = (text: string, soundsLike?: string) =>
   `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='he-IL'>` +
-  `<voice name='${VOICE}'>${escapeXml(text)}</voice></speak>`;
+  `<voice name='${VOICE}'>${spoken(text, soundsLike)}</voice></speak>`;
 
 /**
  * Sends requests to one Azure Speech endpoint at least `minInterval` apart,
@@ -87,7 +96,7 @@ export function createAzureSynthesizer(options: AzureOptions): Synthesizer {
   return {
     voice: VOICE,
     extension: "mp3",
-    async synthesize(text) {
+    async synthesize(text, soundsLike) {
       const response = await send(
         () => ({
           method: "POST",
@@ -97,9 +106,9 @@ export function createAzureSynthesizer(options: AzureOptions): Synthesizer {
             "X-Microsoft-OutputFormat": OUTPUT_FORMAT,
             "User-Agent": "learning-jungle-voice-clips",
           },
-          body: ssml(text),
+          body: ssml(text, soundsLike),
         }),
-        `"${text}"`,
+        soundsLike === undefined ? `"${text}"` : `"${text}" (sounds like "${soundsLike}")`,
       );
       return new Uint8Array(await response.arrayBuffer());
     },

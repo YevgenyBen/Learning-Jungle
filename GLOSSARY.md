@@ -102,6 +102,10 @@ _Avoid_: Recording, audio, sound
 Anything in the Content Bank that is said aloud and so has its own Voice Clip: a Word, a Letter Name, the shared sound of Letter Sounds that are read the same, or a number.
 _Avoid_: Clip item, audio item, sayable
 
+**Sounds-like Spelling**:
+How a Spoken Item should sound, written in English letters with its stressed syllable in capitals (ta-PU-akh). Used only to generate its Voice Clip, never shown.
+_Avoid_: Phonetic hint, transliteration, Hint (a Hint is part of a Game)
+
 **Speech Fallback**:
 Reading text aloud with the device's own voice when no Voice Clip exists for it.
 _Avoid_: TTS, synthesis

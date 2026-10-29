@@ -42,7 +42,7 @@ async function main(args: readonly string[]) {
   );
   if (report.changed.length > 0) {
     console.log(
-      `\n${report.changed.length} clip(s) were made from text that has changed since (a new pronunciation override?).\n` +
+      `\n${report.changed.length} clip(s) were made from text that has changed since (a new pronunciation or Sounds-like Spelling?).\n` +
         `To regenerate them:\n  ${regenerationCommand(report.changed)}`,
     );
   }

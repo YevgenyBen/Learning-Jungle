@@ -100,3 +100,9 @@ export const CONSONANTS: readonly ConsonantData[] = [
  * (`sound-ba`), used only when generating Voice Clips.
  */
 export const SOUND_PRONUNCIATIONS: Readonly<Record<string, string>> = {};
+
+/**
+ * Sounds-like Spellings for spoken sounds, by their identity (`sound-va`),
+ * used only when generating Voice Clips.
+ */
+export const SOUND_SOUNDS_LIKE: Readonly<Record<string, string>> = {};

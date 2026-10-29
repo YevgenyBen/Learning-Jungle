@@ -18,15 +18,15 @@ let spoken: string[];
 const fakeSynthesizer = (): Synthesizer => ({
   voice: "test-voice",
   extension: "mp3",
-  synthesize: async (text) => {
-    spoken.push(text);
+  synthesize: async (text, soundsLike) => {
+    spoken.push(soundsLike === undefined ? text : `${text} as ${soundsLike}`);
     return new TextEncoder().encode(`audio of ${text}`);
   },
 });
 
 const manifest = () =>
   JSON.parse(readFileSync(join(voiceDir, "manifest.json"), "utf8")) as {
-    clips: Record<string, { file: string; text?: string; voice?: string }>;
+    clips: Record<string, { file: string; text?: string; soundsLike?: string; voice?: string }>;
   };
 
 const clipText = (file: string) => readFileSync(join(voiceDir, file), "utf8");
@@ -79,6 +79,25 @@ describe("generating Voice Clips", () => {
 
     expect(spoken).toEqual(["בָּה"]);
     expect(manifest().clips["sound-ba"].text).toBe("בָּה");
+  });
+
+  it("generates with the Sounds-like Spelling when an item has one, and keeps it in the manifest", async () => {
+    const va: SpokenItem = { id: "sound-va", voweledText: "וָ", soundsLike: "va" };
+
+    await generateVoiceClips({ items: [va, alef], voiceDir, synthesizer: fakeSynthesizer });
+
+    expect(spoken).toEqual(["וָ as va", "אָלֶף"]);
+    expect(manifest().clips["sound-va"]).toEqual({ file: "sound-va.mp3", text: "וָ", soundsLike: "va", voice: "test-voice" });
+    expect(manifest().clips["letter-alef"]).not.toHaveProperty("soundsLike");
+  });
+
+  it("refuses a Sounds-like Spelling it can't read, before generating anything", async () => {
+    const wa: SpokenItem = { id: "sound-va", voweledText: "וָ", soundsLike: "wa" };
+
+    await expect(generateVoiceClips({ items: [alef, wa], voiceDir, synthesizer: fakeSynthesizer })).rejects.toThrow(
+      /sound-va: .*"w".*write v instead/,
+    );
+    expect(spoken).toEqual([]);
   });
 
   it("an item whose manifest entry has lost its file is generated again", async () => {
@@ -148,6 +167,23 @@ describe("keeping the manifest in step with the Content Bank", () => {
 
     expect(second.generated).toEqual([]);
     expect(second.changed).toEqual(["letter-alef"]);
+  });
+
+  it("reports a clip whose Sounds-like Spelling was added, changed or removed since", async () => {
+    const hinted: SpokenItem = { ...alef, soundsLike: "A-lef" };
+    await generateVoiceClips({ items: [apple, hinted], voiceDir, synthesizer: fakeSynthesizer });
+
+    const same = await generateVoiceClips({ items: [apple, hinted], voiceDir, synthesizer: fakeSynthesizer });
+    const changed = await generateVoiceClips({
+      items: [{ ...apple, soundsLike: "ta-PU-akh" }, { ...alef, soundsLike: "a-LEF" }],
+      voiceDir,
+      synthesizer: fakeSynthesizer,
+    });
+    const removed = await generateVoiceClips({ items: [apple, alef], voiceDir, synthesizer: fakeSynthesizer });
+
+    expect(same.changed).toEqual([]);
+    expect(changed.changed).toEqual(["word-apple", "letter-alef"]);
+    expect(removed.changed).toEqual(["letter-alef"]);
   });
 
   it("tells how far it has got after every clip", async () => {

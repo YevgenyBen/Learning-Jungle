@@ -58,6 +58,19 @@ describe("the Azure synthesizer", () => {
     expect(sent[0].body).toContain("a&lt;b &amp; &quot;c&apos;");
   });
 
+  it("with a Sounds-like Spelling, says each word as its IPA phones", async () => {
+    const { fetch, sent } = fakeFetch([audio([1])]);
+    const azure = createAzureSynthesizer({ key: "k", region: "r", fetch, ...noWait });
+
+    await azure.synthesize("פֵּא סוֹפִית", "pe so-FIT");
+
+    expect(sent[0].body).toContain(
+      "<voice name='he-IL-HilaNeural'>" +
+        "<phoneme alphabet='ipa' ph='pe'>פֵּא</phoneme> <phoneme alphabet='ipa' ph='soˈfit'>סוֹפִית</phoneme>" +
+        "</voice>",
+    );
+  });
+
   it("fails with the status and a hint at the key when Azure refuses", async () => {
     const { fetch } = fakeFetch([new Response("", { status: 401, statusText: "Unauthorized" })]);
     const azure = createAzureSynthesizer({ key: "wrong", region: "westeurope", fetch, ...noWait });

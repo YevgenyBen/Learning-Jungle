@@ -2,6 +2,7 @@ import {
   AND_UNITS,
   HUNDRED,
   NUMBER_PRONUNCIATIONS,
+  NUMBER_SOUNDS_LIKE,
   TENS,
   TEN_TO_NINETEEN,
   UNITS,
@@ -29,10 +30,12 @@ export function createNumberQueries(): NumberQueries {
   const numbers: readonly HebrewNumber[] = Array.from({ length: 101 }, (_, value) => {
     const text = feminine(value).normalize("NFC");
     const pronunciation = NUMBER_PRONUNCIATIONS[value];
+    const soundsLike = NUMBER_SOUNDS_LIKE[value];
     return {
       id: `number-${value}`,
       voweledText: text,
       ...(pronunciation ? { pronunciation } : {}),
+      ...(soundsLike ? { soundsLike } : {}),
       value,
       feminine: text,
     };

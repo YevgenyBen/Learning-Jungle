@@ -18,6 +18,11 @@ export interface SpokenItem {
   readonly voweledText: string;
   /** Text used instead of `voweledText` only when generating the Voice Clip. */
   readonly pronunciation?: string;
+  /**
+   * How it should sound, in English letters (`ta-PU-akh`), used only when
+   * generating the Voice Clip; the voice then says exactly these sounds.
+   */
+  readonly soundsLike?: string;
 }
 
 export type Category = "fruits" | "vegetables" | "animals" | "home-objects" | "other";
