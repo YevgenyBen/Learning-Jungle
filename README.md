@@ -19,7 +19,7 @@ The live site is https://learning-jungle-8315f.web.app (project `learning-jungle
 Both workflows sign in with a service account key kept in the repository secret `FIREBASE_SERVICE_ACCOUNT`:
 
 1. In the Firebase console, open the project's **Build > Hosting** and press **Get started** once. Click through the wizard; its CLI steps need not be run.
-2. In the Google Cloud console, **IAM & Admin > Service accounts** (project `learning-jungle-8315f`), create a service account (for example `github-action-learning-jungle`) with the roles Firebase Hosting Admin, API Keys Viewer, Firebase Authentication Admin and Cloud Run Viewer.
+2. In the Google Cloud console, **IAM & Admin > Service accounts** (project `learning-jungle-8315f`), create a service account (for example `github-action-learning-jungle`) with the roles Firebase Hosting Admin, API Keys Viewer, Service Usage Consumer, Firebase Authentication Admin and Cloud Run Viewer. Without Service Usage Consumer the deploy fails with "Permission denied to get service [firebasehosting.googleapis.com]".
 3. On that service account, **Keys > Add key > JSON**.
 4. In GitHub, **Settings > Secrets and variables > Actions**, add a repository secret `FIREBASE_SERVICE_ACCOUNT` holding the whole JSON file. Then delete the downloaded file. Never commit it.
 
