@@ -5,6 +5,34 @@ A Hebrew-only, landscape-only learning app for a first-grade child (Kiska & Kot 
 - `npm run dev`: the app on port 3000, reachable from phones on the same Wi-Fi.
 - `npm test`, `npm run test:e2e`, `npm run test:all`: unit tests, Playwright, everything.
 
+## Hosting on Firebase
+
+The app is a static export (`docs/adr/0001`), so it is served by plain Firebase Hosting from `out/`; `firebase.json` holds the setup. Clean URLs map `/home` to `home.html`, `out/404.html` is the not-found page, hashed files under `/_next/static/` are cached for a year, and Voice Clips are revalidated on every visit so regenerated clips (same file name) are picked up.
+
+The live site is https://learning-jungle-8315f.web.app (project `learning-jungle-8315f`, in `.firebaserc`). GitHub Actions does all deploying, so nothing needs the Firebase CLI:
+
+- **Push to `main`**: `.github/workflows/deploy-live.yml` builds and deploys to the live site.
+- **Pull request**: `.github/workflows/deploy-preview.yml` builds and deploys to a preview channel and comments its link on the pull request. Previews expire after 30 days.
+
+### Once: the deploy credentials
+
+Both workflows sign in with a service account key kept in the repository secret `FIREBASE_SERVICE_ACCOUNT`:
+
+1. In the Firebase console, open the project's **Build > Hosting** and press **Get started** once. Click through the wizard; its CLI steps need not be run.
+2. In the Google Cloud console, **IAM & Admin > Service accounts** (project `learning-jungle-8315f`), create a service account (for example `github-action-learning-jungle`) with the roles Firebase Hosting Admin, API Keys Viewer, Service Usage Consumer, Firebase Authentication Admin and Cloud Run Viewer. Without Service Usage Consumer the deploy fails with "Permission denied to get service [firebasehosting.googleapis.com]".
+3. On that service account, **Keys > Add key > JSON**.
+4. In GitHub, **Settings > Secrets and variables > Actions**, add a repository secret `FIREBASE_SERVICE_ACCOUNT` holding the whole JSON file. Then delete the downloaded file. Never commit it.
+
+### Deploying by hand (optional)
+
+From a machine with a browser, after `npx firebase-tools login`:
+
+```
+npm run build && npx firebase-tools deploy --only hosting
+```
+
+`npx firebase-tools emulators:start --only hosting` serves `out/` locally the way Hosting will, on port 5000.
+
 ## Generating Voice Clips
 
 Every spoken item (Words, Letter Names, the shared sounds of Letter Sounds, numbers 0-100) gets a Voice Clip generated once with the Azure neural voice `he-IL-HilaNeural` (`docs/adr/0002`). The clips and their manifest (`public/voice/manifest.json`) are committed and shipped with the app. Until an item has a clip, the app uses Speech Fallback.

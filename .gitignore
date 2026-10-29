@@ -11,3 +11,7 @@ blob-report/
 .env*.local
 # The Azure Speech key for `npm run voice-clips` (covered above too; never commit it).
 .env.azure.local
+# Firebase CLI's local cache and logs.
+.firebase/
+firebase-debug.log
+firebase-debug.*.log

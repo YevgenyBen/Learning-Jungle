@@ -1,0 +1,31 @@
+# Builds the static export and deploys it to the live Firebase Hosting site
+# (https://learning-jungle-8315f.web.app) on every push to main.
+# Needs the FIREBASE_SERVICE_ACCOUNT secret; see "Hosting on Firebase" in the README.
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-live
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          projectId: learning-jungle-8315f
+          channelId: live
