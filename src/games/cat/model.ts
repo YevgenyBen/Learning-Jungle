@@ -338,6 +338,8 @@ export const createCatModel: CreateGameModel<CatState, CatDifficulty> = ({ setti
     choicePerches = newChoices(0);
     focused = null;
     begin("moving");
+    // Said as its Picture appears, once the Celebration has finished saying the last Word.
+    emit({ kind: "say", item: challenge.word, interrupt: false });
   }
 
   function stepMove(): void {
@@ -355,7 +357,6 @@ export const createCatModel: CreateGameModel<CatState, CatDifficulty> = ({ setti
     if (t < 1) return;
     leaving = [];
     begin("choosing");
-    emit({ kind: "say", item: challenge.word, interrupt: true });
   }
 
   function step(dt: number): void {
