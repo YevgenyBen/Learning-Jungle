@@ -120,8 +120,15 @@ describe("the first-letter Game's Challenge", () => {
     const first = model.state();
     const targetId = first.choices[rightChoice(first)];
     model.act({ kind: "pick", choice: rightChoice(first) });
-    run(model, JUMP_SECONDS + CELEBRATION_PAUSE + 0.05);
+    run(model, JUMP_SECONDS + CELEBRATION_PAUSE - 0.05);
+    expect(model.state().phase).toBe("celebrating");
+    const moveStart = run(model, 0.1);
     expect(model.state().phase).toBe("moving");
+    // The next Word is said as its Picture appears, at the start of the move,
+    // after whatever the Celebration is still saying.
+    expect(moveStart.filter((r) => r.kind === "say")).toEqual([
+      { kind: "say", item: model.state().challenge.word, interrupt: false },
+    ]);
 
     const requests = run(model, MOVE_SECONDS + 0.05);
     const next = model.state();
@@ -132,7 +139,7 @@ describe("the first-letter Game's Challenge", () => {
     expect(next.cat.x).toBe(SCENE.homeX);
     expect(next.choices.every((id) => !first.choices.includes(id))).toBe(true);
     expect(next.perches.every((p) => p.rise === 1)).toBe(true);
-    expect(says(requests)).toEqual([next.challenge.word.id]);
+    expect(says(requests)).toEqual([]);
   });
 
   it("a wrong Choice is greyed with gentle feedback and costs nothing: no jump, no progress lost", () => {
