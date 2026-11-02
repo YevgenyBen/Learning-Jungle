@@ -218,8 +218,8 @@ export const createHedgehogModel: CreateGameModel<HedgehogState, HedgehogDifficu
     focused = null;
     begin("celebrating");
     const spoken = content.number(total);
+    // Only the number is said: the fruit's name would distract from how many there are.
     if (spoken) emit({ kind: "say", item: spoken, interrupt: true });
-    emit({ kind: "say", item: fruit, interrupt: false });
     emit({ kind: "sound", effect: "challenge-complete" });
     emit({ kind: "celebrate", celebration: "challenge" });
   }

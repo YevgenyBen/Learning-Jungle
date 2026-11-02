@@ -106,7 +106,13 @@ function Scene({ ticks, act }: { ticks: Ticks<HedgehogState>; act: (action: Play
             {view.count}
           </div>
         )}
-        <div className={styles.fruits} role="group" aria-label="פירות">
+        <div
+          className={styles.fruits}
+          role="group"
+          aria-label="פירות"
+          // The fruits on its back hop along with the hedgehog.
+          data-happy={view.phase === "celebrating"}
+        >
           {view.fruits.map((fruit) => (
             <FruitButton
               key={`${view.number}-${fruit.index}`}
