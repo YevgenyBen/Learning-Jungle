@@ -9,6 +9,34 @@
   background: linear-gradient(var(--color-sky), var(--color-page) 70%);
 }
 
+/* The Home Menu: title, then the big logo, then the entries. */
+.withBigLogo {
+  grid-template-rows: auto auto 1fr;
+}
+
+.bigLogo {
+  display: flex;
+  justify-content: center;
+}
+
+.smallLogo.onlyShort {
+  display: none;
+}
+
+@media (max-height: 480px) {
+  .withBigLogo {
+    grid-template-rows: auto 1fr;
+  }
+
+  .bigLogo {
+    display: none;
+  }
+
+  .smallLogo.onlyShort {
+    display: flex;
+  }
+}
+
 .header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -23,6 +51,13 @@
   font-weight: 400;
   font-size: clamp(28px, 7vmin, 52px);
   line-height: 1;
+}
+
+/* Opposite the back control: the end of the header line, left in RTL. */
+.smallLogo {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
 }
 
 .back {
