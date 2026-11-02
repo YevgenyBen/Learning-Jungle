@@ -114,6 +114,11 @@
   pointer-events: none;
 }
 
+/* Counted fruits ride the hedgehog: the same hop, at the same time, in scene pixels. */
+.fruits[data-happy="true"] .fruit[data-counted="true"] {
+  animation: hop-rider 500ms ease-in-out 3;
+}
+
 .fruitPicture {
   display: block;
   width: 100%;
@@ -223,6 +228,13 @@
   }
 }
 
+/* `hop` in CSS pixels (the SVG's -14 is in scene pixels), on `translate` so a fruit's tilt doesn't skew it. */
+@keyframes hop-rider {
+  50% {
+    translate: -50% calc(-50% - 14 * var(--px));
+  }
+}
+
 @keyframes shake-head {
   25% {
     transform: rotate(-8deg);
@@ -259,6 +271,7 @@
   .running,
   .celebration,
   .hedgehog[data-happy="true"] .hedgehogBody,
+  .fruits[data-happy="true"] .fruit[data-counted="true"],
   .hedgehog[data-doubting="true"] .hedgehogHead {
     animation: none;
     transition: none;

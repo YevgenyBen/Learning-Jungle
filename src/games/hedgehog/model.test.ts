@@ -127,7 +127,7 @@ describe("the counting Game's Challenge", () => {
     }
   });
 
-  it("a wrong total greys it and costs nothing; the right one celebrates and says the number and fruit", () => {
+  it("a wrong total greys it and costs nothing; the right one celebrates and says the number, never the fruit", () => {
     const model = create(5);
     toAnswering(model);
     model.takeRequests();
@@ -137,10 +137,10 @@ describe("the counting Game's Challenge", () => {
     expect(model.state().progress.completed).toBe(0);
     expect(model.state().phase).toBe("answering");
 
-    const { total, fruit } = model.state();
+    const { total } = model.state();
     model.act({ kind: "pick", choice: rightChoice(model) });
     const requests = model.takeRequests();
-    expect(says(requests)).toEqual([`number-${total}`, fruit.id]);
+    expect(says(requests)).toEqual([`number-${total}`]);
     expect(model.state().celebration).toBe("challenge");
     expect(model.state().progress.completed).toBe(1);
   });
