@@ -33,9 +33,20 @@ const escapeXml = (text: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
 
+/**
+ * Silence kept before and after the speech, in ms. Azure otherwise pads a
+ * clip with about 0.25 s before and 1 s after, which makes a clip sound
+ * late after a tap and holds back whatever waits behind it.
+ */
+export const LEADING_SILENCE_MS = 30;
+export const TRAILING_SILENCE_MS = 80;
+
 const ssml = (text: string) =>
-  `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='he-IL'>` +
-  `<voice name='${VOICE}'>${escapeXml(text)}</voice></speak>`;
+  `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='he-IL'>` +
+  `<voice name='${VOICE}'>` +
+  `<mstts:silence type='Leading-exact' value='${LEADING_SILENCE_MS}ms'/>` +
+  `<mstts:silence type='Tailing-exact' value='${TRAILING_SILENCE_MS}ms'/>` +
+  `${escapeXml(text)}</voice></speak>`;
 
 /**
  * Sends requests to one Azure Speech endpoint at least `minInterval` apart,

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { contentBank } from "@/content";
 import { seededRandom } from "../random";
-import { CHALLENGES_PER_ROUND, createCatModel } from "./model";
+import { CELEBRATION_PAUSE, CHALLENGES_PER_ROUND, createCatModel } from "./model";
 import { catTestDriver } from "./testDriver";
 
 // The test driver plays the first-letter Game the way a Player would (only
@@ -36,7 +36,7 @@ describe("the first-letter Game's test driver", () => {
   it("completes a whole Round, and then has no step left to make", () => {
     const model = create(1);
     for (let i = 0; i < CHALLENGES_PER_ROUND; i++) catTestDriver.solveStep(model);
-    model.advance(2);
+    model.advance(CELEBRATION_PAUSE + 0.1);
     expect(model.state().roundOver).toBe(true);
     expect(() => catTestDriver.solveStep(model)).toThrow(/Round is over/);
   });

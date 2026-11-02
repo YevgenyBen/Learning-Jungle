@@ -46,7 +46,19 @@ describe("the Azure synthesizer", () => {
     expect(sent[0].headers["content-type"]).toBe("application/ssml+xml");
     expect(sent[0].headers["x-microsoft-outputformat"]).toBe("audio-24khz-48kbitrate-mono-mp3");
     expect(sent[0].body).toContain("xml:lang='he-IL'");
-    expect(sent[0].body).toContain("<voice name='he-IL-HilaNeural'>תַּפּוּחַ</voice>");
+    expect(sent[0].body).toContain("<voice name='he-IL-HilaNeural'>");
+    expect(sent[0].body).toContain("/>תַּפּוּחַ</voice>");
+  });
+
+  it("asks for only a little silence before and after the speech, so a clip sounds as soon as it plays", async () => {
+    const { fetch, sent } = fakeFetch([audio([1])]);
+    const azure = createAzureSynthesizer({ key: "k", region: "r", fetch, ...noWait });
+
+    await azure.synthesize("אָלֶף");
+
+    expect(sent[0].body).toContain("xmlns:mstts='https://www.w3.org/2001/mstts'");
+    expect(sent[0].body).toContain("<mstts:silence type='Leading-exact' value='30ms'/>");
+    expect(sent[0].body).toContain("<mstts:silence type='Tailing-exact' value='80ms'/>");
   });
 
   it("escapes the text so it cannot break the SSML", async () => {

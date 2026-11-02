@@ -99,7 +99,19 @@ export interface VoicePlayerDeps {
   readonly audio: () => ClipAudio | null;
   /** The device's speech synthesis, or null where there is none. */
   readonly speech: SpeechFallback | null;
+  /**
+   * How long something said before the manifest has loaded waits for it,
+   * in ms, before Speech Fallback reads it instead. Default MANIFEST_WAIT_MS.
+   */
+  readonly manifestWaitMs?: number;
 }
+
+/**
+ * A Game says its first item as it starts, usually before the manifest has
+ * arrived. Waiting this long for it lets that item be its Voice Clip rather
+ * than the device's voice (or nothing, where there is no Hebrew voice).
+ */
+export const MANIFEST_WAIT_MS = 1500;
 
 /** A Voice Clip: its audio file, served at `VOICE_URL_BASE + file`. */
 export interface Clip {
@@ -118,17 +130,34 @@ export function readManifest(manifest: unknown): Map<ItemId, Clip> {
   return clips;
 }
 
-export function createVoicePlayer({ loadManifest, audio: createAudio, speech }: VoicePlayerDeps): VoicePlayerWithLog {
-  // Until the manifest has loaded, everything goes to Speech Fallback.
+export function createVoicePlayer({
+  loadManifest,
+  audio: createAudio,
+  speech,
+  manifestWaitMs = MANIFEST_WAIT_MS,
+}: VoicePlayerDeps): VoicePlayerWithLog {
   let clips = new Map<ItemId, Clip>();
+  /** Whether the manifest has loaded, failed, or been waited for long enough. */
+  let manifestSettled = false;
+  let manifestLoaded: Promise<void>;
   try {
-    loadManifest().then(
-      (manifest) => (clips = readManifest(manifest)),
+    manifestLoaded = loadManifest().then(
+      (manifest) => {
+        clips = readManifest(manifest);
+      },
       () => {},
     );
   } catch {
     // No manifest: Speech Fallback for everything.
+    manifestLoaded = Promise.resolve();
   }
+  // Anything said before then waits for it, but not for ever.
+  const manifestReady = Promise.race([
+    manifestLoaded,
+    new Promise<void>((done) => setTimeout(done, manifestWaitMs)),
+  ]).then(() => {
+    manifestSettled = true;
+  });
   const audio = safely(createAudio, null);
   const said = createHookLog<Said>();
   /** What is being said now; anything reported about an older one is ignored. */
@@ -150,6 +179,17 @@ export function createVoicePlayer({ loadManifest, audio: createAudio, speech }: 
   const start = (item: SpokenItem) => {
     const playing = {};
     current = playing;
+    if (!manifestSettled) {
+      // Said as soon as the manifest is in, unless something newer came first.
+      void manifestReady.then(() => {
+        if (playing === current) play(item, playing);
+      });
+      return;
+    }
+    play(item, playing);
+  };
+
+  const play = (item: SpokenItem, playing: object) => {
     const clip = clips.get(item.id);
     if (clip && audio) playClip(item, clip, playing);
     else speak(item, playing);

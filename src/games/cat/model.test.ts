@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { contentBank } from "@/content";
-import type { GameRequest, GameSettings } from "../contract";
+import { CHIME_SECONDS, type GameRequest, type GameSettings } from "../contract";
 import { seededRandom } from "../random";
 import {
   CELEBRATION_PAUSE,
@@ -110,9 +110,17 @@ describe("the first-letter Game's Challenge", () => {
     expect(landed.cat).toMatchObject({ x: target.x, y: target.top, airborne: false });
     expect(landed.progress.completed).toBe(1);
     expect(landed.celebration).toBe("challenge");
-    const letter = contentBank.letter(start.challenge.letter)!;
-    expect(says(requests)).toEqual([letter.id, start.challenge.word.id]);
     expect(requests).toContainEqual({ kind: "celebrate", celebration: "challenge" });
+    expect(sounds(requests)).toEqual(["jump", "challenge-complete"]);
+    // The letter and the Word are said once the landing chime has rung out, not over it.
+    expect(says(requests)).toEqual([]);
+    const said = run(model, CHIME_SECONDS);
+    const letter = contentBank.letter(start.challenge.letter)!;
+    expect(said.filter((r) => r.kind === "say")).toEqual([
+      { kind: "say", item: letter, interrupt: true },
+      { kind: "say", item: start.challenge.word, interrupt: false },
+    ]);
+    expect(says(run(model, 1))).toEqual([]);
   });
 
   it("after the Celebration the cat's perch slides home and the next Word comes with new Choices", () => {

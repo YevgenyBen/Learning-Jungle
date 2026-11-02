@@ -75,8 +75,10 @@ test.describe("the first-letter Game", () => {
     await expect(choice(page, before.challenge.letter)).toHaveAttribute("data-look", "right");
     await expect(roundProgress(page)).toHaveAttribute("aria-valuenow", "1");
     await expect(page.getByTestId("celebration-sign")).toContainText(before.challenge.word.voweled);
-    const said = (await gameRequests(page)).flatMap((r) => (r.kind === "say" ? [r.item.id] : []));
-    expect(said.slice(-2)).toEqual([expect.stringMatching(/^letter-/), before.challenge.word.id]);
+    // The letter and the Word are said once the landing chime has rung out.
+    await expect
+      .poll(async () => (await gameRequests(page)).flatMap((r) => (r.kind === "say" ? [r.item.id] : [])).slice(-2))
+      .toEqual([expect.stringMatching(/^letter-/), before.challenge.word.id]);
 
     const after = await choosing(page);
     expect(after.challenge.word.id).not.toBe(before.challenge.word.id);

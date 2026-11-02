@@ -37,6 +37,12 @@ export type SoundEffect = "jump" | "collect" | "mistake" | "challenge-complete" 
 
 export type CelebrationKind = "challenge" | "round";
 
+/**
+ * How long the "challenge-complete" chime takes to ring out. A Game says
+ * its Challenge Celebration's words after the chime, not over it.
+ */
+export const CHIME_SECONDS = 0.35;
+
 /** What a model asks the Game Frame to do. The model never waits for any of it. */
 export type GameRequest =
   /**

@@ -10,7 +10,7 @@ import { SCENE, type CatState, type CelebratedWord, type Perch } from "./model";
 const { width: W, height: H, ground: GROUND } = SCENE;
 
 /** How long the Challenge Celebration's sign lasts. */
-export const SIGN_SECONDS = 1.8;
+export const SIGN_SECONDS = 2.2;
 
 /**
  * The sign's top edge hangs this far below the perch's top, so a sign made
