@@ -17,6 +17,7 @@ export default async function SubjectPage({ params }: { params: Promise<{ subjec
     <Menu
       title={subject.name}
       back={{ label: "חזרה", href: "/home" }}
+      logo="small"
       entries={subject.games.map((game) => ({
         id: game.id,
         label: game.name,

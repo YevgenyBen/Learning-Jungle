@@ -1,8 +1,35 @@
-/* Square; the art leaves its own margin, so it can fill most of the short side. */
+/* Square; the art leaves its own margin. */
 .logo {
-  width: clamp(220px, 70vmin, 440px);
   height: auto;
+  user-select: none;
+}
+
+/* Beside the menus and Continue it is never a tap target: taps go through. */
+.home,
+.menu,
+.pause {
+  pointer-events: none;
+}
+
+/* Alone on the Opening Screen: fills most of the short side. */
+.opening {
+  width: clamp(220px, 70vmin, 440px);
   animation: arrive 600ms ease-out both;
+}
+
+/* Above the Subjects on the Home Menu, in the space under the title. */
+.home {
+  width: clamp(120px, 24vmin, 200px);
+}
+
+/* Small, in a Subject Menu's header, opposite the back control. */
+.menu {
+  width: clamp(56px, 11vmin, 88px);
+}
+
+/* Above Continue on the pause screen. */
+.pause {
+  width: clamp(64px, 20vmin, 160px);
 }
 
 @keyframes arrive {
@@ -17,7 +44,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .logo {
+  .opening {
     animation: none;
   }
 }

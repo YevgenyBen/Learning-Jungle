@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { hasModifierKey, moveFocus, type MenuLayout } from "./focus";
 import { useFocusGroup } from "./focusGroup";
+import { Logo } from "@/shell/Logo";
 import styles from "./Menu.module.css";
 
 const BACK_ID = "back";
@@ -32,6 +33,11 @@ export interface MenuProps {
    * Its first link or button is the Menu's last row for the arrow keys.
    */
   readonly footer?: ReactNode;
+  /**
+   * How the company logo shows: big above the entries (the Home Menu) or
+   * small in the header, opposite the back control (Subject Menus).
+   */
+  readonly logo?: "big" | "small";
 }
 
 /**
@@ -39,7 +45,7 @@ export interface MenuProps {
  * Every entry works by touch, mouse, and arrow keys plus Enter.
  * Unavailable entries stay visible but do nothing when picked.
  */
-export function Menu({ title, entries, back, footer }: MenuProps) {
+export function Menu({ title, entries, back, footer, logo }: MenuProps) {
   const router = useRouter();
   const controls = useFocusGroup<string>();
   const footerBox = useRef<HTMLDivElement>(null);
@@ -72,7 +78,7 @@ export function Menu({ title, entries, back, footer }: MenuProps) {
   }, [entryIds, hasBack, controls]);
 
   return (
-    <main className={styles.menu}>
+    <main className={`${styles.menu} ${logo === "big" ? styles.withBigLogo : ""}`}>
       <header className={styles.header}>
         {back && (
           <button
@@ -88,7 +94,19 @@ export function Menu({ title, entries, back, footer }: MenuProps) {
           </button>
         )}
         <h1 className={styles.title}>{title}</h1>
+        {logo && (
+          // A big logo moves up here on short screens, where it would push
+          // the entries off the bottom.
+          <span className={`${styles.smallLogo} ${logo === "big" ? styles.onlyShort : ""}`}>
+            <Logo place="menu" />
+          </span>
+        )}
       </header>
+      {logo === "big" && (
+        <span className={styles.bigLogo}>
+          <Logo place="home" />
+        </span>
+      )}
       <ul className={styles.entries}>
         {entries.map((entry) => {
           const available = entry.href !== undefined;

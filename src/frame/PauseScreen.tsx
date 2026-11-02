@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "@/shell/Logo";
 import styles from "./PauseScreen.module.css";
 
 /**
@@ -9,6 +10,7 @@ import styles from "./PauseScreen.module.css";
 export function PauseScreen({ onResume }: { readonly onResume: () => void }) {
   return (
     <div className={styles.screen} data-testid="pause-screen">
+      <Logo place="pause" />
       <button type="button" className={styles.resume} onClick={onResume}>
         <span aria-hidden="true" className={styles.icon}>
           {"▶︎" /* ▶ as text, not a colour emoji */}

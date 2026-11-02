@@ -14,6 +14,7 @@ export default function HomePage() {
         color: `var(--color-subject-${subject.id})`,
       }))}
       footer={<ParentControl />}
+      logo="big"
     />
   );
 }
