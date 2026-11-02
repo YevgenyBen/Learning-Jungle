@@ -1,5 +1,6 @@
 import type { Page } from "@playwright/test";
 import type { CatState } from "../../src/games/cat/model";
+import type { HedgehogState } from "../../src/games/hedgehog/model";
 import type { RabbitState } from "../../src/games/rabbit/model";
 import type { GameRequest } from "../../src/games/contract";
 import type { GameTestHook } from "../../src/frame/testHook";
@@ -7,7 +8,7 @@ import type { GameTestHook } from "../../src/frame/testHook";
 // Helpers for driving a running Game through the dev/test hook
 // (window.__learningJungleGame, see src/frame/testHook.ts).
 
-export type { CatState, RabbitState };
+export type { CatState, HedgehogState, RabbitState };
 
 /** Waits until the Game Frame has installed the hook for this Game. */
 export async function waitForGame(page: Page, gameId: string): Promise<void> {

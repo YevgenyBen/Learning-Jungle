@@ -13,7 +13,7 @@ test.describe("Menus by touch or mouse", () => {
 
   for (const subject of [
     { name: "עברית", games: ["ארנב קופץ", "האות הראשונה"], available: ["ארנב קופץ", "האות הראשונה"] },
-    { name: "חשבון", games: ["ספירה", "חיבור"], available: [] as string[] },
+    { name: "חשבון", games: ["ספירה", "חיבור"], available: ["ספירה"] },
   ]) {
     test(`${subject.name} opens its Subject Menu, and back returns Home`, async ({ page }) => {
       await page.goto("/home");
@@ -41,7 +41,7 @@ test.describe("Menus by touch or mouse", () => {
     await expect(page.getByRole("heading", { name: "חשבון" })).toBeVisible();
     const menuUrl = page.url();
 
-    await press(entry(page, "ספירה"), { force: true });
+    await press(entry(page, "חיבור"), { force: true });
     await page.waitForTimeout(500);
     expect(page.url()).toBe(menuUrl);
     await expect(page.getByRole("heading", { name: "חשבון" })).toBeVisible();
