@@ -25,6 +25,7 @@ const ROUTES: readonly { readonly path: string; readonly pattern?: string }[] = 
   { path: "/subjects/math", pattern: "/subjects/[subject]" },
   { path: "/games/rabbit", pattern: "/games/[game]" },
   { path: "/games/first-letter", pattern: "/games/[game]" },
+  { path: "/games/counting", pattern: "/games/[game]" },
   { path: "/credits" },
   { path: "/dev/voice-clips" },
 ];
