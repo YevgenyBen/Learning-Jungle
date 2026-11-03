@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { contentBank } from "@/content";
-import type { GameRequest, GameSettings } from "../contract";
+import { CHIME_SECONDS, type GameRequest, type GameSettings } from "../contract";
 import { seededRandom } from "../random";
 import {
   CELEBRATION_PAUSE,
@@ -140,9 +140,14 @@ describe("the counting Game's Challenge", () => {
     const { total } = model.state();
     model.act({ kind: "pick", choice: rightChoice(model) });
     const requests = model.takeRequests();
-    expect(says(requests)).toEqual([`number-${total}`]);
     expect(model.state().celebration).toBe("challenge");
     expect(model.state().progress.completed).toBe(1);
+    // The chime rings at once; the number is said once it has rung out, not over it.
+    expect(sounds(requests)).toEqual(["challenge-complete"]);
+    expect(says(requests)).toEqual([]);
+    expect(says(run(model, CHIME_SECONDS - 0.05))).toEqual([]);
+    expect(says(run(model, 0.1))).toEqual([`number-${total}`]);
+    expect(says(run(model, 1))).toEqual([]);
   });
 
   it("shows the Hint after two wrong totals", () => {

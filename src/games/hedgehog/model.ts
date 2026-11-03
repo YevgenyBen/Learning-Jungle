@@ -9,7 +9,7 @@
  * The scene is in logical pixels (SCENE) and y grows downward.
  */
 import type { Word } from "@/content";
-import type { CreateGameModel, GameModel, GameRequest, GameSettings, GameState } from "../contract";
+import { CHIME_SECONDS, type CreateGameModel, type GameModel, type GameRequest, type GameSettings, type GameState } from "../contract";
 import { between, shuffled, type Random } from "../random";
 import { createWordBag } from "../wordBag";
 
@@ -129,6 +129,8 @@ export const createHedgehogModel: CreateGameModel<HedgehogState, HedgehogDifficu
   let mistakes = 0;
   let doubt = 0;
   let focused: number | null = null;
+  /** Whether this Celebration has said the total yet (it waits for the chime). */
+  let totalSaid = false;
   let requests: GameRequest[] = [];
   const emit = (request: GameRequest) => requests.push(request);
 
@@ -217,9 +219,8 @@ export const createHedgehogModel: CreateGameModel<HedgehogState, HedgehogDifficu
     if (mistakes === 0) firstTries++;
     focused = null;
     begin("celebrating");
-    const spoken = content.number(total);
-    // Only the number is said: the fruit's name would distract from how many there are.
-    if (spoken) emit({ kind: "say", item: spoken, interrupt: true });
+    // The chime rings at once; the total is said once it has rung out (see step).
+    totalSaid = false;
     emit({ kind: "sound", effect: "challenge-complete" });
     emit({ kind: "celebrate", celebration: "challenge" });
   }
@@ -249,6 +250,12 @@ export const createHedgehogModel: CreateGameModel<HedgehogState, HedgehogDifficu
     time += dt;
     inPhase += dt;
     doubt = Math.max(0, doubt - dt);
+    if (phase === "celebrating" && !totalSaid && inPhase >= CHIME_SECONDS) {
+      totalSaid = true;
+      const spoken = content.number(total);
+      // Only the number is said: the fruit's name would distract from how many there are.
+      if (spoken) emit({ kind: "say", item: spoken, interrupt: true });
+    }
     if (phase === "counted" && inPhase >= COUNTED_PAUSE) {
       choices = newChoices();
       begin("answering");

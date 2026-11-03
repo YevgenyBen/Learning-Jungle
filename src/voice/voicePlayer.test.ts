@@ -167,7 +167,7 @@ describe("the voice player picks a Voice Clip, else Speech Fallback, else silenc
     expect(speech.texts()).toEqual([alef.voweledText]);
   });
 
-  it("uses Speech Fallback for anything said before the manifest has loaded, and clips once it has", async () => {
+  it("waits for the manifest to load before saying what was asked before it, so a clip can play", async () => {
     const audio = fakeAudio();
     const speech = fakeSpeech();
     let loaded: (manifest: unknown) => void = () => {};
@@ -178,6 +178,29 @@ describe("the voice player picks a Voice Clip, else Speech Fallback, else silenc
     });
 
     voice.say(alef, true);
+    await settle();
+    expect(speech.texts()).toEqual([]);
+    expect(audio.played).toEqual([]);
+
+    loaded(manifestFor(alef));
+    await settle();
+    expect(audio.played).toEqual([clipOf(alef)]);
+    expect(speech.texts()).toEqual([]);
+  });
+
+  it("uses Speech Fallback once the manifest has kept it waiting too long", async () => {
+    const audio = fakeAudio();
+    const speech = fakeSpeech();
+    let loaded: (manifest: unknown) => void = () => {};
+    const voice = createVoicePlayer({
+      loadManifest: () => new Promise((resolve) => (loaded = resolve)),
+      audio: audio.create,
+      speech: speech.speech,
+      manifestWaitMs: 5,
+    });
+
+    voice.say(alef, true);
+    await new Promise((resolve) => setTimeout(resolve, 20));
     expect(speech.texts()).toEqual([alef.voweledText]);
 
     loaded(manifestFor(bet));
@@ -185,6 +208,26 @@ describe("the voice player picks a Voice Clip, else Speech Fallback, else silenc
     voice.say(bet, true);
     await settle();
     expect(audio.played).toEqual([clipOf(bet)]);
+  });
+
+  it("says only the newest of several items asked for while waiting for the manifest, unless they queue", async () => {
+    const audio = fakeAudio();
+    let loaded: (manifest: unknown) => void = () => {};
+    const voice = createVoicePlayer({
+      loadManifest: () => new Promise((resolve) => (loaded = resolve)),
+      audio: audio.create,
+      speech: null,
+    });
+
+    voice.say(alef, true);
+    voice.say(bet, true);
+    voice.say(word, false);
+    loaded(manifestFor(alef, bet, word));
+    await settle();
+    expect(audio.played).toEqual([clipOf(bet)]);
+    audio.finish();
+    await settle();
+    expect(audio.played).toEqual([clipOf(bet), clipOf(word)]);
   });
 });
 

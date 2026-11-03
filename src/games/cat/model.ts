@@ -11,7 +11,7 @@
  * itself never scrolls: perches slide, sink into the ground and rise.
  */
 import type { Letter, SpelledLetter, Word } from "@/content";
-import type { CreateGameModel, GameModel, GameRequest, GameSettings, GameState } from "../contract";
+import { CHIME_SECONDS, type CreateGameModel, type GameModel, type GameRequest, type GameSettings, type GameState } from "../contract";
 import { between, pick, shuffled, type Random } from "../random";
 import { createWordBag } from "../wordBag";
 
@@ -38,10 +38,13 @@ const HOME_TOP = 170;
 export const JUMP_SECONDS = 0.75;
 /** How far above the higher of the two perches the jump's arc rises. */
 const JUMP_ARC = 90;
-/** After the cat has landed on the right Choice, this long passes before the scene moves on. */
-export const CELEBRATION_PAUSE = 1.6; // s
+/**
+ * After the cat has landed on the right Choice, this long passes before the
+ * scene moves on: the chime, then the letter and the Word said after it.
+ */
+export const CELEBRATION_PAUSE = 2.2; // s
 /** How long the latest Challenge Celebration stays in the state for drawing (sign, confetti). */
-const CELEBRATION_SHOWN = 2.2; // s
+const CELEBRATION_SHOWN = 2.6; // s
 /** The chosen perch slides home, the others sink and new Choices rise, in this long. */
 export const MOVE_SECONDS = 1.1;
 /** Parts of the move: the old Choices sink in its first part, the new ones rise in its last. */
@@ -194,6 +197,8 @@ export const createCatModel: CreateGameModel<CatState, CatDifficulty> = ({ setti
   let focused: number | null = null;
   let doubt = 0;
   let celebrated: CelebratedWord | null = null;
+  /** Whether this Celebration has said its letter and Word yet (it waits for the chime). */
+  let celebrationSaid = false;
   let requests: GameRequest[] = [];
   const emit = (request: GameRequest) => requests.push(request);
 
@@ -306,13 +311,20 @@ export const createCatModel: CreateGameModel<CatState, CatDifficulty> = ({ setti
     mistakes = 0;
     doubt = 0;
     begin("celebrating");
-    const letter = content.letter(challenge.letter);
-    if (letter) emit({ kind: "say", item: letter, interrupt: true });
-    emit({ kind: "say", item: challenge.word, interrupt: false });
+    // The chime rings as the cat lands; the letter and the Word follow it (sayCelebration).
+    celebrationSaid = false;
     emit({ kind: "sound", effect: "challenge-complete" });
     emit({ kind: "celebrate", celebration: "challenge" });
     const { text, letters } = content.spelling(challenge.word, current);
     celebrated = { word: challenge.word, text, first: letters[0].marked, number: completed, since: 0 };
+  }
+
+  /** Once the chime has rung out: the right letter, then the Word. */
+  function sayCelebration(): void {
+    celebrationSaid = true;
+    const letter = content.letter(challenge.letter);
+    if (letter) emit({ kind: "say", item: letter, interrupt: true });
+    emit({ kind: "say", item: challenge.word, interrupt: false });
   }
 
   /** After a Challenge's Celebration: the next Challenge, or the end of the Round. */
@@ -369,6 +381,7 @@ export const createCatModel: CreateGameModel<CatState, CatDifficulty> = ({ setti
     }
     for (const p of choicePerches) if (p.sign?.rejected) p.sign.sinceRejected += dt;
     if (phase === "jumping" && inPhase >= JUMP_SECONDS) land();
+    else if (phase === "celebrating" && !celebrationSaid && inPhase >= CHIME_SECONDS) sayCelebration();
     else if (phase === "celebrating" && !roundOver && inPhase >= CELEBRATION_PAUSE) endCelebration();
     else if (phase === "moving") stepMove();
   }

@@ -1,2644 +1,2644 @@
 {
   "checks": {
     "word-watermelon": {
-      "audio": "f8f1d87e3bccf096",
+      "audio": "26bcf20f0cb2ba08",
       "heard": "אבטיח.",
       "confidence": 0.7935582,
-      "durationMs": 1944,
-      "speechStartMs": 350,
-      "speechEndMs": 1190
+      "durationMs": 888,
+      "speechStartMs": 102,
+      "speechEndMs": 888
     },
     "word-pear": {
-      "audio": "5d2d788ff017c5d2",
+      "audio": "70b4528f0ced41d2",
       "heard": "הגאס.",
       "confidence": 0.51974607,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 990
+      "durationMs": 792,
+      "speechStartMs": 69,
+      "speechEndMs": 749
     },
     "word-pineapple": {
-      "audio": "c321123d17b1323a",
+      "audio": "20fb1e183feb66b7",
       "heard": "אננס.",
       "confidence": 0.5751382,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1070
+      "durationMs": 816,
+      "speechStartMs": 65,
+      "speechEndMs": 816
     },
     "word-banana": {
-      "audio": "26c466dbe0c0c52b",
+      "audio": "510ada243788af15",
       "heard": "בננה.",
       "confidence": 0.33343884,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 910
+      "durationMs": 696,
+      "speechStartMs": 105,
+      "speechEndMs": 696
     },
     "word-cherry": {
-      "audio": "020d0011b7bc4fae",
+      "audio": "e82b1e28341b00d0",
       "heard": "דעו ודבן.",
       "confidence": 0.6332817,
-      "durationMs": 1920,
-      "speechStartMs": 270,
-      "speechEndMs": 1190
+      "durationMs": 984,
+      "speechStartMs": 102,
+      "speechEndMs": 984
     },
     "word-olive": {
-      "audio": "b2176b6bee6c81d6",
+      "audio": "d404b7b4f110f5d4",
       "heard": "זית.",
       "confidence": 0.74687505,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1030
+      "durationMs": 720,
+      "speechStartMs": 78,
+      "speechEndMs": 720
     },
     "word-lemon": {
-      "audio": "c5351f580bb60465",
+      "audio": "2beb26462a11bc23",
       "heard": "לימון.",
       "confidence": 0.8368837,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 672,
+      "speechStartMs": 80,
+      "speechEndMs": 672
     },
     "word-melon": {
-      "audio": "3deb2f46bb9b128b",
+      "audio": "83106c8f5d149a83",
       "heard": "מלון.",
       "confidence": 0.8001398,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 672,
+      "speechStartMs": 88,
+      "speechEndMs": 672
     },
     "word-mango": {
-      "audio": "274a78e5d25425ab",
+      "audio": "24e7f61935833040",
       "heard": "מנגבו.",
       "confidence": 0.5177277,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 696,
+      "speechStartMs": 84,
+      "speechEndMs": 696
     },
     "word-grapes": {
-      "audio": "083f5d37162ccaae",
+      "audio": "ba111814d8b956bb",
       "heard": "ענבים.",
       "confidence": 0.8930874,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1030
+      "durationMs": 720,
+      "speechStartMs": 83,
+      "speechEndMs": 720
     },
     "word-coconut": {
-      "audio": "fe0086902ad935a2",
+      "audio": "3c7e784f7648a627",
       "heard": "קוקוס.",
       "confidence": 0.88846165,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 990
+      "durationMs": 768,
+      "speechStartMs": 95,
+      "speechEndMs": 735
     },
     "word-kiwi": {
-      "audio": "70512432f4c02398",
+      "audio": "5c4e9085e6f92b46",
       "heard": "קיווי.",
       "confidence": 0.07344936,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 910
+      "durationMs": 552,
+      "speechStartMs": 102,
+      "speechEndMs": 552
     },
     "word-strawberry": {
-      "audio": "024d21c93894287c",
+      "audio": "3ce96ad76502ecef",
       "heard": "טעות.",
       "confidence": 0.37486616,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 870
+      "durationMs": 576,
+      "speechStartMs": 84,
+      "speechEndMs": 576
     },
     "word-apple": {
-      "audio": "942763cffb85d59d",
+      "audio": "1dfe0dd5298823e7",
       "heard": "תפוח.",
       "confidence": 0.40417555,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1070
+      "durationMs": 816,
+      "speechStartMs": 114,
+      "speechEndMs": 816
     },
     "word-orange": {
-      "audio": "f4c14e10386b446f",
+      "audio": "fb58afa903cf9be0",
       "heard": "תפוז.",
       "confidence": 0.71601236,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 910
+      "durationMs": 768,
+      "speechStartMs": 84,
+      "speechEndMs": 724
     },
     "word-peas": {
-      "audio": "192d4b3047bf9ade",
+      "audio": "2746893d0e176d0c",
       "heard": "אפונה.",
       "confidence": 0.6270518,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 624,
+      "speechStartMs": 87,
+      "speechEndMs": 624
     },
     "word-broccoli": {
-      "audio": "872f5b3bcf27aa2d",
+      "audio": "f4a1562568780b0f",
       "heard": "ברוקולי.",
       "confidence": 0.7004974,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 950
+      "durationMs": 768,
+      "speechStartMs": 101,
+      "speechEndMs": 768
     },
     "word-sweet-potato": {
-      "audio": "4d073ce880b21dcd",
+      "audio": "24fffec0048a387a",
       "heard": "בטטה.",
       "confidence": 0.5132603,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 990
+      "durationMs": 744,
+      "speechStartMs": 66,
+      "speechEndMs": 744
     },
     "word-onion": {
-      "audio": "60a7867eceff8c9c",
+      "audio": "08fa04d96d00d580",
       "heard": "בצל.",
       "confidence": 0.8942464,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 910
+      "durationMs": 744,
+      "speechStartMs": 104,
+      "speechEndMs": 744
     },
     "word-carrot": {
-      "audio": "95228a1491ae8d24",
+      "audio": "f43c6cb81a003bc1",
       "heard": "גזר.",
       "confidence": 0.609329,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 1070
+      "durationMs": 792,
+      "speechStartMs": 127,
+      "speechEndMs": 792
     },
     "word-lettuce": {
-      "audio": "929b033cae48fb9e",
+      "audio": "5600a768ebced287",
       "heard": "חס וחלילה.",
       "confidence": 0.27603942,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1070
+      "durationMs": 672,
+      "speechStartMs": 74,
+      "speechEndMs": 672
     },
     "word-eggplant": {
-      "audio": "0df4481435253905",
+      "audio": "ca177f22a0806961",
       "heard": "חציל.",
       "confidence": 0.8106355,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1030
+      "durationMs": 720,
+      "speechStartMs": 74,
+      "speechEndMs": 720
     },
     "word-cucumber": {
-      "audio": "61a4d9bb1b3e475f",
+      "audio": "9e95d5a5f2f0f753",
       "heard": "מלפון.",
       "confidence": 0.51941395,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1070
+      "durationMs": 840,
+      "speechStartMs": 94,
+      "speechEndMs": 840
     },
     "word-tomato": {
-      "audio": "62a4efc708ecbee3",
+      "audio": "ebf1818860377efb",
       "heard": "עגבניה.",
       "confidence": 0.42700377,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1150
+      "durationMs": 792,
+      "speechStartMs": 72,
+      "speechEndMs": 792
     },
     "word-mushroom": {
-      "audio": "118d92f95f879a07",
+      "audio": "3ae7f26c132bb0bd",
       "heard": "פטריה.",
       "confidence": 0.68141115,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 950
+      "durationMs": 672,
+      "speechStartMs": 71,
+      "speechEndMs": 672
     },
     "word-pepper": {
-      "audio": "06764fd5fb6ba271",
+      "audio": "410b5299bd02cacd",
       "heard": "פלפל.",
       "confidence": 0.8695172,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 870
+      "durationMs": 672,
+      "speechStartMs": 64,
+      "speechEndMs": 672
     },
     "word-garlic": {
-      "audio": "0948904c621a0811",
+      "audio": "1d6cbfa31f6f2cc2",
       "heard": "שום.",
       "confidence": 0.8703721,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 600,
+      "speechStartMs": 86,
+      "speechEndMs": 600
     },
     "word-corn": {
-      "audio": "dbbc0ab7a0b794ef",
+      "audio": "2c86f47fe8be9668",
       "heard": "תירס.",
       "confidence": 0.8919648,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 744,
+      "speechStartMs": 104,
+      "speechEndMs": 744
     },
     "word-lion": {
-      "audio": "f4c29414302c23f3",
+      "audio": "bb1cbae26c4055b8",
       "heard": "אריה.",
       "confidence": 0.8563063,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 830
+      "durationMs": 528,
+      "speechStartMs": 71,
+      "speechEndMs": 528
     },
     "word-rabbit": {
-      "audio": "abaf9101438f3fe8",
+      "audio": "a0e9687c0fa14250",
       "heard": "ארנב.",
       "confidence": 0.7121625,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 672,
+      "speechStartMs": 61,
+      "speechEndMs": 672
     },
     "word-duck": {
-      "audio": "ea2f5caced0ade23",
+      "audio": "69d485644c8a3b03",
       "heard": "ברווז.",
       "confidence": 0.36242276,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1030
+      "durationMs": 816,
+      "speechStartMs": 108,
+      "speechEndMs": 816
     },
     "word-camel": {
-      "audio": "292eac09526020e7",
+      "audio": "f29f0c10ec8ecd84",
       "heard": "גאמל.",
       "confidence": 0.24056235,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 990
+      "durationMs": 792,
+      "speechStartMs": 137,
+      "speechEndMs": 777
     },
     "word-bear": {
-      "audio": "e75b95a9dfc47caf",
+      "audio": "50b6b11b8efbce1d",
       "heard": "דאו.",
       "confidence": 0.32654166,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 710
+      "durationMs": 648,
+      "speechStartMs": 123,
+      "speechEndMs": 483
     },
     "word-fish": {
-      "audio": "6b3d9a32a9379137",
+      "audio": "eafe53c4158511c6",
       "heard": "דיג.",
       "confidence": 0.5145472,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 870
+      "durationMs": 624,
+      "speechStartMs": 120,
+      "speechEndMs": 624
     },
     "word-hippo": {
-      "audio": "793a7f761e8b7f5a",
+      "audio": "5dd80b0b842c0d5a",
       "heard": "היפופוטם.",
       "confidence": 0.8163594,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1110
+      "durationMs": 864,
+      "speechStartMs": 104,
+      "speechEndMs": 864
     },
     "word-wolf": {
-      "audio": "b6fecb77711dc512",
+      "audio": "c9ccf22f9c35aba9",
       "heard": "זאב.",
       "confidence": 0.86833316,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 672,
+      "speechStartMs": 82,
+      "speechEndMs": 672
     },
     "word-zebra": {
-      "audio": "9a4e8ae02d39ae80",
+      "audio": "ae4d2a30a96da4d1",
       "heard": "זברה.",
       "confidence": 0.7387533,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1030
+      "durationMs": 648,
+      "speechStartMs": 70,
+      "speechEndMs": 648
     },
     "word-cat": {
-      "audio": "0b5f521238a42c57",
+      "audio": "ea3c24df4c3c5ef6",
       "heard": "חתול.",
       "confidence": 0.771751,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 950
+      "durationMs": 696,
+      "speechStartMs": 61,
+      "speechEndMs": 696
     },
     "word-peacock": {
-      "audio": "17ecc0fd4dcd42b1",
+      "audio": "4908cb7ae4a08a35",
       "heard": "That's.",
       "confidence": 0.16747375,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 710
+      "durationMs": 792,
+      "speechStartMs": 72,
+      "speechEndMs": 472
     },
     "word-dove": {
-      "audio": "f8772c5d0d414ddc",
+      "audio": "3e9a30fab2d8dd45",
       "heard": "יונה.",
       "confidence": 0.8934458,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 870
+      "durationMs": 552,
+      "speechStartMs": 84,
+      "speechEndMs": 552
     },
     "word-owl": {
-      "audio": "9181be452d866bc7",
+      "audio": "f732619b27f84b21",
       "heard": "ינשוף.",
       "confidence": 0.5521575,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1070
+      "durationMs": 840,
+      "speechStartMs": 97,
+      "speechEndMs": 840
     },
     "word-dog": {
-      "audio": "9e8a950a3890ea23",
+      "audio": "b926ee0cae9bec6c",
       "heard": "כלב.",
       "confidence": 0.8944272,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 910
+      "durationMs": 600,
+      "speechStartMs": 91,
+      "speechEndMs": 600
     },
     "word-lizard": {
-      "audio": "6edb7b0fa47cf597",
+      "audio": "c6759b3de6fe96bf",
       "heard": "לטא.",
       "confidence": 0.49215668,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 910
+      "durationMs": 648,
+      "speechStartMs": 98,
+      "speechEndMs": 648
     },
     "word-snake": {
-      "audio": "143d25fabae7bb99",
+      "audio": "5200831f21e3e338",
       "heard": "נחש.",
       "confidence": 0.56450117,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1030
+      "durationMs": 792,
+      "speechStartMs": 87,
+      "speechEndMs": 792
     },
     "word-tiger": {
-      "audio": "7f2a162195533db6",
+      "audio": "349eb89c1974bcc7",
       "heard": "נמר.",
       "confidence": 0.8014133,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 648,
+      "speechStartMs": 92,
+      "speechEndMs": 648
     },
     "word-squirrel": {
-      "audio": "a18d99625c6dba7e",
+      "audio": "263c3132634eb2b1",
       "heard": "סנאי.",
       "confidence": 0.4680185,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 648,
+      "speechStartMs": 77,
+      "speechEndMs": 648
     },
     "word-horse": {
-      "audio": "a6f673fc9d9f6950",
+      "audio": "96f873acd2b3f8c2",
       "heard": "סוס.",
       "confidence": 0.8017207,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 720,
+      "speechStartMs": 89,
+      "speechEndMs": 689
     },
     "word-mouse": {
-      "audio": "da48ab416ca68b68",
+      "audio": "bfc63df6d2d60ec3",
       "heard": "עכבר.",
       "confidence": 0.8260396,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 672,
+      "speechStartMs": 74,
+      "speechEndMs": 672
     },
     "word-elephant": {
-      "audio": "e698cca99fd2ea30",
+      "audio": "49acb7043f10c0d9",
       "heard": "פיל.",
       "confidence": 0.83394,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 710
+      "durationMs": 480,
+      "speechStartMs": 59,
+      "speechEndMs": 480
     },
     "word-cow": {
-      "audio": "9dd76c348ad81375",
+      "audio": "d7ece8c06af17656",
       "heard": "פרה.",
       "confidence": 0.6595139,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 63,
+      "speechEndMs": 456
     },
     "word-butterfly": {
-      "audio": "e38c96ec14c7fa98",
+      "audio": "0f57e5384dc2b831",
       "heard": "פרפר.",
       "confidence": 0.68264586,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 870
+      "durationMs": 696,
+      "speechStartMs": 61,
+      "speechEndMs": 696
     },
     "word-turtle": {
-      "audio": "4bcda6b335da113b",
+      "audio": "b89819046fffa71c",
       "heard": "צב.",
       "confidence": 0.6933152,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 870
+      "durationMs": 576,
+      "speechStartMs": 93,
+      "speechEndMs": 576
     },
     "word-bird": {
-      "audio": "fc805a759046db24",
+      "audio": "99e37be29411f2f7",
       "heard": "ציפור.",
       "confidence": 0.7157088,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 910
+      "durationMs": 672,
+      "speechStartMs": 74,
+      "speechEndMs": 672
     },
     "word-frog": {
-      "audio": "d12857161ed1a0ef",
+      "audio": "eeae6e64624d59e8",
       "heard": "צפרדע.",
       "confidence": 0.75423056,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1150
+      "durationMs": 840,
+      "speechStartMs": 114,
+      "speechEndMs": 840
     },
     "word-monkey": {
-      "audio": "d4ce9acb7e897fbd",
+      "audio": "79151632ffb0eb0d",
       "heard": "קוף.",
       "confidence": 0.8126882,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 910
+      "durationMs": 624,
+      "speechStartMs": 77,
+      "speechEndMs": 624
     },
     "word-hedgehog": {
-      "audio": "246b7a1da041f687",
+      "audio": "98629e6de02a763d",
       "heard": "קיפוד.",
       "confidence": 0.68102723,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 870
+      "durationMs": 648,
+      "speechStartMs": 72,
+      "speechEndMs": 648
     },
     "word-snail": {
-      "audio": "341c531f10ae6050",
+      "audio": "d8938700f848d514",
       "heard": "שבלול.",
       "confidence": 0.72161186,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1030
+      "durationMs": 744,
+      "speechStartMs": 59,
+      "speechEndMs": 744
     },
     "word-fox": {
-      "audio": "e118407d534250ed",
+      "audio": "2cd7103ea10660b4",
       "heard": "שועל.",
       "confidence": 0.53953946,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 910
+      "durationMs": 696,
+      "speechStartMs": 56,
+      "speechEndMs": 696
     },
     "word-rooster": {
-      "audio": "a1d375afab04d59e",
+      "audio": "26fe48ec7a301404",
       "heard": "תרנגול.",
       "confidence": 0.34422547,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1070
+      "durationMs": 792,
+      "speechStartMs": 117,
+      "speechEndMs": 792
     },
     "word-socks": {
-      "audio": "54306da173c28223",
+      "audio": "abdd7e58aaebd35b",
       "heard": "גרה ביי.",
       "confidence": 0.49871856,
-      "durationMs": 1920,
-      "speechStartMs": 270,
-      "speechEndMs": 1030
+      "durationMs": 984,
+      "speechStartMs": 95,
+      "speechEndMs": 855
     },
     "word-door": {
-      "audio": "fdc0e370f1dd5b7e",
+      "audio": "d6b883caf2bf0ba3",
       "heard": "דלת.",
       "confidence": 0.5869772,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 1070
+      "durationMs": 744,
+      "speechStartMs": 132,
+      "speechEndMs": 744
     },
     "word-hook": {
-      "audio": "d7c156c301d54cd0",
+      "audio": "82571b858beae7de",
       "heard": "וו.",
       "confidence": 0.732969,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 624,
+      "speechStartMs": 74,
+      "speechEndMs": 624
     },
     "word-window": {
-      "audio": "57c37e2fcd0545fe",
+      "audio": "3713d665203409b2",
       "heard": "חלון.",
       "confidence": 0.8220547,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 672,
+      "speechStartMs": 74,
+      "speechEndMs": 672
     },
     "word-television": {
-      "audio": "3d9c11966dfcad2c",
+      "audio": "ce24043e71867392",
       "heard": "טלויזיה.",
       "confidence": 0.60992527,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1150
+      "durationMs": 840,
+      "speechStartMs": 71,
+      "speechEndMs": 840
     },
     "word-telephone": {
-      "audio": "a783a05300745c7a",
+      "audio": "341dce44cfebfcdc",
       "heard": "טלפון.",
       "confidence": 0.8132192,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 950
+      "durationMs": 744,
+      "speechStartMs": 94,
+      "speechEndMs": 744
     },
     "word-ball": {
-      "audio": "0b3b659965036e1a",
+      "audio": "38e8d264e14d360e",
       "heard": "קאדר.",
       "confidence": 0.79858273,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 910
+      "durationMs": 648,
+      "speechStartMs": 54,
+      "speechEndMs": 648
     },
     "word-chair": {
-      "audio": "1360672c71e8bf51",
+      "audio": "0a67e41b0612f422",
       "heard": "כסא.",
       "confidence": 0.64216274,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 870
+      "durationMs": 552,
+      "speechStartMs": 101,
+      "speechEndMs": 552
     },
     "word-spoon": {
-      "audio": "5f54bafd792989a8",
+      "audio": "302ade294c6d8ca8",
       "heard": "כף.",
       "confidence": 0.31394228,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 910
+      "durationMs": 600,
+      "speechStartMs": 74,
+      "speechEndMs": 600
     },
     "word-bed": {
-      "audio": "82d5d30f8165734e",
+      "audio": "0dfbd84812e250e2",
       "heard": "מיתיה.",
       "confidence": 0.26073304,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 910
+      "durationMs": 672,
+      "speechStartMs": 59,
+      "speechEndMs": 672
     },
     "word-key": {
-      "audio": "d4208ae7c934a115",
+      "audio": "0dd5839c4dd0a212",
       "heard": "מפתח.",
       "confidence": 0.36912176,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 1110
+      "durationMs": 888,
+      "speechStartMs": 61,
+      "speechEndMs": 888
     },
     "word-shoe": {
-      "audio": "578a702372ea2e24",
+      "audio": "16c1fd7671f47366",
       "heard": "נעל.",
       "confidence": 0.79785335,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 870
+      "durationMs": 624,
+      "speechStartMs": 93,
+      "speechEndMs": 624
     },
     "word-candle": {
-      "audio": "f58937e0cde5233a",
+      "audio": "9b9b35360a9d06da",
       "heard": "נר.",
       "confidence": 0.8484688,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 552,
+      "speechStartMs": 84,
+      "speechEndMs": 552
     },
     "word-soap": {
-      "audio": "3fcff659592e6e7a",
+      "audio": "4ee3d150f46fedb8",
       "heard": "סבון.",
       "confidence": 0.7860279,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 990
+      "durationMs": 696,
+      "speechStartMs": 102,
+      "speechEndMs": 696
     },
     "word-sofa": {
-      "audio": "be48eef2b956500d",
+      "audio": "df2321c9566de702",
       "heard": "ספה.",
       "confidence": 0.7434923,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 910
+      "durationMs": 624,
+      "speechStartMs": 89,
+      "speechEndMs": 624
     },
     "word-kite": {
-      "audio": "7fa80803b315d8c2",
+      "audio": "97c2bbc32dcf71aa",
       "heard": "עפיפון.",
       "confidence": 0.54185176,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1070
+      "durationMs": 816,
+      "speechStartMs": 104,
+      "speechEndMs": 816
     },
     "word-plate": {
-      "audio": "8b99dec4c99e0847",
+      "audio": "ebe91df9183ed6ef",
       "heard": "צלחת.",
       "confidence": 0.702861,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 1030
+      "durationMs": 768,
+      "speechStartMs": 63,
+      "speechEndMs": 768
     },
     "word-radio": {
-      "audio": "a57e6dd604a9fdbe",
+      "audio": "ad95fb3536c74b29",
       "heard": "רדיו.",
       "confidence": 0.46770728,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 648,
+      "speechStartMs": 67,
+      "speechEndMs": 648
     },
     "word-clock": {
-      "audio": "6d0866e30911ab06",
+      "audio": "3afc69bac186c9cd",
       "heard": "שאון.",
       "confidence": 0.14694518,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 910
+      "durationMs": 672,
+      "speechStartMs": 57,
+      "speechEndMs": 672
     },
     "word-helicopter": {
-      "audio": "400a9e64b1425144",
+      "audio": "2f83b544136cd5c5",
       "heard": "הליקופטר.",
       "confidence": 0.50380576,
-      "durationMs": 1896,
-      "speechStartMs": 270,
-      "speechEndMs": 1150
+      "durationMs": 888,
+      "speechStartMs": 104,
+      "speechEndMs": 888
     },
     "word-hamburger": {
-      "audio": "b496bdbfd97a0f32",
+      "audio": "4bd88898f7faa5ef",
       "heard": "המבורגר.",
       "confidence": 0.60861564,
-      "durationMs": 1920,
-      "speechStartMs": 350,
-      "speechEndMs": 1190
+      "durationMs": 864,
+      "speechStartMs": 92,
+      "speechEndMs": 864
     },
     "word-waffle": {
-      "audio": "214121ad684125bc",
+      "audio": "d1113d1217b943f6",
       "heard": "ופל.",
       "confidence": 0.7377445,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 720,
+      "speechStartMs": 92,
+      "speechEndMs": 720
     },
     "word-rose": {
-      "audio": "06d2ad306b74096a",
+      "audio": "c9242b3a4de08620",
       "heard": "ורד.",
       "confidence": 0.8718256,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 950
+      "durationMs": 672,
+      "speechStartMs": 117,
+      "speechEndMs": 672
     },
     "word-train": {
-      "audio": "7b8c44dbe3d52eaa",
+      "audio": "e8e7ea1dca612ab9",
       "heard": "רכבת.",
       "confidence": 0.7898045,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 1070
+      "durationMs": 816,
+      "speechStartMs": 58,
+      "speechEndMs": 816
     },
     "word-leg": {
-      "audio": "817d85783c2c9d28",
+      "audio": "9c2eb7338dcea28e",
       "heard": "רגל.",
       "confidence": 0.7801867,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 950
+      "durationMs": 672,
+      "speechStartMs": 114,
+      "speechEndMs": 672
     },
     "letter-alef": {
-      "audio": "810c55457ba54c63",
+      "audio": "f61e718ce60c6c92",
       "heard": "1000.",
       "confidence": 0.6666012,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 648,
+      "speechStartMs": 84,
+      "speechEndMs": 648
     },
     "letter-bet": {
-      "audio": "6a5b4eb03a0dc382",
+      "audio": "11f4c373e2647dbc",
       "heard": "בית.",
       "confidence": 0.880662,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 950
+      "durationMs": 696,
+      "speechStartMs": 129,
+      "speechEndMs": 696
     },
     "letter-gimel": {
-      "audio": "b02902307d9bf8f3",
+      "audio": "61e83795a81b382d",
       "heard": "ג.",
       "confidence": 0.69939905,
-      "durationMs": 1872,
-      "speechStartMs": 390,
-      "speechEndMs": 550
+      "durationMs": 768,
+      "speechStartMs": 163,
+      "speechEndMs": 323
     },
     "letter-dalet": {
-      "audio": "3231f39fdf72f8b6",
+      "audio": "b39a431afa00902d",
       "heard": "דיאלט.",
       "confidence": 0.3099795,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 1110
+      "durationMs": 816,
+      "speechStartMs": 128,
+      "speechEndMs": 816
     },
     "letter-he": {
-      "audio": "7686ba20b43e8286",
+      "audio": "4812eeca0f9cca32",
       "heard": "היי.",
       "confidence": 0.686125,
-      "durationMs": 1872,
-      "speechStartMs": 670,
-      "speechEndMs": 750
+      "durationMs": 384,
+      "speechStartMs": 384,
+      "speechEndMs": 384
     },
     "letter-vav": {
-      "audio": "62c4f40cd8fb0e9c",
+      "audio": "e043a64dcefb0c81",
       "heard": "וו.",
       "confidence": 0.6253032,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 624,
+      "speechStartMs": 74,
+      "speechEndMs": 624
     },
     "letter-zayin": {
-      "audio": "94ec05c041041904",
+      "audio": "b47e7c1d156ca47c",
       "heard": "ז.",
       "confidence": 0.7753778,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 510
+      "durationMs": 696,
+      "speechStartMs": 75,
+      "speechEndMs": 275
     },
     "letter-het": {
-      "audio": "bf36579fa7d02a85",
+      "audio": "f18b443b80edc253",
       "heard": "חייט.",
       "confidence": 0.17835195,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 990
+      "durationMs": 672,
+      "speechStartMs": 94,
+      "speechEndMs": 672
     },
     "letter-tet": {
-      "audio": "da6d13b9b20a0a44",
+      "audio": "0edce2abca3c801d",
       "heard": "טייט.",
       "confidence": 0.59199095,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 624,
+      "speechStartMs": 84,
+      "speechEndMs": 624
     },
     "letter-yod": {
-      "audio": "c9d2654872f373a2",
+      "audio": "02bb8069699c22e3",
       "heard": "יוד.",
       "confidence": 0.51055884,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 830
+      "durationMs": 552,
+      "speechStartMs": 118,
+      "speechEndMs": 552
     },
     "letter-kaf": {
-      "audio": "33b4b10280102fb6",
+      "audio": "4d0f60a8c4657bf0",
       "heard": "כף.",
       "confidence": 0.23333754,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 910
+      "durationMs": 600,
+      "speechStartMs": 74,
+      "speechEndMs": 600
     },
     "letter-final-kaf": {
-      "audio": "c5e22ca684456a78",
+      "audio": "d00267c10ad1b12a",
       "heard": "כף סופית.",
       "confidence": 0.4687387,
-      "durationMs": 1920,
-      "speechStartMs": 350,
-      "speechEndMs": 1190
+      "durationMs": 912,
+      "speechStartMs": 184,
+      "speechEndMs": 912
     },
     "letter-lamed": {
-      "audio": "734c2ece62982bee",
+      "audio": "ae1d8fef3c9d4c89",
       "heard": "למד.",
       "confidence": 0.75108904,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 648,
+      "speechStartMs": 77,
+      "speechEndMs": 648
     },
     "letter-mem": {
-      "audio": "2c752409b1ed68be",
+      "audio": "f7cd5a337cd8a0b0",
       "heard": "מם.",
       "confidence": 0.22156505,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 830
+      "durationMs": 552,
+      "speechStartMs": 80,
+      "speechEndMs": 552
     },
     "letter-final-mem": {
-      "audio": "b6db922e703aabae",
+      "audio": "4bbb41044d6b8b40",
       "heard": "מם סופית.",
       "confidence": 0.5437502,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1150
+      "durationMs": 888,
+      "speechStartMs": 83,
+      "speechEndMs": 888
     },
     "letter-nun": {
-      "audio": "7daaa7f6ab9553da",
+      "audio": "b898fc0f5d691777",
       "heard": "נו.",
       "confidence": 0.7053921,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 870
+      "durationMs": 576,
+      "speechStartMs": 84,
+      "speechEndMs": 576
     },
     "letter-final-nun": {
-      "audio": "0f6fe2e76160e57c",
+      "audio": "4d798f6f3f36829a",
       "heard": "נון סופית.",
       "confidence": 0.770344,
-      "durationMs": 1896,
-      "speechStartMs": 270,
-      "speechEndMs": 1190
+      "durationMs": 912,
+      "speechStartMs": 93,
+      "speechEndMs": 912
     },
     "letter-samekh": {
-      "audio": "711cc03eca517e08",
+      "audio": "a3edd605fe373f83",
       "heard": "סמך.",
       "confidence": 0.86026967,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1070
+      "durationMs": 744,
+      "speechStartMs": 74,
+      "speechEndMs": 744
     },
     "letter-ayin": {
-      "audio": "82bb53b916547c95",
+      "audio": "fba7aca0bbf84141",
       "heard": "האם.",
       "confidence": 0.14716214,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 870
+      "durationMs": 600,
+      "speechStartMs": 84,
+      "speechEndMs": 600
     },
     "letter-pe": {
-      "audio": "c0816df15a3a945e",
+      "audio": "b3ac1613b8325bca",
       "heard": "פה.",
       "confidence": 0.10622109,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 630
+      "durationMs": 336,
+      "speechStartMs": 88,
+      "speechEndMs": 336
     },
     "letter-final-pe": {
-      "audio": "4aa380f32da06da9",
+      "audio": "565fdb7350d5fc68",
       "heard": "וסופית.",
       "confidence": 0.180141,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 1150
+      "durationMs": 840,
+      "speechStartMs": 154,
+      "speechEndMs": 840
     },
     "letter-tsadi": {
-      "audio": "e9be08af247b7f27",
+      "audio": "c09eed37134cf222",
       "heard": "צדי.",
       "confidence": 0.3935895,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 870
+      "durationMs": 576,
+      "speechStartMs": 93,
+      "speechEndMs": 576
     },
     "letter-final-tsadi": {
-      "audio": "f239e8b5d1f50af5",
+      "audio": "1a49b4bc385e9e5d",
       "heard": "צד היא סופית.",
       "confidence": 0.76619387,
-      "durationMs": 1920,
-      "speechStartMs": 230,
-      "speechEndMs": 1190
+      "durationMs": 936,
+      "speechStartMs": 63,
+      "speechEndMs": 936
     },
     "letter-qof": {
-      "audio": "1e1102a2a27d0e3c",
+      "audio": "578a28cf4784d1ac",
       "heard": "קוף.",
       "confidence": 0.8098921,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 910
+      "durationMs": 624,
+      "speechStartMs": 77,
+      "speechEndMs": 624
     },
     "letter-resh": {
-      "audio": "839ec425eb78e737",
+      "audio": "c91986111dcdfccc",
       "heard": "רי.",
       "confidence": 0.43999213,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 710
+      "durationMs": 720,
+      "speechStartMs": 105,
+      "speechEndMs": 466
     },
     "letter-shin": {
-      "audio": "48cd558b01509522",
+      "audio": "d874c63de6ca9cf4",
       "heard": "שיין.",
       "confidence": 0.21954496,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1030
+      "durationMs": 696,
+      "speechStartMs": 74,
+      "speechEndMs": 696
     },
     "letter-tav": {
-      "audio": "ce5ae9f820e6018f",
+      "audio": "b8a4b69809f70191",
       "heard": "תייג.",
       "confidence": 0.16851386,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 528,
+      "speechStartMs": 82,
+      "speechEndMs": 528
     },
     "sound-a": {
-      "audio": "dfd846d92be06b7e",
+      "audio": "329cdf81ffbe68df",
       "heard": "אה.",
       "confidence": 0.044337913,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 630
+      "durationMs": 360,
+      "speechStartMs": 85,
+      "speechEndMs": 360
     },
     "sound-e": {
-      "audio": "30bcb2c0f5e28dbe",
+      "audio": "fbbcd1dab8112efc",
       "heard": "אין.",
       "confidence": 0.10693219,
-      "durationMs": 1872,
-      "speechStartMs": 470,
-      "speechEndMs": 630
+      "durationMs": 360,
+      "speechStartMs": 244,
+      "speechEndMs": 360
     },
     "sound-i": {
-      "audio": "7e8806ea612d691f",
+      "audio": "21ce409b786df890",
       "heard": "אי.",
       "confidence": 0.7837961,
-      "durationMs": 1872,
-      "speechStartMs": 470,
-      "speechEndMs": 550
+      "durationMs": 336,
+      "speechStartMs": 251,
+      "speechEndMs": 331
     },
     "sound-o": {
-      "audio": "27fcdea703e3abe8",
+      "audio": "f1471ecf4892eef8",
       "heard": "או.",
       "confidence": 0.16224256,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 590
+      "durationMs": 360,
+      "speechStartMs": 87,
+      "speechEndMs": 360
     },
     "sound-u": {
-      "audio": "b69b012e2558eed4",
+      "audio": "a323263a30061c9f",
       "heard": "הוא.",
       "confidence": 0.34937102,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 630
+      "durationMs": 384,
+      "speechStartMs": 89,
+      "speechEndMs": 369
     },
     "sound-ba": {
-      "audio": "d8cc8ca49fb5144f",
+      "audio": "4593caae9331aa73",
       "heard": "בא.",
       "confidence": 0.24723738,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 790
+      "durationMs": 432,
+      "speechStartMs": 137,
+      "speechEndMs": 432
     },
     "sound-be": {
-      "audio": "f021db7bd3ad70ad",
+      "audio": "4cb14264ffff31bf",
       "heard": "ב.",
       "confidence": 0.051900547,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 630
+      "durationMs": 456,
+      "speechStartMs": 133,
+      "speechEndMs": 413
     },
     "sound-bi": {
-      "audio": "fa3f68dfc4b04367",
+      "audio": "8c70c39e4f7e3b83",
       "heard": "בי.",
       "confidence": 0.29059654,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 135,
+      "speechEndMs": 456
     },
     "sound-bo": {
-      "audio": "c747718641c3ce7d",
+      "audio": "36a5a8f6bb54078b",
       "heard": "בוא.",
       "confidence": 0.6665394,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 135,
+      "speechEndMs": 480
     },
     "sound-bu": {
-      "audio": "898e673e115ea82a",
+      "audio": "9396a459cdb0f20c",
       "heard": "בום.",
       "confidence": 0.3984326,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 96,
+      "speechEndMs": 480
     },
     "sound-b": {
-      "audio": "a625c96d10e6d53c",
+      "audio": "d51ef9ea1043e31d",
       "heard": "ב.",
       "confidence": 0.05780096,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 630
+      "durationMs": 456,
+      "speechStartMs": 132,
+      "speechEndMs": 412
     },
     "sound-va": {
-      "audio": "19aa1a0eb85455b2",
+      "audio": "7af9c3686d407abb",
       "heard": "",
       "confidence": 0,
-      "durationMs": 1872,
+      "durationMs": 456,
       "speechStartMs": 0,
       "speechEndMs": 0
     },
     "sound-ve": {
-      "audio": "a2d78099d8bd6d33",
+      "audio": "2b8db2a55b6acb1f",
       "heard": "א.",
       "confidence": 0.01793006,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 480,
+      "speechStartMs": 93,
+      "speechEndMs": 480
     },
     "sound-vi": {
-      "audio": "44654a78165cdb34",
+      "audio": "e9b7960aa2f27928",
       "heard": "וי.",
       "confidence": 0.5394032,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 480,
+      "speechStartMs": 94,
+      "speechEndMs": 480
     },
     "sound-vo": {
-      "audio": "cdaf57c3b489745b",
+      "audio": "6783994ef60ca7c6",
       "heard": "וו.",
       "confidence": 0.07142448,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 630
+      "durationMs": 480,
+      "speechStartMs": 56,
+      "speechEndMs": 416
     },
     "sound-vu": {
-      "audio": "eff39da09f8727c1",
+      "audio": "515c18583a8c9569",
       "heard": "וו.",
       "confidence": 0.33380693,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 630
+      "durationMs": 480,
+      "speechStartMs": 90,
+      "speechEndMs": 410
     },
     "sound-v": {
-      "audio": "5284972bb3182752",
+      "audio": "d51ef9ea1043e31d",
       "heard": "ב.",
       "confidence": 0.06650178,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 630
+      "durationMs": 456,
+      "speechStartMs": 132,
+      "speechEndMs": 412
     },
     "sound-ga": {
-      "audio": "73a756065a289cd2",
+      "audio": "524025d705246577",
       "heard": "גם.",
       "confidence": 0.04899472,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 790
+      "durationMs": 456,
+      "speechStartMs": 136,
+      "speechEndMs": 456
     },
     "sound-ge": {
-      "audio": "a3f11a14ac8bcf72",
+      "audio": "66ac8f66badf7dcc",
       "heard": "גיי.",
       "confidence": 0.11140126,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 134,
+      "speechEndMs": 480
     },
     "sound-gi": {
-      "audio": "a0b9ed7d652640f4",
+      "audio": "03b459cdc1771917",
       "heard": "די.",
       "confidence": 0.05452048,
-      "durationMs": 1872,
-      "speechStartMs": 390,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 176,
+      "speechEndMs": 480
     },
     "sound-go": {
-      "audio": "598ca4600eac7898",
+      "audio": "ffcf0da0fb6fc0c6",
       "heard": "ג.",
       "confidence": 0.3087082,
-      "durationMs": 1872,
-      "speechStartMs": 470,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 255,
+      "speechEndMs": 456
     },
     "sound-gu": {
-      "audio": "17375edb3f20a710",
+      "audio": "cf19f77fab2a9453",
       "heard": "גוף.",
       "confidence": 0.33988464,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 670
+      "durationMs": 480,
+      "speechStartMs": 133,
+      "speechEndMs": 453
     },
     "sound-g": {
-      "audio": "0a05fae65c4e35e9",
+      "audio": "9354953e5b096490",
       "heard": "ג.",
       "confidence": 0.84973264,
-      "durationMs": 1872,
-      "speechStartMs": 390,
-      "speechEndMs": 470
+      "durationMs": 696,
+      "speechStartMs": 161,
+      "speechEndMs": 241
     },
     "sound-da": {
-      "audio": "aafd0333bdcdb770",
+      "audio": "99ba92bc734973c0",
       "heard": "דע.",
       "confidence": 0.02812578,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 790
+      "durationMs": 456,
+      "speechStartMs": 136,
+      "speechEndMs": 456
     },
     "sound-de": {
-      "audio": "77338c77054a9b5d",
+      "audio": "b765bb385762208b",
       "heard": "דה.",
       "confidence": 0.48892692,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 138,
+      "speechEndMs": 456
     },
     "sound-di": {
-      "audio": "22c9eb0ad4156044",
+      "audio": "90b1936c6b59c088",
       "heard": "די.",
       "confidence": 0.7017183,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 137,
+      "speechEndMs": 480
     },
     "sound-do": {
-      "audio": "9cc2437279e871f4",
+      "audio": "d2e456d07a0e8a58",
       "heard": "",
       "confidence": 0,
-      "durationMs": 1872,
+      "durationMs": 456,
       "speechStartMs": 0,
       "speechEndMs": 0
     },
     "sound-du": {
-      "audio": "30cdec492646026e",
+      "audio": "836f9539d09bca6d",
       "heard": "דו.",
       "confidence": 0.08860046,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 710
+      "durationMs": 504,
+      "speechStartMs": 136,
+      "speechEndMs": 496
     },
     "sound-d": {
-      "audio": "9493578b0e3ef347",
+      "audio": "0d89dae8677ceeba",
       "heard": "ד.",
       "confidence": 0.772325,
-      "durationMs": 1872,
-      "speechStartMs": 1790,
-      "speechEndMs": 1830
+      "durationMs": 672,
+      "speechStartMs": 672,
+      "speechEndMs": 672
     },
     "sound-ha": {
-      "audio": "c6af02b27e0d97eb",
+      "audio": "1b2b4f449ad7a4a1",
       "heard": "הא?",
       "confidence": 0.03692977,
-      "durationMs": 1872,
-      "speechStartMs": 390,
-      "speechEndMs": 750
+      "durationMs": 384,
+      "speechStartMs": 154,
+      "speechEndMs": 384
     },
     "sound-he": {
-      "audio": "d3e9e0adf538f255",
+      "audio": "97fd3dc141435e63",
       "heard": "היי.",
       "confidence": 0.656434,
-      "durationMs": 1872,
-      "speechStartMs": 670,
-      "speechEndMs": 750
+      "durationMs": 384,
+      "speechStartMs": 384,
+      "speechEndMs": 384
     },
     "sound-hi": {
-      "audio": "ef4dafae1bddba58",
+      "audio": "5a6280d79115b02c",
       "heard": "היא.",
       "confidence": 0.88544613,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 384,
+      "speechStartMs": 97,
+      "speechEndMs": 384
     },
     "sound-ho": {
-      "audio": "cdd93bf2852b295e",
+      "audio": "471eabf30151f87c",
       "heard": "הו.",
       "confidence": 0.3822972,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 750
+      "durationMs": 384,
+      "speechStartMs": 5,
+      "speechEndMs": 384
     },
     "sound-hu": {
-      "audio": "ce148689b078833a",
+      "audio": "92d9f713177253da",
       "heard": "הוא.",
       "confidence": 0.4533047,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 710
+      "durationMs": 408,
+      "speechStartMs": 64,
+      "speechEndMs": 408
     },
     "sound-za": {
-      "audio": "9bbbdb0e1dd29a0e",
+      "audio": "2ccc6c9fc1c8ec98",
       "heard": "זה.",
       "confidence": 0.14151834,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 630
+      "durationMs": 480,
+      "speechStartMs": 93,
+      "speechEndMs": 413
     },
     "sound-ze": {
-      "audio": "59b7847b4c9798bb",
+      "audio": "89be9973ce228c0a",
       "heard": "זה.",
       "confidence": 0.70931166,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 89,
+      "speechEndMs": 480
     },
     "sound-zi": {
-      "audio": "2aec2c73f182caaa",
+      "audio": "6483193c8b16a577",
       "heard": "זה.",
       "confidence": 0.105341084,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 88,
+      "speechEndMs": 480
     },
     "sound-zo": {
-      "audio": "a7a40a1d11378b1c",
+      "audio": "934bcf83c56aa801",
       "heard": "זו.",
       "confidence": 0.52142847,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 90,
+      "speechEndMs": 456
     },
     "sound-zu": {
-      "audio": "7a7371db1dd6ef13",
+      "audio": "11b115782a184fe3",
       "heard": "זו.",
       "confidence": 0.5226937,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 87,
+      "speechEndMs": 480
     },
     "sound-z": {
-      "audio": "3524cf6673b17b61",
+      "audio": "b5f1513104403e1e",
       "heard": "זין.",
       "confidence": 0.62517816,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 696,
+      "speechStartMs": 78,
+      "speechEndMs": 696
     },
     "sound-kha": {
-      "audio": "03138308404467e8",
+      "audio": "7874c570c3f548af",
       "heard": "חם.",
       "confidence": 0.42159823,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 830
+      "durationMs": 480,
+      "speechStartMs": 87,
+      "speechEndMs": 480
     },
     "sound-khe": {
-      "audio": "d36f4fa11eadb94f",
+      "audio": "397225e96056a9c1",
       "heard": "חכה.",
       "confidence": 0.32336408,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 504,
+      "speechStartMs": 84,
+      "speechEndMs": 504
     },
     "sound-khi": {
-      "audio": "40b8059f165ee222",
+      "audio": "561de138c21eb649",
       "heard": "כי.",
       "confidence": 0.17314713,
-      "durationMs": 1872,
-      "speechStartMs": 470,
-      "speechEndMs": 830
+      "durationMs": 528,
+      "speechStartMs": 254,
+      "speechEndMs": 528
     },
     "sound-kho": {
-      "audio": "13f10fc486ec54ba",
+      "audio": "777e4af7bac32399",
       "heard": "נכון?",
       "confidence": 0.10727105,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 790
+      "durationMs": 480,
+      "speechStartMs": 14,
+      "speechEndMs": 480
     },
     "sound-khu": {
-      "audio": "81a007b0e27fda56",
+      "audio": "bfcd08e3b917343e",
       "heard": "קחו.",
       "confidence": 0.048527632,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 790
+      "durationMs": 528,
+      "speechStartMs": 51,
+      "speechEndMs": 528
     },
     "sound-kh": {
-      "audio": "f6186498895c5032",
+      "audio": "e99c4b7a5ce09f9b",
       "heard": "חית.",
       "confidence": 0.15357219,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 648,
+      "speechStartMs": 74,
+      "speechEndMs": 648
     },
     "sound-ta": {
-      "audio": "e1f02fe446491e50",
+      "audio": "6ae0cb7e042e8a96",
       "heard": "תא.",
       "confidence": 0.09613921,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 710
+      "durationMs": 360,
+      "speechStartMs": 60,
+      "speechEndMs": 360
     },
     "sound-te": {
-      "audio": "71ba8da0889dfaa4",
+      "audio": "c0f11a49dc1b3d27",
       "heard": "תה.",
       "confidence": 0.6470274,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 630
+      "durationMs": 360,
+      "speechStartMs": 65,
+      "speechEndMs": 360
     },
     "sound-ti": {
-      "audio": "46acd30fe5508c8d",
+      "audio": "b4f87168cf9e8a35",
       "heard": "טי.",
       "confidence": 0.5826981,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 630
+      "durationMs": 360,
+      "speechStartMs": 88,
+      "speechEndMs": 360
     },
     "sound-to": {
-      "audio": "6b5d5b1f7095b410",
+      "audio": "9e6ab2200f20f25c",
       "heard": "טוב.",
       "confidence": 0.85886604,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 670
+      "durationMs": 360,
+      "speechStartMs": 71,
+      "speechEndMs": 360
     },
     "sound-tu": {
-      "audio": "5fa0c82d9327dc0b",
+      "audio": "4bbbfd9ed2e4556f",
       "heard": "",
       "confidence": 0,
-      "durationMs": 1872,
+      "durationMs": 384,
       "speechStartMs": 0,
       "speechEndMs": 0
     },
     "sound-t": {
-      "audio": "7c236ed0d68ec618",
+      "audio": "2473f65b89b4cca3",
       "heard": "טית.",
       "confidence": 0.5061298,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 870
+      "durationMs": 528,
+      "speechStartMs": 101,
+      "speechEndMs": 528
     },
     "sound-ya": {
-      "audio": "d30a76198b477118",
+      "audio": "66996d152f2e7224",
       "heard": "יה.",
       "confidence": 0.39513546,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 432,
+      "speechStartMs": 121,
+      "speechEndMs": 432
     },
     "sound-ye": {
-      "audio": "1446aaa0e5b0e2a9",
+      "audio": "9259de7c000a1291",
       "heard": "יהיה.",
       "confidence": 0.84694916,
-      "durationMs": 1872,
-      "speechStartMs": 430,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 201,
+      "speechEndMs": 456
     },
     "sound-yi": {
-      "audio": "df331314561bb7cc",
+      "audio": "eedf72b7c01914bb",
       "heard": "אי.",
       "confidence": 0.6662199,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 670
+      "durationMs": 432,
+      "speechStartMs": 84,
+      "speechEndMs": 432
     },
     "sound-yo": {
-      "audio": "0c3f96710b4c3fac",
+      "audio": "b57e9554f748d63c",
       "heard": "יו.",
       "confidence": 0.076145224,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 710
+      "durationMs": 432,
+      "speechStartMs": 125,
+      "speechEndMs": 432
     },
     "sound-yu": {
-      "audio": "fa7c3ad9a9b6cfd7",
+      "audio": "2740fd65e49dd30c",
       "heard": "יו.",
       "confidence": 0.22929221,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 710
+      "durationMs": 432,
+      "speechStartMs": 119,
+      "speechEndMs": 432
     },
     "sound-y": {
-      "audio": "9c42b58f50c3e3f5",
+      "audio": "d58925ee0d54bac1",
       "heard": "יוד.",
       "confidence": 0.8322509,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 870
+      "durationMs": 576,
+      "speechStartMs": 109,
+      "speechEndMs": 576
     },
     "sound-ka": {
-      "audio": "5372bf8352f71e20",
+      "audio": "b97b232a5fb7dce8",
       "heard": "מלב.",
       "confidence": 0.03741471,
-      "durationMs": 1872,
-      "speechStartMs": 390,
-      "speechEndMs": 830
+      "durationMs": 384,
+      "speechStartMs": 114,
+      "speechEndMs": 384
     },
     "sound-ke": {
-      "audio": "2eba1be40a0fc7bc",
+      "audio": "dce1cf2574bd4fcf",
       "heard": "כן.",
       "confidence": 0.39864743,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 630
+      "durationMs": 384,
+      "speechStartMs": 77,
+      "speechEndMs": 357
     },
     "sound-ki": {
-      "audio": "ad60e5a8983e6058",
+      "audio": "76a7112c31293717",
       "heard": "כי.",
       "confidence": 0.43351683,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 408,
+      "speechStartMs": 100,
+      "speechEndMs": 408
     },
     "sound-ko": {
-      "audio": "b1f4ed49a79a45bf",
+      "audio": "dad47e7097a9b303",
       "heard": "כה.",
       "confidence": 0.09478913,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 710
+      "durationMs": 408,
+      "speechStartMs": 87,
+      "speechEndMs": 408
     },
     "sound-ku": {
-      "audio": "9f170f943642723f",
+      "audio": "db046e9a627414e7",
       "heard": "קו.",
       "confidence": 0.26490355,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 630
+      "durationMs": 408,
+      "speechStartMs": 87,
+      "speechEndMs": 367
     },
     "sound-k": {
-      "audio": "5c6c09319f9254d9",
+      "audio": "d2d9ae5dab6ebde5",
       "heard": "כן.",
       "confidence": 0.35940394,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 670
+      "durationMs": 384,
+      "speechStartMs": 75,
+      "speechEndMs": 384
     },
     "sound-la": {
-      "audio": "4e0a80b47cd6d0d2",
+      "audio": "2006e252586ee602",
       "heard": "לה.",
       "confidence": 0.56691426,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 790
+      "durationMs": 432,
+      "speechStartMs": 124,
+      "speechEndMs": 432
     },
     "sound-le": {
-      "audio": "898c400dafb1e21d",
+      "audio": "8861789376c97eab",
       "heard": "ל.",
       "confidence": 0.5950777,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 590
+      "durationMs": 432,
+      "speechStartMs": 111,
+      "speechEndMs": 351
     },
     "sound-li": {
-      "audio": "59ed1adae6903fb0",
+      "audio": "2e0819d026dba42d",
       "heard": "לי.",
       "confidence": 0.7521868,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 111,
+      "speechEndMs": 456
     },
     "sound-lo": {
-      "audio": "185e905cf680d954",
+      "audio": "e2e006207fc4b33f",
       "heard": "לא.",
       "confidence": 0.8943172,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 74,
+      "speechEndMs": 456
     },
     "sound-lu": {
-      "audio": "3c1a7e0372ca0adb",
+      "audio": "960167d9f047cb8e",
       "heard": "לא.",
       "confidence": 0.12745379,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 106,
+      "speechEndMs": 480
     },
     "sound-l": {
-      "audio": "7ff1222bd86e951b",
+      "audio": "91eeaca984c33c05",
       "heard": "ל.",
       "confidence": 0.5097399,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 590
+      "durationMs": 432,
+      "speechStartMs": 111,
+      "speechEndMs": 351
     },
     "sound-ma": {
-      "audio": "9f2308fd64d61f67",
+      "audio": "36166d930aabd0af",
       "heard": "מה?",
       "confidence": 0.8686324,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 432,
+      "speechStartMs": 87,
+      "speechEndMs": 432
     },
     "sound-me": {
-      "audio": "b960a2a17fadd7e7",
+      "audio": "f2fe5020baee1fa8",
       "heard": "מי?",
       "confidence": 0.14923497,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 82,
+      "speechEndMs": 456
     },
     "sound-mi": {
-      "audio": "486a0a8748249ec4",
+      "audio": "f6296b369dc6c421",
       "heard": "מי?",
       "confidence": 0.7607842,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 82,
+      "speechEndMs": 480
     },
     "sound-mo": {
-      "audio": "a16649910ad01c1f",
+      "audio": "73e56242df897db5",
       "heard": "מ.",
       "confidence": 0.56528157,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 550
+      "durationMs": 456,
+      "speechStartMs": 86,
+      "speechEndMs": 326
     },
     "sound-mu": {
-      "audio": "bbfc52243127c65f",
+      "audio": "99bcf17de5a69bd8",
       "heard": "מוו.",
       "confidence": 0.15597358,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 710
+      "durationMs": 456,
+      "speechStartMs": 86,
+      "speechEndMs": 456
     },
     "sound-m": {
-      "audio": "b50f7dba3aa8af27",
+      "audio": "6625e96ecdf544e9",
       "heard": "מם.",
       "confidence": 0.39423832,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 830
+      "durationMs": 576,
+      "speechStartMs": 80,
+      "speechEndMs": 576
     },
     "sound-na": {
-      "audio": "030f1a8223db1a7e",
+      "audio": "1e5540b65a867a49",
       "heard": "נע.",
       "confidence": 0.17961456,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 83,
+      "speechEndMs": 456
     },
     "sound-ne": {
-      "audio": "093676d055412753",
+      "audio": "7085ef6e567ebaae",
       "heard": "נ.",
       "confidence": 0.59291744,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 630
+      "durationMs": 480,
+      "speechStartMs": 82,
+      "speechEndMs": 402
     },
     "sound-ni": {
-      "audio": "fa3604ea02e060bd",
+      "audio": "3be2f42f61147061",
       "heard": "מי?",
       "confidence": 0.55387247,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 80,
+      "speechEndMs": 480
     },
     "sound-no": {
-      "audio": "a7be50bb24f63e69",
+      "audio": "98750e4172c2f480",
       "heard": "נו.",
       "confidence": 0.24393728,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 710
+      "durationMs": 456,
+      "speechStartMs": 84,
+      "speechEndMs": 456
     },
     "sound-nu": {
-      "audio": "756c59f96f02f294",
+      "audio": "f81e8a99e6608d0f",
       "heard": "נו.",
       "confidence": 0.6278551,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 82,
+      "speechEndMs": 480
     },
     "sound-n": {
-      "audio": "5bc79d9f4d8bb55d",
+      "audio": "ac75dffca8258033",
       "heard": "נו.",
       "confidence": 0.31151357,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 870
+      "durationMs": 576,
+      "speechStartMs": 85,
+      "speechEndMs": 576
     },
     "sound-sa": {
-      "audio": "fd886ea4e84e336a",
+      "audio": "f5772e8adda748ed",
       "heard": "סע.",
       "confidence": 0.23898849,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 830
+      "durationMs": 480,
+      "speechStartMs": 87,
+      "speechEndMs": 480
     },
     "sound-se": {
-      "audio": "b979b2ca82e8e3dd",
+      "audio": "82b3267bd5fbafb2",
       "heard": "ס.",
       "confidence": 0.13449726,
-      "durationMs": 1872,
-      "speechStartMs": 1790,
-      "speechEndMs": 1830
+      "durationMs": 504,
+      "speechStartMs": 504,
+      "speechEndMs": 504
     },
     "sound-si": {
-      "audio": "47864b7e192ad177",
+      "audio": "32967afcf963963e",
       "heard": "סי.",
       "confidence": 0.17124176,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 830
+      "durationMs": 528,
+      "speechStartMs": 96,
+      "speechEndMs": 528
     },
     "sound-so": {
-      "audio": "f3648ad5962824fd",
+      "audio": "0f8faf41d665dece",
       "heard": "לא.",
       "confidence": 0.02779701,
-      "durationMs": 1872,
-      "speechStartMs": 510,
-      "speechEndMs": 790
+      "durationMs": 504,
+      "speechStartMs": 287,
+      "speechEndMs": 504
     },
     "sound-su": {
-      "audio": "6f53a496005ccf40",
+      "audio": "01ec4563e9b017bb",
       "heard": "סוג.",
       "confidence": 0.13651857,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 528,
+      "speechStartMs": 89,
+      "speechEndMs": 528
     },
     "sound-s": {
-      "audio": "59dd087265e69895",
+      "audio": "f02e323c9d1be064",
       "heard": "סמך.",
       "confidence": 0.69031405,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1070
+      "durationMs": 744,
+      "speechStartMs": 77,
+      "speechEndMs": 744
     },
     "sound-pa": {
-      "audio": "9c82acdd13c8cdc4",
+      "audio": "2a37d67cb7713066",
       "heard": "ה.",
       "confidence": 0.064364545,
-      "durationMs": 1872,
-      "speechStartMs": 390,
-      "speechEndMs": 510
+      "durationMs": 336,
+      "speechStartMs": 153,
+      "speechEndMs": 273
     },
     "sound-pe": {
-      "audio": "94144ff5d09d8579",
+      "audio": "c657be6fa7e612b4",
       "heard": "ה.",
       "confidence": 0.06329722,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 630
+      "durationMs": 336,
+      "speechStartMs": 85,
+      "speechEndMs": 336
     },
     "sound-pi": {
-      "audio": "67cfd78c0d303b2c",
+      "audio": "eaa7fc4562af541d",
       "heard": "פי.",
       "confidence": 0.27364793,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 630
+      "durationMs": 360,
+      "speechStartMs": 50,
+      "speechEndMs": 360
     },
     "sound-po": {
-      "audio": "281d21ea27750278",
+      "audio": "a786b196dec728bf",
       "heard": "פה.",
       "confidence": 0.2973023,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 430
+      "durationMs": 360,
+      "speechStartMs": 85,
+      "speechEndMs": 205
     },
     "sound-pu": {
-      "audio": "dfee642c08ec5cc6",
+      "audio": "f16035bf477250ef",
       "heard": "",
       "confidence": 0,
-      "durationMs": 1872,
+      "durationMs": 360,
       "speechStartMs": 0,
       "speechEndMs": 0
     },
     "sound-p": {
-      "audio": "567cc753603eba2a",
+      "audio": "91e10c7ae651d625",
       "heard": "נכון?",
       "confidence": 0.027345942,
-      "durationMs": 1872,
-      "speechStartMs": 550,
-      "speechEndMs": 750
+      "durationMs": 264,
+      "speechStartMs": 264,
+      "speechEndMs": 264
     },
     "sound-fa": {
-      "audio": "5766c4f6e18fe026",
+      "audio": "726a8556d10919fc",
       "heard": "פ.",
       "confidence": 0.20973489,
-      "durationMs": 1872,
-      "speechStartMs": 1790,
-      "speechEndMs": 1830
+      "durationMs": 480,
+      "speechStartMs": 480,
+      "speechEndMs": 480
     },
     "sound-fe": {
-      "audio": "8271e0c8feaa77dd",
+      "audio": "157ad7e1947599d9",
       "heard": "יפה.",
       "confidence": 0.5034051,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 480,
+      "speechStartMs": 91,
+      "speechEndMs": 480
     },
     "sound-fi": {
-      "audio": "359115230497a5c6",
+      "audio": "6f53d0f4da3f0e80",
       "heard": "פי.",
       "confidence": 0.7036162,
-      "durationMs": 1872,
-      "speechStartMs": 470,
-      "speechEndMs": 830
+      "durationMs": 528,
+      "speechStartMs": 249,
+      "speechEndMs": 528
     },
     "sound-fo": {
-      "audio": "02da1d49ac237e4f",
+      "audio": "f1bda9c0c7f35a41",
       "heard": "",
       "confidence": 0,
-      "durationMs": 1872,
+      "durationMs": 480,
       "speechStartMs": 0,
       "speechEndMs": 0
     },
     "sound-fu": {
-      "audio": "db3a5cbc61a7ec39",
+      "audio": "d96f960d01d5595d",
       "heard": "פו.",
       "confidence": 0.2096937,
-      "durationMs": 1872,
-      "speechStartMs": 390,
-      "speechEndMs": 790
+      "durationMs": 528,
+      "speechStartMs": 174,
+      "speechEndMs": 528
     },
     "sound-f": {
-      "audio": "75c7909204e8085d",
+      "audio": "ec0b22ed3886c15d",
       "heard": "ה.",
       "confidence": 0.076202564,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 630
+      "durationMs": 336,
+      "speechStartMs": 119,
+      "speechEndMs": 336
     },
     "sound-tsa": {
-      "audio": "15438ec889bf23b9",
+      "audio": "546a54a07e9aabe0",
       "heard": "סע.",
       "confidence": 0.21045515,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 432,
+      "speechStartMs": 94,
+      "speechEndMs": 432
     },
     "sound-tse": {
-      "audio": "fa83b67096bbde55",
+      "audio": "b9b32502d21eded9",
       "heard": "צא.",
       "confidence": 0.803393,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 432,
+      "speechStartMs": 93,
+      "speechEndMs": 432
     },
     "sound-tsi": {
-      "audio": "5741e90e7826ce07",
+      "audio": "85ca4e2ccdbb262e",
       "heard": "סי.",
       "confidence": 0.5629514,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 790
+      "durationMs": 480,
+      "speechStartMs": 133,
+      "speechEndMs": 480
     },
     "sound-tso": {
-      "audio": "eacf130933f015c6",
+      "audio": "434bdbdaba973b44",
       "heard": "טוב.",
       "confidence": 0.12748767,
-      "durationMs": 1872,
-      "speechStartMs": 430,
-      "speechEndMs": 750
+      "durationMs": 432,
+      "speechStartMs": 213,
+      "speechEndMs": 432
     },
     "sound-tsu": {
-      "audio": "22f69069b1a87ef3",
+      "audio": "ff3757837477de00",
       "heard": "צאו.",
       "confidence": 0.5278573,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 710
+      "durationMs": 456,
+      "speechStartMs": 94,
+      "speechEndMs": 456
     },
     "sound-ts": {
-      "audio": "66ee7c09ecce1324",
+      "audio": "f0f4a2ddbfdbb3e5",
       "heard": "צדיק.",
       "confidence": 0.890602,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 910
+      "durationMs": 696,
+      "speechStartMs": 56,
+      "speechEndMs": 696
     },
     "sound-ra": {
-      "audio": "eac38733a1831b10",
+      "audio": "a298c6065fc25e0d",
       "heard": "רע.",
       "confidence": 0.7976555,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 750
+      "durationMs": 432,
+      "speechStartMs": 87,
+      "speechEndMs": 432
     },
     "sound-re": {
-      "audio": "cdb1e858034b2303",
+      "audio": "1fd97faae3040b49",
       "heard": "ראה.",
       "confidence": 0.039268807,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 710
+      "durationMs": 432,
+      "speechStartMs": 119,
+      "speechEndMs": 432
     },
     "sound-ri": {
-      "audio": "2364d9fcf906fc8f",
+      "audio": "2100b34185851678",
       "heard": "רי.",
       "confidence": 0.5785903,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 750
+      "durationMs": 456,
+      "speechStartMs": 119,
+      "speechEndMs": 456
     },
     "sound-ro": {
-      "audio": "408345e8d0c23722",
+      "audio": "e3a973f6c3689e1f",
       "heard": "רו.",
       "confidence": 0.19715764,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 710
+      "durationMs": 432,
+      "speechStartMs": 78,
+      "speechEndMs": 432
     },
     "sound-ru": {
-      "audio": "da5e1fc7f1c9b60a",
+      "audio": "2b88fea2dc3e471b",
       "heard": "רו.",
       "confidence": 0.07041644,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 710
+      "durationMs": 480,
+      "speechStartMs": 81,
+      "speechEndMs": 480
     },
     "sound-r": {
-      "audio": "7c8cf3d333e4b64b",
+      "audio": "e9cdeb243a8403ae",
       "heard": "רי.",
       "confidence": 0.5360796,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 710
+      "durationMs": 744,
+      "speechStartMs": 111,
+      "speechEndMs": 471
     },
     "sound-sha": {
-      "audio": "405624f4660b3827",
+      "audio": "d06c1e1f0e604c5c",
       "heard": "אישה.",
       "confidence": 0.30973253,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 830
+      "durationMs": 480,
+      "speechStartMs": 46,
+      "speechEndMs": 480
     },
     "sound-she": {
-      "audio": "8ee22b76f765a21b",
+      "audio": "42af6d78ae5a31d4",
       "heard": "ש.",
       "confidence": 0.11792933,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 504,
+      "speechStartMs": 86,
+      "speechEndMs": 504
     },
     "sound-shi": {
-      "audio": "14e40b751cb8f97b",
+      "audio": "af8da015696cf3c3",
       "heard": "שי.",
       "confidence": 0.6786537,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 790
+      "durationMs": 504,
+      "speechStartMs": 94,
+      "speechEndMs": 504
     },
     "sound-sho": {
-      "audio": "157adf13c3204475",
+      "audio": "207ee2e0640050d6",
       "heard": "שוטר.",
       "confidence": 0.041110724,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 830
+      "durationMs": 504,
+      "speechStartMs": 87,
+      "speechEndMs": 504
     },
     "sound-shu": {
-      "audio": "8cc1825b3bb2b759",
+      "audio": "4f20431486738866",
       "heard": "שוב.",
       "confidence": 0.51375765,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 830
+      "durationMs": 528,
+      "speechStartMs": 87,
+      "speechEndMs": 528
     },
     "sound-sh": {
-      "audio": "c37a105d766f0af0",
+      "audio": "8e5e4fb079d09877",
       "heard": "שין.",
       "confidence": 0.64153945,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 624,
+      "speechStartMs": 87,
+      "speechEndMs": 624
     },
     "number-0": {
-      "audio": "286c4d0076f9db8a",
+      "audio": "ed928a87be030a82",
       "heard": "אפס.",
       "confidence": 0.67734206,
-      "durationMs": 1872,
-      "speechStartMs": 470,
-      "speechEndMs": 950
+      "durationMs": 768,
+      "speechStartMs": 231,
+      "speechEndMs": 711
     },
     "number-1": {
-      "audio": "35c815e0de50fdc3",
+      "audio": "3c7faeafc7ad9fdf",
       "heard": "אחת.",
       "confidence": 0.6311662,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 648,
+      "speechStartMs": 92,
+      "speechEndMs": 648
     },
     "number-2": {
-      "audio": "6f772e9922588927",
+      "audio": "35d4fe40deb5069b",
       "heard": "שתיים.",
       "confidence": 0.76811755,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1110
+      "durationMs": 816,
+      "speechStartMs": 62,
+      "speechEndMs": 816
     },
     "number-3": {
-      "audio": "eca741d8a6d34095",
+      "audio": "e3b8dfa90dfc319b",
       "heard": "3.",
       "confidence": 0.71242666,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1070
+      "durationMs": 816,
+      "speechStartMs": 59,
+      "speechEndMs": 816
     },
     "number-4": {
-      "audio": "07a560b2e749cc6c",
+      "audio": "2b5526c70a94dae6",
       "heard": "4.",
       "confidence": 0.7603374,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 552,
+      "speechStartMs": 69,
+      "speechEndMs": 552
     },
     "number-5": {
-      "audio": "35364d09c4602f6b",
+      "audio": "1e29db36102bda3f",
       "heard": "5.",
       "confidence": 0.8790318,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1070
+      "durationMs": 792,
+      "speechStartMs": 74,
+      "speechEndMs": 792
     },
     "number-6": {
-      "audio": "73f95f284ca5bca2",
+      "audio": "275a9feb44328fb9",
       "heard": "6.",
       "confidence": 0.8917579,
-      "durationMs": 1872,
-      "speechStartMs": 470,
-      "speechEndMs": 670
+      "durationMs": 720,
+      "speechStartMs": 244,
+      "speechEndMs": 444
     },
     "number-7": {
-      "audio": "b60b6c0b80d5d687",
+      "audio": "b60d63ce4b0d536e",
       "heard": "7.",
       "confidence": 0.80226517,
-      "durationMs": 1872,
-      "speechStartMs": 390,
-      "speechEndMs": 870
+      "durationMs": 600,
+      "speechStartMs": 224,
+      "speechEndMs": 600
     },
     "number-8": {
-      "audio": "25c6e29458f97a23",
+      "audio": "3a529b5e372e7931",
       "heard": "8.",
       "confidence": 0.8852743,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 910
+      "durationMs": 672,
+      "speechStartMs": 74,
+      "speechEndMs": 672
     },
     "number-9": {
-      "audio": "37b95da3b8137907",
+      "audio": "7d8ee7c16c5de0fd",
       "heard": "9.",
       "confidence": 0.86962086,
-      "durationMs": 1872,
-      "speechStartMs": 590,
-      "speechEndMs": 910
+      "durationMs": 600,
+      "speechStartMs": 434,
+      "speechEndMs": 600
     },
     "number-10": {
-      "audio": "7f5ade84fea74cde",
+      "audio": "f85aa4ef7573e936",
       "heard": "10.",
       "confidence": 0.65896446,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 910
+      "durationMs": 648,
+      "speechStartMs": 124,
+      "speechEndMs": 648
     },
     "number-11": {
-      "audio": "8f0350d6cf400fa3",
+      "audio": "c3134175460b76d4",
       "heard": "11.",
       "confidence": 0.79030275,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1070
+      "durationMs": 840,
+      "speechStartMs": 104,
+      "speechEndMs": 840
     },
     "number-12": {
-      "audio": "a77b9fe752794ea9",
+      "audio": "391f6776f9cfc4f7",
       "heard": "12.",
       "confidence": 0.5701088,
-      "durationMs": 1896,
-      "speechStartMs": 310,
-      "speechEndMs": 1150
+      "durationMs": 888,
+      "speechStartMs": 84,
+      "speechEndMs": 888
     },
     "number-13": {
-      "audio": "ad746b2e76399da2",
+      "audio": "b414ce6218ecfe8e",
       "heard": "13.",
       "confidence": 0.6880066,
-      "durationMs": 1896,
-      "speechStartMs": 230,
-      "speechEndMs": 1150
+      "durationMs": 936,
+      "speechStartMs": 66,
+      "speechEndMs": 936
     },
     "number-14": {
-      "audio": "8e4b65ca61d50ee4",
+      "audio": "6c204791c645c375",
       "heard": "14.",
       "confidence": 0.60532093,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1110
+      "durationMs": 864,
+      "speechStartMs": 94,
+      "speechEndMs": 864
     },
     "number-15": {
-      "audio": "80ce143fa0dfe533",
+      "audio": "1c9d450d84d072d1",
       "heard": "15.",
       "confidence": 0.59205866,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 1110
+      "durationMs": 912,
+      "speechStartMs": 64,
+      "speechEndMs": 912
     },
     "number-16": {
-      "audio": "f7f73583657d29f7",
+      "audio": "4fec62bae9789b6c",
       "heard": "16.",
       "confidence": 0.5352944,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 1030
+      "durationMs": 792,
+      "speechStartMs": 184,
+      "speechEndMs": 792
     },
     "number-17": {
-      "audio": "0495804c5067e51e",
+      "audio": "cc2c3734d37e24c1",
       "heard": "17.",
       "confidence": 0.8342595,
-      "durationMs": 1896,
-      "speechStartMs": 390,
-      "speechEndMs": 1150
+      "durationMs": 936,
+      "speechStartMs": 224,
+      "speechEndMs": 936
     },
     "number-18": {
-      "audio": "262aea17e5600de7",
+      "audio": "5fa9b5e798a29d71",
       "heard": "18.",
       "confidence": 0.7279221,
-      "durationMs": 1944,
-      "speechStartMs": 270,
-      "speechEndMs": 1190
+      "durationMs": 912,
+      "speechStartMs": 59,
+      "speechEndMs": 912
     },
     "number-19": {
-      "audio": "30fb3a5124620b1b",
+      "audio": "35e74324a409e8a5",
       "heard": "19.",
       "confidence": 0.6012928,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1070
+      "durationMs": 840,
+      "speechStartMs": 103,
+      "speechEndMs": 840
     },
     "number-20": {
-      "audio": "abffb035c7e3ee5c",
+      "audio": "98395ee1079dd5bf",
       "heard": "20.",
       "confidence": 0.6411367,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 950
+      "durationMs": 720,
+      "speechStartMs": 84,
+      "speechEndMs": 720
     },
     "number-21": {
-      "audio": "706708819cb6190c",
+      "audio": "98a91c391e2d18a0",
       "heard": "21.",
       "confidence": 0.60844016,
-      "durationMs": 2088,
-      "speechStartMs": 310,
-      "speechEndMs": 1390
+      "durationMs": 1080,
+      "speechStartMs": 106,
+      "speechEndMs": 1080
     },
     "number-22": {
-      "audio": "033736ee9dbf0aef",
+      "audio": "2c06da5ef61d35c7",
       "heard": "22.",
       "confidence": 0.6605637,
-      "durationMs": 2136,
-      "speechStartMs": 270,
-      "speechEndMs": 1430
+      "durationMs": 1176,
+      "speechStartMs": 104,
+      "speechEndMs": 1176
     },
     "number-23": {
-      "audio": "7c6086d2de894c83",
+      "audio": "1c59784c6253623f",
       "heard": "23.",
       "confidence": 0.7548592,
-      "durationMs": 2112,
-      "speechStartMs": 270,
-      "speechEndMs": 1350
+      "durationMs": 1176,
+      "speechStartMs": 104,
+      "speechEndMs": 1176
     },
     "number-24": {
-      "audio": "f372bb7039fbf37a",
+      "audio": "ef58e4635d14965f",
       "heard": "24.",
       "confidence": 0.8153635,
-      "durationMs": 1992,
-      "speechStartMs": 310,
-      "speechEndMs": 1310
+      "durationMs": 984,
+      "speechStartMs": 94,
+      "speechEndMs": 984
     },
     "number-25": {
-      "audio": "17670601726a1ab8",
+      "audio": "40259530ff11ce00",
       "heard": "25.",
       "confidence": 0.6493777,
-      "durationMs": 2136,
-      "speechStartMs": 310,
-      "speechEndMs": 1390
+      "durationMs": 1152,
+      "speechStartMs": 94,
+      "speechEndMs": 1152
     },
     "number-26": {
-      "audio": "125955502fd41702",
+      "audio": "04ee98b61c13b11e",
       "heard": "26.",
       "confidence": 0.71615,
-      "durationMs": 2016,
-      "speechStartMs": 270,
-      "speechEndMs": 1070
+      "durationMs": 1056,
+      "speechStartMs": 104,
+      "speechEndMs": 904
     },
     "number-27": {
-      "audio": "5a68595b86e2705f",
+      "audio": "f794002630762fef",
       "heard": "27.",
       "confidence": 0.68733144,
-      "durationMs": 1968,
-      "speechStartMs": 270,
-      "speechEndMs": 1270
+      "durationMs": 1008,
+      "speechStartMs": 104,
+      "speechEndMs": 1008
     },
     "number-28": {
-      "audio": "f011b106486401c5",
+      "audio": "f52418051f22c2ee",
       "heard": "28.",
       "confidence": 0.816104,
-      "durationMs": 2016,
-      "speechStartMs": 310,
-      "speechEndMs": 1190
+      "durationMs": 1032,
+      "speechStartMs": 106,
+      "speechEndMs": 986
     },
     "number-29": {
-      "audio": "346fdb651a503018",
+      "audio": "54c469bad2ea8069",
       "heard": "29.",
       "confidence": 0.5428871,
-      "durationMs": 2016,
-      "speechStartMs": 270,
-      "speechEndMs": 1350
+      "durationMs": 1056,
+      "speechStartMs": 104,
+      "speechEndMs": 1056
     },
     "number-30": {
-      "audio": "747ba39039ed39fb",
+      "audio": "3db18ce406157507",
       "heard": "30.",
       "confidence": 0.73979956,
-      "durationMs": 1872,
-      "speechStartMs": 230,
-      "speechEndMs": 1070
+      "durationMs": 792,
+      "speechStartMs": 64,
+      "speechEndMs": 792
     },
     "number-31": {
-      "audio": "41082a364b8bbb49",
+      "audio": "c5d3a3f747ca6899",
       "heard": "31.",
       "confidence": 0.6708055,
-      "durationMs": 2136,
-      "speechStartMs": 230,
-      "speechEndMs": 1430
+      "durationMs": 1152,
+      "speechStartMs": 64,
+      "speechEndMs": 1152
     },
     "number-32": {
-      "audio": "4282453b05cf2fab",
+      "audio": "476864726e4bfe18",
       "heard": "32.",
       "confidence": 0.75759745,
-      "durationMs": 2160,
-      "speechStartMs": 230,
-      "speechEndMs": 1430
+      "durationMs": 1200,
+      "speechStartMs": 64,
+      "speechEndMs": 1200
     },
     "number-33": {
-      "audio": "3bcf95ceacc94dd4",
+      "audio": "4a82032bee447d56",
       "heard": "33.",
       "confidence": 0.659393,
-      "durationMs": 2208,
-      "speechStartMs": 270,
-      "speechEndMs": 1430
+      "durationMs": 1200,
+      "speechStartMs": 66,
+      "speechEndMs": 1200
     },
     "number-34": {
-      "audio": "76d7aacd9ecf4ef7",
+      "audio": "ac27228565ce7c62",
       "heard": "34.",
       "confidence": 0.8182962,
-      "durationMs": 2040,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1032,
+      "speechStartMs": 81,
+      "speechEndMs": 1032
     },
     "number-35": {
-      "audio": "b6b7b9437a3bdbc4",
+      "audio": "8e97f7f4dc4a3233",
       "heard": "35.",
       "confidence": 0.744308,
-      "durationMs": 2184,
-      "speechStartMs": 310,
-      "speechEndMs": 1430
+      "durationMs": 1176,
+      "speechStartMs": 94,
+      "speechEndMs": 1176
     },
     "number-36": {
-      "audio": "06780c28ae59213e",
+      "audio": "001fae12da3cd075",
       "heard": "36.",
       "confidence": 0.78506494,
-      "durationMs": 2088,
-      "speechStartMs": 230,
-      "speechEndMs": 1150
+      "durationMs": 1128,
+      "speechStartMs": 64,
+      "speechEndMs": 984
     },
     "number-37": {
-      "audio": "655f57208e13468c",
+      "audio": "432bf2ac67e397da",
       "heard": "37.",
       "confidence": 0.8225081,
-      "durationMs": 2040,
-      "speechStartMs": 230,
-      "speechEndMs": 1390
+      "durationMs": 1080,
+      "speechStartMs": 64,
+      "speechEndMs": 1080
     },
     "number-38": {
-      "audio": "bc1aef044da67a63",
+      "audio": "e2dec4d14d8aaa16",
       "heard": "38.",
       "confidence": 0.78303814,
-      "durationMs": 2040,
-      "speechStartMs": 270,
-      "speechEndMs": 1230
+      "durationMs": 1056,
+      "speechStartMs": 66,
+      "speechEndMs": 1026
     },
     "number-39": {
-      "audio": "4300ead72bfefc2e",
+      "audio": "bf6784124bfa0be5",
       "heard": "39.",
       "confidence": 0.5191995,
-      "durationMs": 2064,
-      "speechStartMs": 230,
-      "speechEndMs": 1390
+      "durationMs": 1104,
+      "speechStartMs": 64,
+      "speechEndMs": 1104
     },
     "number-40": {
-      "audio": "cac7eed695fa793d",
+      "audio": "09455b2934158240",
       "heard": "40.",
       "confidence": 0.8918988,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1030
+      "durationMs": 744,
+      "speechStartMs": 83,
+      "speechEndMs": 744
     },
     "number-41": {
-      "audio": "24982f57b49f3409",
+      "audio": "119c9ca1cbb4553c",
       "heard": "41.",
       "confidence": 0.86304784,
-      "durationMs": 2136,
-      "speechStartMs": 310,
-      "speechEndMs": 1430
+      "durationMs": 1128,
+      "speechStartMs": 77,
+      "speechEndMs": 1128
     },
     "number-42": {
-      "audio": "892776d03b797a75",
+      "audio": "acaedf4701e9a544",
       "heard": "42.",
       "confidence": 0.82588875,
-      "durationMs": 2184,
-      "speechStartMs": 270,
-      "speechEndMs": 1470
+      "durationMs": 1200,
+      "speechStartMs": 104,
+      "speechEndMs": 1200
     },
     "number-43": {
-      "audio": "81d0849c880271f5",
+      "audio": "437b480c5c20c815",
       "heard": "43.",
       "confidence": 0.89377135,
-      "durationMs": 2232,
-      "speechStartMs": 350,
-      "speechEndMs": 1470
+      "durationMs": 1224,
+      "speechStartMs": 94,
+      "speechEndMs": 1214
     },
     "number-44": {
-      "audio": "f6dbe31fff7a5bfc",
+      "audio": "d8fd1847712b0e33",
       "heard": "44.",
       "confidence": 0.80022097,
-      "durationMs": 2088,
-      "speechStartMs": 310,
-      "speechEndMs": 1430
+      "durationMs": 1056,
+      "speechStartMs": 72,
+      "speechEndMs": 1056
     },
     "number-45": {
-      "audio": "7aaf9b30bf1331e3",
+      "audio": "d59036336fd92640",
       "heard": "45.",
       "confidence": 0.8933391,
-      "durationMs": 2232,
-      "speechStartMs": 310,
-      "speechEndMs": 1470
+      "durationMs": 1200,
+      "speechStartMs": 64,
+      "speechEndMs": 1200
     },
     "number-46": {
-      "audio": "09d60d4b4c11a09f",
+      "audio": "63951a617c7e782e",
       "heard": "46.",
       "confidence": 0.7799337,
-      "durationMs": 2088,
-      "speechStartMs": 270,
-      "speechEndMs": 1190
+      "durationMs": 1152,
+      "speechStartMs": 82,
+      "speechEndMs": 1002
     },
     "number-47": {
-      "audio": "471eeeb1512680d0",
+      "audio": "4dfc44a6a99297c6",
       "heard": "47.",
       "confidence": 0.7304305,
-      "durationMs": 2040,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1080,
+      "speechStartMs": 104,
+      "speechEndMs": 1080
     },
     "number-48": {
-      "audio": "27a371ea1e08488c",
+      "audio": "c84ab4df03dd90ac",
       "heard": "48.",
       "confidence": 0.8209087,
-      "durationMs": 2064,
-      "speechStartMs": 310,
-      "speechEndMs": 1230
+      "durationMs": 1080,
+      "speechStartMs": 87,
+      "speechEndMs": 1007
     },
     "number-49": {
-      "audio": "ebb3618e53b2547b",
+      "audio": "2c884a7e8ff2757a",
       "heard": "49.",
       "confidence": 0.85515475,
-      "durationMs": 2064,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1104,
+      "speechStartMs": 104,
+      "speechEndMs": 1104
     },
     "number-50": {
-      "audio": "99937d38574f9cca",
+      "audio": "1b747eb05fd6a76d",
       "heard": "50.",
       "confidence": 0.890129,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1110
+      "durationMs": 816,
+      "speechStartMs": 94,
+      "speechEndMs": 816
     },
     "number-51": {
-      "audio": "e7857b0c96a9a05e",
+      "audio": "44f170c33c18101b",
       "heard": "51.",
       "confidence": 0.74508023,
-      "durationMs": 2255,
-      "speechStartMs": 310,
-      "speechEndMs": 1550
+      "durationMs": 1224,
+      "speechStartMs": 106,
+      "speechEndMs": 1224
     },
     "number-52": {
-      "audio": "c112b2c971f8ce9a",
+      "audio": "0aa71487ee01cf42",
       "heard": "52.",
       "confidence": 0.8650873,
-      "durationMs": 2255,
-      "speechStartMs": 270,
-      "speechEndMs": 1510
+      "durationMs": 1272,
+      "speechStartMs": 104,
+      "speechEndMs": 1272
     },
     "number-53": {
-      "audio": "8bf02b8089008932",
+      "audio": "15831fcd717cb94b",
       "heard": "53.",
       "confidence": 0.77946264,
-      "durationMs": 2279,
-      "speechStartMs": 310,
-      "speechEndMs": 1510
+      "durationMs": 1272,
+      "speechStartMs": 106,
+      "speechEndMs": 1272
     },
     "number-54": {
-      "audio": "e24b5a4e7625c118",
+      "audio": "d14e44f33f6db2bd",
       "heard": "54.",
       "confidence": 0.7975131,
-      "durationMs": 2160,
-      "speechStartMs": 310,
-      "speechEndMs": 1470
+      "durationMs": 1128,
+      "speechStartMs": 106,
+      "speechEndMs": 1128
     },
     "number-55": {
-      "audio": "eccdbd331d121c6e",
+      "audio": "e8f0064274d1723d",
       "heard": "55.",
       "confidence": 0.8778778,
-      "durationMs": 2304,
-      "speechStartMs": 310,
-      "speechEndMs": 1550
+      "durationMs": 1296,
+      "speechStartMs": 94,
+      "speechEndMs": 1296
     },
     "number-56": {
-      "audio": "c8f1e29b30ffa87a",
+      "audio": "e5e187676cda6f04",
       "heard": "56.",
       "confidence": 0.59985423,
-      "durationMs": 2232,
-      "speechStartMs": 310,
-      "speechEndMs": 1310
+      "durationMs": 1224,
+      "speechStartMs": 106,
+      "speechEndMs": 1106
     },
     "number-57": {
-      "audio": "97e75e7da506d1c5",
+      "audio": "8026fec8ddd6dd31",
       "heard": "57.",
       "confidence": 0.6180048,
-      "durationMs": 2184,
-      "speechStartMs": 270,
-      "speechEndMs": 1510
+      "durationMs": 1176,
+      "speechStartMs": 79,
+      "speechEndMs": 1176
     },
     "number-58": {
-      "audio": "41b6d315a3ed1191",
+      "audio": "6e813f8336e3cc37",
       "heard": "58.",
       "confidence": 0.89390814,
-      "durationMs": 2136,
-      "speechStartMs": 310,
-      "speechEndMs": 1310
+      "durationMs": 1152,
+      "speechStartMs": 106,
+      "speechEndMs": 1106
     },
     "number-59": {
-      "audio": "d2d335ae85d42880",
+      "audio": "c6c0caffda60dc0a",
       "heard": "59.",
       "confidence": 0.8784447,
-      "durationMs": 2184,
-      "speechStartMs": 270,
-      "speechEndMs": 1510
+      "durationMs": 1200,
+      "speechStartMs": 104,
+      "speechEndMs": 1200
     },
     "number-60": {
-      "audio": "f0eac901cddf6d4e",
+      "audio": "751304676d501f0e",
       "heard": "60.",
       "confidence": 0.716797,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1070
+      "durationMs": 744,
+      "speechStartMs": 59,
+      "speechEndMs": 744
     },
     "number-61": {
-      "audio": "8bef02eefd4eed09",
+      "audio": "ea2ef8b91e690dae",
       "heard": "61.",
       "confidence": 0.847739,
-      "durationMs": 2064,
-      "speechStartMs": 230,
-      "speechEndMs": 1390
+      "durationMs": 1104,
+      "speechStartMs": 66,
+      "speechEndMs": 1104
     },
     "number-62": {
-      "audio": "1d62c8e61b65fc22",
+      "audio": "2800fe129027551d",
       "heard": "62.",
       "confidence": 0.864902,
-      "durationMs": 2112,
-      "speechStartMs": 230,
-      "speechEndMs": 1430
+      "durationMs": 1176,
+      "speechStartMs": 69,
+      "speechEndMs": 1176
     },
     "number-63": {
-      "audio": "8d1d46ce21729615",
+      "audio": "b05848aa0f683e1c",
       "heard": "63.",
       "confidence": 0.8165567,
-      "durationMs": 2112,
-      "speechStartMs": 230,
-      "speechEndMs": 1350
+      "durationMs": 1176,
+      "speechStartMs": 67,
+      "speechEndMs": 1176
     },
     "number-64": {
-      "audio": "61f0ada18a5729c3",
+      "audio": "261b6bc5e0a2ba31",
       "heard": "64.",
       "confidence": 0.7109941,
-      "durationMs": 1992,
-      "speechStartMs": 230,
-      "speechEndMs": 1310
+      "durationMs": 1032,
+      "speechStartMs": 74,
+      "speechEndMs": 1032
     },
     "number-65": {
-      "audio": "12c61afb4169cac0",
+      "audio": "8fd2cd93e96bbd56",
       "heard": "65.",
       "confidence": 0.8215565,
-      "durationMs": 2160,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1176,
+      "speechStartMs": 67,
+      "speechEndMs": 1176
     },
     "number-66": {
-      "audio": "853ae9acc328233d",
+      "audio": "e3f502a11b1287ed",
       "heard": "66.",
       "confidence": 0.74324733,
-      "durationMs": 2040,
-      "speechStartMs": 230,
-      "speechEndMs": 1150
+      "durationMs": 1104,
+      "speechStartMs": 66,
+      "speechEndMs": 986
     },
     "number-67": {
-      "audio": "bfc16a5426decbcd",
+      "audio": "40c6c98b6d06a07c",
       "heard": "67.",
       "confidence": 0.6971363,
-      "durationMs": 1992,
-      "speechStartMs": 230,
-      "speechEndMs": 1350
+      "durationMs": 1056,
+      "speechStartMs": 66,
+      "speechEndMs": 1056
     },
     "number-68": {
-      "audio": "254f91eae166fd72",
+      "audio": "662ff37b6b05259d",
       "heard": "68.",
       "confidence": 0.89300406,
-      "durationMs": 1992,
-      "speechStartMs": 270,
-      "speechEndMs": 1230
+      "durationMs": 1032,
+      "speechStartMs": 84,
+      "speechEndMs": 1032
     },
     "number-69": {
-      "audio": "d87fa206107ffadb",
+      "audio": "6f368ec9f4e909df",
       "heard": "69.",
       "confidence": 0.83779615,
-      "durationMs": 2040,
-      "speechStartMs": 230,
-      "speechEndMs": 1350
+      "durationMs": 1080,
+      "speechStartMs": 69,
+      "speechEndMs": 1080
     },
     "number-70": {
-      "audio": "20be87da9138f8a3",
+      "audio": "afe9456aabf5b7f1",
       "heard": "70.",
       "confidence": 0.89235955,
-      "durationMs": 1872,
-      "speechStartMs": 470,
-      "speechEndMs": 1110
+      "durationMs": 768,
+      "speechStartMs": 234,
+      "speechEndMs": 768
     },
     "number-71": {
-      "audio": "aac62ed3492b5467",
+      "audio": "da16abadf1e27590",
       "heard": "71.",
       "confidence": 0.7510961,
-      "durationMs": 2112,
-      "speechStartMs": 310,
-      "speechEndMs": 1430
+      "durationMs": 1104,
+      "speechStartMs": 99,
+      "speechEndMs": 1104
     },
     "number-72": {
-      "audio": "7a51fb2000af13ad",
+      "audio": "9852f0f4fc503644",
       "heard": "72.",
       "confidence": 0.8734851,
-      "durationMs": 2184,
-      "speechStartMs": 270,
-      "speechEndMs": 1470
+      "durationMs": 1224,
+      "speechStartMs": 104,
+      "speechEndMs": 1224
     },
     "number-73": {
-      "audio": "b66804d87dc4087a",
+      "audio": "7aedc7afb9e09b27",
       "heard": "73.",
       "confidence": 0.81253374,
-      "durationMs": 2184,
-      "speechStartMs": 310,
-      "speechEndMs": 1430
+      "durationMs": 1200,
+      "speechStartMs": 106,
+      "speechEndMs": 1200
     },
     "number-74": {
-      "audio": "4ab89c300b0d5e25",
+      "audio": "1fc25984ad9c6105",
       "heard": "74.",
       "confidence": 0.78925586,
-      "durationMs": 2040,
-      "speechStartMs": 310,
-      "speechEndMs": 1390
+      "durationMs": 1032,
+      "speechStartMs": 106,
+      "speechEndMs": 1032
     },
     "number-75": {
-      "audio": "83d2f67272fda65e",
+      "audio": "c72759408cc7d23b",
       "heard": "75.",
       "confidence": 0.8873056,
-      "durationMs": 2208,
-      "speechStartMs": 310,
-      "speechEndMs": 1470
+      "durationMs": 1200,
+      "speechStartMs": 86,
+      "speechEndMs": 1200
     },
     "number-76": {
-      "audio": "bff84bb17a41f835",
+      "audio": "53c1a047fca63a9a",
       "heard": "76.",
       "confidence": 0.80462265,
-      "durationMs": 2064,
-      "speechStartMs": 390,
-      "speechEndMs": 1150
+      "durationMs": 1104,
+      "speechStartMs": 192,
+      "speechEndMs": 952
     },
     "number-77": {
-      "audio": "ea7ff90162ddab32",
+      "audio": "a034d22cbac460cf",
       "heard": "77.",
       "confidence": 0.44901457,
-      "durationMs": 2064,
-      "speechStartMs": 390,
-      "speechEndMs": 1390
+      "durationMs": 1080,
+      "speechStartMs": 224,
+      "speechEndMs": 1080
     },
     "number-78": {
-      "audio": "32e3bc15a9d70982",
+      "audio": "44cf7b6ed34cb855",
       "heard": "78.",
       "confidence": 0.893074,
-      "durationMs": 2064,
-      "speechStartMs": 310,
-      "speechEndMs": 1270
+      "durationMs": 1080,
+      "speechStartMs": 106,
+      "speechEndMs": 1066
     },
     "number-79": {
-      "audio": "2b8d3cb10b62af4d",
+      "audio": "bd488259f2149502",
       "heard": "79.",
       "confidence": 0.8104137,
-      "durationMs": 2088,
-      "speechStartMs": 270,
-      "speechEndMs": 1430
+      "durationMs": 1104,
+      "speechStartMs": 97,
+      "speechEndMs": 1104
     },
     "number-80": {
-      "audio": "0711d6e7bc40227a",
+      "audio": "c369beaf79b68f1e",
       "heard": "80.",
       "confidence": 0.8933619,
-      "durationMs": 1872,
-      "speechStartMs": 310,
-      "speechEndMs": 1110
+      "durationMs": 768,
+      "speechStartMs": 74,
+      "speechEndMs": 768
     },
     "number-81": {
-      "audio": "dba725cdf9b72e24",
+      "audio": "e84dbbb2b92e8563",
       "heard": "81.",
       "confidence": 0.85729575,
-      "durationMs": 2184,
-      "speechStartMs": 270,
-      "speechEndMs": 1470
+      "durationMs": 1152,
+      "speechStartMs": 59,
+      "speechEndMs": 1152
     },
     "number-82": {
-      "audio": "d06e0479d1d6b803",
+      "audio": "8b47d50d56ebf217",
       "heard": "82.",
       "confidence": 0.75353336,
-      "durationMs": 2184,
-      "speechStartMs": 230,
-      "speechEndMs": 1470
+      "durationMs": 1200,
+      "speechStartMs": 47,
+      "speechEndMs": 1200
     },
     "number-83": {
-      "audio": "4d24d0457764007f",
+      "audio": "3b89aa2823fdba7b",
       "heard": "83.",
       "confidence": 0.71671593,
-      "durationMs": 2232,
-      "speechStartMs": 310,
-      "speechEndMs": 1470
+      "durationMs": 1224,
+      "speechStartMs": 74,
+      "speechEndMs": 1224
     },
     "number-84": {
-      "audio": "36d38c86425fd595",
+      "audio": "5ea7baa40d063765",
       "heard": "84.",
       "confidence": 0.8939798,
-      "durationMs": 2064,
-      "speechStartMs": 310,
-      "speechEndMs": 1430
+      "durationMs": 1056,
+      "speechStartMs": 94,
+      "speechEndMs": 1056
     },
     "number-85": {
-      "audio": "64a9d18989edf667",
+      "audio": "2c346d0b0c804a99",
       "heard": "85.",
       "confidence": 0.7184633,
-      "durationMs": 2232,
-      "speechStartMs": 310,
-      "speechEndMs": 1470
+      "durationMs": 1200,
+      "speechStartMs": 74,
+      "speechEndMs": 1200
     },
     "number-86": {
-      "audio": "96d2743b375c4f62",
+      "audio": "74f6bd5efb9bee82",
       "heard": "86.",
       "confidence": 0.8742993,
-      "durationMs": 2136,
-      "speechStartMs": 310,
-      "speechEndMs": 1230
+      "durationMs": 1152,
+      "speechStartMs": 89,
+      "speechEndMs": 1009
     },
     "number-87": {
-      "audio": "445c02fefc709eec",
+      "audio": "01ab5236fb6b1e3e",
       "heard": "87.",
       "confidence": 0.80735064,
-      "durationMs": 2112,
-      "speechStartMs": 270,
-      "speechEndMs": 1430
+      "durationMs": 1104,
+      "speechStartMs": 59,
+      "speechEndMs": 1104
     },
     "number-88": {
-      "audio": "da7e35ade065c88d",
+      "audio": "f8cb11613719e8f6",
       "heard": "88.",
       "confidence": 0.84604144,
-      "durationMs": 2088,
-      "speechStartMs": 310,
-      "speechEndMs": 1310
+      "durationMs": 1080,
+      "speechStartMs": 89,
+      "speechEndMs": 1080
     },
     "number-89": {
-      "audio": "e67d2cf9513fb653",
+      "audio": "2d652aa8a92c218a",
       "heard": "89.",
       "confidence": 0.7218268,
-      "durationMs": 2112,
-      "speechStartMs": 270,
-      "speechEndMs": 1430
+      "durationMs": 1128,
+      "speechStartMs": 87,
+      "speechEndMs": 1128
     },
     "number-90": {
-      "audio": "8c5e58a586b19d66",
+      "audio": "106c6c9c01c087e5",
       "heard": "90.",
       "confidence": 0.6079519,
-      "durationMs": 1872,
-      "speechStartMs": 270,
-      "speechEndMs": 1030
+      "durationMs": 768,
+      "speechStartMs": 103,
+      "speechEndMs": 768
     },
     "number-91": {
-      "audio": "586e88f9ecdc3954",
+      "audio": "4c25d0ea7233e040",
       "heard": "91.",
       "confidence": 0.6881087,
-      "durationMs": 2112,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1128,
+      "speechStartMs": 114,
+      "speechEndMs": 1128
     },
     "number-92": {
-      "audio": "72633f2caffa1d91",
+      "audio": "d86b1a7557d81ab3",
       "heard": "92.",
       "confidence": 0.7470889,
-      "durationMs": 2208,
-      "speechStartMs": 270,
-      "speechEndMs": 1470
+      "durationMs": 1200,
+      "speechStartMs": 114,
+      "speechEndMs": 1200
     },
     "number-93": {
-      "audio": "ab5c1211f3bba4f9",
+      "audio": "a2790f5c08a60247",
       "heard": "93.",
       "confidence": 0.6414097,
-      "durationMs": 2136,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1200,
+      "speechStartMs": 114,
+      "speechEndMs": 1200
     },
     "number-94": {
-      "audio": "2541660e3cdd5f97",
+      "audio": "a3a1110f7d13d423",
       "heard": "94.",
       "confidence": 0.79253113,
-      "durationMs": 2040,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1056,
+      "speechStartMs": 114,
+      "speechEndMs": 1056
     },
     "number-95": {
-      "audio": "59b62963eed82869",
+      "audio": "fbfc52e616e7b4a3",
       "heard": "95.",
       "confidence": 0.70641327,
-      "durationMs": 2208,
-      "speechStartMs": 310,
-      "speechEndMs": 1430
+      "durationMs": 1200,
+      "speechStartMs": 72,
+      "speechEndMs": 1192
     },
     "number-96": {
-      "audio": "0815266b4f5c64ff",
+      "audio": "f2e9d77d8ac2614e",
       "heard": "96.",
       "confidence": 0.4916011,
-      "durationMs": 2064,
-      "speechStartMs": 270,
-      "speechEndMs": 1150
+      "durationMs": 1128,
+      "speechStartMs": 91,
+      "speechEndMs": 971
     },
     "number-97": {
-      "audio": "e11569037bfd41ed",
+      "audio": "74a4c387b62f59b0",
       "heard": "97.",
       "confidence": 0.7637625,
-      "durationMs": 2040,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1080,
+      "speechStartMs": 114,
+      "speechEndMs": 1080
     },
     "number-98": {
-      "audio": "9662e76113f3e6d6",
+      "audio": "6c25fb71ce17d823",
       "heard": "98.",
       "confidence": 0.69891757,
-      "durationMs": 2040,
-      "speechStartMs": 270,
-      "speechEndMs": 1230
+      "durationMs": 1080,
+      "speechStartMs": 114,
+      "speechEndMs": 1074
     },
     "number-99": {
-      "audio": "591b2cc0cc010575",
+      "audio": "54cba6e0f7ce9b63",
       "heard": "99.",
       "confidence": 0.6083745,
-      "durationMs": 2064,
-      "speechStartMs": 270,
-      "speechEndMs": 1390
+      "durationMs": 1104,
+      "speechStartMs": 114,
+      "speechEndMs": 1104
     },
     "number-100": {
-      "audio": "44ce9739ec6492e5",
+      "audio": "fec4229623841dce",
       "heard": "100.",
       "confidence": 0.8717306,
-      "durationMs": 1872,
-      "speechStartMs": 350,
-      "speechEndMs": 830
+      "durationMs": 504,
+      "speechStartMs": 129,
+      "speechEndMs": 504
     }
   }
 }
